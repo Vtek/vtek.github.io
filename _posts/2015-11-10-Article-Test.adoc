@@ -3,6 +3,7 @@
 == Introduction :)
 
 :published_at:
+:hp-tags: HubPress, Blog, Open Source,
 
 
 Voici un premier article sur HubPress, trop mignon !!!
