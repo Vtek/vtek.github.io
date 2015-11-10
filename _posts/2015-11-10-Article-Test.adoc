@@ -2,7 +2,6 @@
 
 == Introduction :)
 
-:published_at:
 :hp-tags: HubPress, Blog, Open Source,
 
 
