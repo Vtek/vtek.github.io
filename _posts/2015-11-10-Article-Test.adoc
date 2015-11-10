@@ -1,7 +1,7 @@
 = Article Test
 
 
-:hp-tags: HubPress, Blog, Open Source,
+:hp-tags: HubPress, Blog, Open Source
 
 
 Voici un premier article sur HubPress, trop mignon !!!
