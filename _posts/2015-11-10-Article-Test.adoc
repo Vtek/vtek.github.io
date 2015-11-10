@@ -1,0 +1,8 @@
+= Article Test
+
+== Introduction :)
+
+:published_at:
+
+
+Voici un premier article sur HubPress, trop mignon !!!
