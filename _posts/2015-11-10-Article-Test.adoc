@@ -1,6 +1,5 @@
 = Article Test
 
-== Introduction :)
 
 :hp-tags: HubPress, Blog, Open Source,
 
