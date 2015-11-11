@@ -1,5 +1,5 @@
 = Pourquoi je suis passé à HubPress !
-:hp-image: NASA-Spaceship.jpg
+:hp-image: pourquoi-je-suis-passe-a-hubpress.jpg
 
 :hp-tags: HubPress
 
