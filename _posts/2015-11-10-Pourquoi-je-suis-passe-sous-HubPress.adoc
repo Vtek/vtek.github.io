@@ -4,4 +4,7 @@
 :hp-tags: HubPress
 
 
-Depuis un moment j'
+Cela fait un moment que je penses à changer de blog. Pendant longtemps j'ai utilié Wordpress que j'ai toujours considéré comme trop lourd pour mon utilisation. Etant un fan inconditionnel de Github, j'avais vu qu'un moteur de blog utilisant Github Pages était sortie. Ce projet c'est http://hubpress.io/[HubPress] et il faut dire que c'est une très belle suprise.
+
+Simple et léger, HubPress utilise AsciiDoctor pour la rédaction des billets. Concernant la mise en place rien de plus facile puisqu'il suffit de fork le projet sous Github et de renommer le repo pour utiliser Github.io (plus d'informations https://pages.github.com/[ici]). Un panneau de settings permet de renseigner la majeur partie des options de bases d'un blog (Titre, Description, Réseau sociaux, Google Analytic, etc etc). Je l'utilise depuis peu mais je suis déjà fan !
+
