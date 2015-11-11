@@ -1,0 +1,12 @@
+= Introduction à Angular2 !
+:hp-image: introduction-a-angular2.png
+
+:hp-tags: Angular2, TypeScript
+
+L'annonce d'*Angular2* l'année dernière à la _ng-europe_ à fait couler beaucoup d'encre. Cette nouvelle version change complétement le framework, a tel point que l'on peut se demander si la librairie ne devrait pas s'appeller autrement.
+
+Dernièrement j'ai eu un peu de temps pour faire de la veille et ça faisait un moment que je voulais voir ce que cette version donne. Je vous propose donc un petit un petit exemple !
+
+== Mise en place
+
+
