@@ -1,10 +1,10 @@
-= Article Test
+= Pourquoi je suis passé sous HubPress !
 
 
-:hp-tags: HubPress, Blog, Open Source
+:hp-tags: HubPress
 
 
-Voici un premier article sur HubPress, trop mignon !!!
+Depuis un moment je Voici un premier article sur HubPress, trop mignon !!!
 
 
 ++++
