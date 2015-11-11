@@ -4,9 +4,4 @@
 :hp-tags: HubPress
 
 
-Depuis un moment 
-
-
-++++
-<iframe width="100%" height="300" src="//jsfiddle.net/Vtek/baxahztb/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-++++
+Depuis un moment j'
