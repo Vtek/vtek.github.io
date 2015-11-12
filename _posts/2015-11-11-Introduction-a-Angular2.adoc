@@ -39,7 +39,7 @@ Si tout va bien l'API démarre via la commande :
 $ npm start
 ----
 
-Le serveur doit écouter sur le port 3000 et si vous attaquez l'url http://localhost:3000/user, vous devriez obtenir le JSON suivant en réponse :
+Le serveur écoute sur le port 3000 et si vous attaquez l'url http://localhost:3000/user, vous devriez obtenir le JSON suivant en réponse :
 
 ++++
 <iframe width="100%" height="150" src="//jsfiddle.net/Vtek/5vc4fvgx/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
