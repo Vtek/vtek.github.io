@@ -7,6 +7,21 @@ L'annonce d'*Angular2* l'année dernière à la _ng-europe_ à fait couler beauc
 
 Dernièrement j'ai eu un peu de temps pour faire de la veille et ça faisait un moment que je voulais voir ce que cette version donne. Je vous propose donc un petit un petit exemple !
 
-== Mise en place
 
+== REST Api
 
+Avant de gagner du temps, j'ai créé un Repo sur Github contenant une API Rest très simple à utiliser. Commencez par récupérer le projet ici :
+
+https://github.com/Vtek/BlogIntroductionAngular2
+
+L'Api tourne avec node.js (vous trouverez le runtime https://nodejs.org[ici]), et nécessite la CLI TypeScript. Il faut l'installer globalement via npm :
+
+----
+$ npm install -g typescript
+----
+
+TypeScript utilise des fichiers de définitions. Pour les gérer éfficacement j'utilise la CLI tsd. A nouveau il faut l'installer globalement via npm :
+
+----
+$ npm install -g tsd
+----
