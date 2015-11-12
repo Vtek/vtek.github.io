@@ -45,3 +45,17 @@ Le serveur écoute sur le port 3000 et si vous attaquez l'url http://localhost:3
 <iframe width="100%" height="150" src="//jsfiddle.net/Vtek/5vc4fvgx/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 ++++
 
+== Angular2 et les services
+
+Si vous avez déjà fait de l'Angular, vous connaissez très certainement les services. C'est une des notions qui a été conservé dans Angular2 et nous allons en utiliser pour consommer notre Rest API. Pour commencer, ajoutez un répertoire services dans :
+----
+public/javascripts/app
+----
+et ajoutez y un fichier user.ts contenant la classe suivante :
+
+++++
+<iframe width="100%" height="120" src="//jsfiddle.net/Vtek/m5hp41ot/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+++++
+
+
+Cette classe définit un object de données utilisateur correspondant au JSON qui est renvoyé par l'API.
