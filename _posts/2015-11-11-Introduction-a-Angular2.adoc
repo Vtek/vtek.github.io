@@ -4,12 +4,12 @@
 :hp-tags: Angular2, TypeScript
 
 
-L'annonce d'*Angular2* l'année dernière à la _ng-europe_ à fait couler beaucoup d'encre. Cette nouvelle version change complétement le framework, a tel point que l'on peut se demander si la librairie ne devrait pas s'appeller autrement. Dernièrement j'ai eu un peu de temps pour faire de la veille et ça faisait un moment que je voulais voir ce que cette version donne. Je vous propose donc un petit un petit exemple !
+L'annonce d'*Angular2* l'année dernière à la _ng-europe_ à fait couler beaucoup d'encre. Cette nouvelle version change complétement le framework, a tel point que l'on peut se demander si la librairie ne devrait pas s'appeller autrement. Dernièrement j'ai eu un peu de temps pour faire de la veille et ça faisait un moment que je voulais voir ce que cette version donne. Je vous propose donc un petit exemple !
 
 
 == Rest API
 
-Avant de gagner du temps, j'ai créé un Repo sur *Github* contenant une API Rest très simple à utiliser. Commencez par récupérer le projet ici :
+Afin de gagner du temps, j'ai créé un Repo sur *Github* contenant une API Rest très simple à utiliser. Commencez par récupérer le projet ici :
 
 https://github.com/Vtek/BlogIntroductionAngular2
 
@@ -39,7 +39,7 @@ Si tout va bien l'API démarre via la commande :
 $ npm start
 ----
 
-Le serveur écoute sur le port 3000 et si vous attaquez l'url http://localhost:3000/user, vous devriez obtenir le JSON suivant en réponse :
+Le serveur écoute sur le port 3000 et si vous attaquez l'url http://localhost:3000/user, vous devriez obtenir le *JSON* suivant en réponse :
 
 ++++
 <iframe width="100%" height="150" src="//jsfiddle.net/Vtek/5vc4fvgx/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
@@ -47,7 +47,7 @@ Le serveur écoute sur le port 3000 et si vous attaquez l'url http://localhost:3
 
 == Angular2 et les services
 
-Si vous avez déjà fait de l'Angular, vous connaissez très certainement les _services_. C'est une des notions qui a été conservé dans Angular2 et nous allons en utiliser pour consommer notre Rest API. Pour commencer, ajoutez un répertoire services dans :
+Si vous avez déjà fait de l'Angular, vous connaissez très certainement les _services_. C'est une des notions qui a été conservé dans la version 2 et nous allons en utiliser un pour consommer notre Rest API. Pour commencer, ajoutez un répertoire services dans :
 ----
 public/javascripts/app
 ----
@@ -63,7 +63,7 @@ Cette classe définit un object de données correspondant au JSON qui est renvoy
 <iframe width="100%" height="200" src="//jsfiddle.net/Vtek/s2jgLa0v/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 ++++
 
-La méthode _getUser()_ permettera d'obtenir les données. Pour consommer l'API Rest il existe le module *Http*. Celui ci vous permez d'attaquer les services web via les principaux verbes Http (Get, Post, Put, Delete...). Pour l'utiliser il faut au préalable en connaitre la définition. Dans votre code source, avant l'export de la classe _UserService_ il faut ajouter un import du module :
+La méthode _getUser()_ permettera d'obtenir les données. Pour consommer l'API Rest il existe le module *Http*. Celui ci vous permez d'attaquer les services web via les principaux verbes Http (Get, Post, Put, Delete...). Pour l'utiliser il faut au préalable en connaitre la définition du module. Dans votre code source, avant l'export de la classe _UserService_ il faut ajouter un import :
 
 ++++
 <iframe width="100%" height="80" src="//jsfiddle.net/Vtek/aco04tn1/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
@@ -83,4 +83,7 @@ Dans getUsers() il est maintenant possible d'utiliser la référence pour faire 
 
 La méthode get est utilisé pour faire un appel Http Get sur l'url http://localhost:3000/user. C'est un code fluent (https://fr.wikipedia.org/wiki/D%C3%A9signation_cha%C3%AEn%C3%A9e[Désignation chaînée]), il faut donc chainer sur la méthode map() qui va s'occuper de transcrire le JSON en objet de type User. Pour le faire on utilise une fonction fléchée (https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Fonctions/Fonctions_fl%C3%A9ch%C3%A9es[Arrow function]) qui renvoie le résultat de la convertion.
 
-NOTE: Les fonctions fléchées sont normalisées dans *ES*. Elles sont utilisées depuis longtemps en programmation, et on les retrouvent souvent sous le nom d'*Expression Lambda*. Cette dénomination vient du travail d'_Alonzo Church_ qui est l'inventeur de ce concept (https://fr.wikipedia.org/wiki/Lambda-calcul[λ-calcul]). Il est possible de les utiliser dans beaucoup de langage, notamment *C#*, *Lisp*, *Python* et même *C++* depuis la version 11 !
+NOTE: Les fonctions fléchées sont normalisées dans *ES6*. Elles sont utilisées depuis longtemps en programmation et on les retrouvent souvent sous le nom d'*Expression Lambda*. Cette dénomination vient du travail d'_Alonzo Church_ qui est l'inventeur de ce concept (https://fr.wikipedia.org/wiki/Lambda-calcul[λ-calcul]). Il est possible de les utiliser dans beaucoup de langages, notamment *C#*, *Lisp*, *Python* et même *C++* depuis la version 11 !
+
+Notre service est quasiment finit, mais il manque une partie importante du code : l'instantiation de la classe Http. Pour le faire on va se dispenser du mot clé new car Angular utilise depuis toujours un concept fort et structurant : l'injection de dépendances.
+
