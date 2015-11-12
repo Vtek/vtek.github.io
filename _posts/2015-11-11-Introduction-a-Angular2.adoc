@@ -109,9 +109,14 @@ Pour rendre la classe injectable il faut donc écrire :
 <iframe width="100%" height="120" src="//jsfiddle.net/Vtek/g8ho9br1/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 ++++
 
-Et pour injecter une instance d'Http, il faut le faire via le constructeur de la classe comme suit :
+Et pour injecter une instance d'Http, il faut le faire via le constructeur de la classe en décorant le paramètre d'entrée :
 
 ++++
 <iframe width="100%" height="100" src="//jsfiddle.net/Vtek/kubhg4g1/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 ++++
 
+A ce stade le service utilisateur est terminé. Si vous avez bien suivi toutes les étapes vous devriez avoir le code suivant :
+
+++++
+<iframe width="100%" height="380" src="//jsfiddle.net/Vtek/Lnpy178y/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+++++
