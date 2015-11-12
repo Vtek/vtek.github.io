@@ -94,7 +94,7 @@ Deux points sont important à noter niveau dépendances sur ce service :
 
 Il va donc falloir utiliser des annotations pour gérer ces deux points.
 
-NOTE: Les annotations sont des méta-données qui servent à décorer une classe. Cela permet de donner des aspects sans avoir à implémenter du code ou de la configuration sans dépendance à un fichier de conf.
+NOTE: Les annotations sont des méta-données qui servent à décorer une classe, un paramètre ou encore une méthode. Cela permet de donner des aspects sans avoir à implémenter du code ou de la configuration sans dépendance à un fichier.
 
 Commencez par importer les annotations dédiés à l'injection :
 
