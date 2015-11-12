@@ -51,10 +51,15 @@ Si vous avez déjà fait de l'Angular, vous connaissez très certainement les se
 ----
 public/javascripts/app
 ----
-et ajoutez y un fichier user.ts contenant la classe suivante :
+et ajoutez y un fichier user.ts et un user.service.ts. Le fichier user.ts contient le code suivant :
 
 ++++
 <iframe width="100%" height="120" src="//jsfiddle.net/Vtek/m5hp41ot/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 ++++
 
-Cette classe définit un object de données utilisateur correspondant au JSON qui est renvoyé par l'API.
+Cette classe définit un object de données correspondant au JSON qui est renvoyé par l'API. Le fichier user.service.ts aura pour structure :
+
+++++
+<iframe width="100%" height="200" src="//jsfiddle.net/Vtek/s2jgLa0v/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+++++
+
