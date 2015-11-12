@@ -4,30 +4,28 @@
 :hp-tags: Angular2, TypeScript
 
 
-L'annonce d'*Angular2* l'année dernière à la _ng-europe_ à fait couler beaucoup d'encre. Cette nouvelle version change complétement le framework, a tel point que l'on peut se demander si la librairie ne devrait pas s'appeller autrement.
-
-Dernièrement j'ai eu un peu de temps pour faire de la veille et ça faisait un moment que je voulais voir ce que cette version donne. Je vous propose donc un petit un petit exemple !
+L'annonce d'*Angular2* l'année dernière à la _ng-europe_ à fait couler beaucoup d'encre. Cette nouvelle version change complétement le framework, a tel point que l'on peut se demander si la librairie ne devrait pas s'appeller autrement. Dernièrement j'ai eu un peu de temps pour faire de la veille et ça faisait un moment que je voulais voir ce que cette version donne. Je vous propose donc un petit un petit exemple !
 
 
 == Rest API
 
-Avant de gagner du temps, j'ai créé un Repo sur Github contenant une API Rest très simple à utiliser. Commencez par récupérer le projet ici :
+Avant de gagner du temps, j'ai créé un Repo sur *Github* contenant une API Rest très simple à utiliser. Commencez par récupérer le projet ici :
 
 https://github.com/Vtek/BlogIntroductionAngular2
 
-L'Api tourne avec node.js (vous trouverez le runtime https://nodejs.org[ici]), et nécessite la CLI TypeScript. Il faut l'installer globalement via npm :
+L'Api tourne avec *node.js* (vous trouverez le runtime https://nodejs.org[ici]), et nécessite la CLI *TypeScript*. Il faut l'installer globalement via npm :
 
 ----
 $ npm install -g typescript
 ----
 
-TypeScript utilise des fichiers de définitions. Pour les gérer éfficacement j'utilise la CLI tsd. A nouveau il faut l'installer globalement via npm :
+TypeScript utilise des fichiers de définitions. Pour les gérer éfficacement j'utilise la CLI *tsd* :
 
 ----
 $ npm install -g tsd
 ----
 
-Pour compiler le projet, mettez vous à la racine du projet et tapez les trois commandes suivantes :
+Pour compiler les fichiers TypeScript, mettez vous à la racine du projet et tapez les trois commandes suivantes :
 
 ----
 $ npm install
@@ -41,4 +39,9 @@ Si tout va bien l'API démarre via la commande :
 $ npm start
 ----
 
-Le serveur doit écouter sur le port 3000 et si vous attaquez l'url http://localhost:3000/user
+Le serveur doit écouter sur le port 3000 et si vous attaquez l'url http://localhost:3000/user, vous devriez obtenir le JSON suivant en réponse :
+
+++++
+<iframe width="100%" height="150" src="//jsfiddle.net/Vtek/5vc4fvgx/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+++++
+
