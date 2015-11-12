@@ -63,3 +63,9 @@ Cette classe définit un object de données correspondant au JSON qui est renvoy
 <iframe width="100%" height="200" src="//jsfiddle.net/Vtek/s2jgLa0v/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 ++++
 
+La méthode getUser() permettera d'obtenir les données. Pour consommer l'API Rest il existe le module Angular Http. Celui ci vous permez d'attaquer les services web via les principaux verbes Http (Get, Post, Put, Delete...). Pour l'utiliser il faut au préalable en connaitre la définition. Dans votre code source, avant l'export de la classe UserService il faut ajouter un import du module :
+
+++++
+<iframe width="100%" height="80" src="//jsfiddle.net/Vtek/aco04tn1/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+++++
+
