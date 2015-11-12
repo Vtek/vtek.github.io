@@ -85,5 +85,5 @@ La méthode get est utilisé pour faire un appel Http Get sur l'url http://local
 
 NOTE: Les fonctions fléchées sont normalisées dans *ES6*. Elles sont utilisées depuis longtemps en programmation et on les retrouvent souvent sous le nom d'*Expression Lambda*. Cette dénomination vient du travail d'_Alonzo Church_ qui est l'inventeur de ce concept (https://fr.wikipedia.org/wiki/Lambda-calcul[λ-calcul]). Il est possible de les utiliser dans beaucoup de langages, notamment *C#*, *Lisp*, *Python* et même *C++* depuis la version 11 !
 
-Notre service est quasiment finit, mais il manque une partie importante du code : l'instantiation de la classe Http. Pour le faire on va se dispenser du mot clé new car Angular utilise depuis toujours un concept fort et structurant : l'injection de dépendances.
+Notre service est quasiment finit, mais il manque une partie importante du code : l'instantiation de la classe Http. Pour le faire on va se dispenser du mot clé new car Angular utilise depuis toujours un concept fort et structurant : l'injection de dépendances. Je ne vais pas 
 
