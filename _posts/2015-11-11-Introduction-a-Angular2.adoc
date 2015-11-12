@@ -47,23 +47,23 @@ Le serveur écoute sur le port 3000 et si vous attaquez l'url http://localhost:3
 
 == Angular2 et les services
 
-Si vous avez déjà fait de l'Angular, vous connaissez très certainement les services. C'est une des notions qui a été conservé dans Angular2 et nous allons en utiliser pour consommer notre Rest API. Pour commencer, ajoutez un répertoire services dans :
+Si vous avez déjà fait de l'Angular, vous connaissez très certainement les _services_. C'est une des notions qui a été conservé dans Angular2 et nous allons en utiliser pour consommer notre Rest API. Pour commencer, ajoutez un répertoire services dans :
 ----
 public/javascripts/app
 ----
-et ajoutez y un fichier user.ts et un user.service.ts. Le fichier user.ts contient le code suivant :
+et ajoutez y un fichier _user.ts_ et un _user.service.ts_. Le fichier user.ts contient le code suivant :
 
 ++++
 <iframe width="100%" height="120" src="//jsfiddle.net/Vtek/m5hp41ot/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 ++++
 
-Cette classe définit un object de données correspondant au JSON qui est renvoyé par l'API. Le fichier user.service.ts aura pour structure :
+Cette classe définit un object de données correspondant au JSON qui est renvoyé par l'API. Le fichier _user.service.ts_ aura pour structure :
 
 ++++
 <iframe width="100%" height="200" src="//jsfiddle.net/Vtek/s2jgLa0v/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 ++++
 
-La méthode getUser() permettera d'obtenir les données. Pour consommer l'API Rest il existe le module Angular Http. Celui ci vous permez d'attaquer les services web via les principaux verbes Http (Get, Post, Put, Delete...). Pour l'utiliser il faut au préalable en connaitre la définition. Dans votre code source, avant l'export de la classe UserService il faut ajouter un import du module :
+La méthode _getUser()_ permettera d'obtenir les données. Pour consommer l'API Rest il existe le module *Http*. Celui ci vous permez d'attaquer les services web via les principaux verbes Http (Get, Post, Put, Delete...). Pour l'utiliser il faut au préalable en connaitre la définition. Dans votre code source, avant l'export de la classe _UserService_ il faut ajouter un import du module :
 
 ++++
 <iframe width="100%" height="80" src="//jsfiddle.net/Vtek/aco04tn1/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
