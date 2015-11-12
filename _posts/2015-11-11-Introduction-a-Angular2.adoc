@@ -63,13 +63,13 @@ Cette classe définit un object de données correspondant au JSON qui est renvoy
 <iframe width="100%" height="200" src="//jsfiddle.net/Vtek/s2jgLa0v/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 ++++
 
-La méthode _getUser()_ permettera d'obtenir les données. Pour consommer l'API Rest il existe le module *Http*. Celui ci vous permez d'attaquer les services web via les principaux verbes Http (Get, Post, Put, Delete...). Pour l'utiliser il faut au préalable en connaitre la définition du module. Dans votre code source, avant l'export de la classe _UserService_ il faut ajouter un import :
+La méthode _getUser()_ permettera d'obtenir les données. Pour consommer l'API Rest il existe le module *Http*. Celui ci vous permez d'attaquer les services web via les principaux verbes Http (Get, Post, Put, Delete...). Pour l'utiliser il faut au préalable en connaitre la définition du module. De plus il faut que votre service puisse utiliser la classe User. Dans votre code source, avant l'export de la classe _UserService_ il faut donc ajouter les imports :
 
 ++++
-<iframe width="100%" height="80" src="//jsfiddle.net/Vtek/aco04tn1/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe width="100%" height="100" src="//jsfiddle.net/Vtek/aco04tn1/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 ++++
 
-Pour manipuler cette objet, ajoutez un attribut de classe au dessus du constructeur :
+Pour manipuler l'objet Http, ajoutez un attribut de classe au dessus du constructeur :
 
 ++++
 <iframe width="100%" height="80" src="//jsfiddle.net/Vtek/Lu87cq26/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
@@ -86,3 +86,32 @@ La méthode get est utilisé pour faire un appel Http Get sur l'url http://local
 NOTE: Les fonctions fléchées sont normalisées dans *ES6*. Elles sont utilisées depuis longtemps en programmation et on les retrouvent souvent sous le nom d'*Expression Lambda*. Cette dénomination vient du travail d'_Alonzo Church_ qui est l'inventeur de ce concept (https://fr.wikipedia.org/wiki/Lambda-calcul[λ-calcul]). Il est possible de les utiliser dans beaucoup de langages, notamment *C#*, *Lisp*, *Python* et même *C++* depuis la version 11 !
 
 Notre service est quasiment finit, mais il manque une partie importante du code : l'instantiation de la classe Http. Pour le faire on va se dispenser du mot clé new car Angular utilise depuis toujours un concept fort et structurant : l'injection de dépendances. Je ne vais pas trop insister sur l'injection, cela mériterais un article entier sur le sujet (j'aborderais surement le sujet dans un billet, en attendant si vous êtes intéresser voir trouverez des infomations https://en.wikipedia.org/wiki/Dependency_injection[ici], https://en.wikipedia.org/wiki/Dependency_inversion_principle[ici] ou encore https://en.wikipedia.org/wiki/Inversion_of_control[ici])
+
+Deux points sont important à noter niveau dépendances sur ce service :
+
+* La classe Http est une dépendance nécessaire au bon fonctionnement du service.
+* Le service en lui même est une dépendance qu'il faudra injecter.
+
+Il va donc falloir utiliser des annotations pour gérer ces deux points.
+
+NOTE: Les annotations sont des méta-données qui servent à décorer une classe. Cela permet de donner des aspects sans avoir à implémenter du code ou de la configuration sans dépendance à un fichier de conf.
+
+Commencez par importer les annotations dédiés à l'injection :
+
+++++
+<iframe width="100%" height="80" src="//jsfiddle.net/Vtek/e6y9jbdk/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+++++
+
+L'annotation Injectable va permettre de décorer la classe pour qu'elle puisse être injecter, Inject qu'à lui permet de précider l'injection direct d'une dépendance. Les annotations doivent être préfixé par un *@* et préceder l'élement décorer.
+Pour rendre la classe injectable il faut donc écrire :
+
+++++
+<iframe width="100%" height="120" src="//jsfiddle.net/Vtek/g8ho9br1/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+++++
+
+Et pour injecter une instance d'Http, il faut le faire via le constructeur de la classe comme suit :
+
+++++
+<iframe width="100%" height="100" src="//jsfiddle.net/Vtek/kubhg4g1/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+++++
+
