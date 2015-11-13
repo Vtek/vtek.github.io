@@ -141,4 +141,16 @@ Pour le composant aura pour structure le code suivant :
 ++++
 <iframe width="100%" height="200" src="//jsfiddle.net/Vtek/hjkvya2z/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 ++++
+
+Afin que le template puisse fonctionner il faut que le composant dispose d'un attribut public users de type User[] (Le template itère une collection). Avant l'export de la classe il faut donc importer le type User :
+
 ++++
+<iframe width="100%" height="80" src="//jsfiddle.net/Vtek/ccoLLvu3/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+++++
+
+Ensuite ajoutez avant le constructeur l'attibut correspondant au tableau d'utilisateur :
+
+++++
+<iframe width="100%" height="80" src="//jsfiddle.net/Vtek/Lj13hLbp/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+++++
+
