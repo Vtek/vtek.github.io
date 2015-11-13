@@ -126,3 +126,8 @@ TIP: Vous avez surement fait attention à la ligne en commentaire tout en haut d
 == Les composants
 Angular2 a enterré plusieurs concepts important du framework. Les deux principaux pour moi sont le Scope et le Controller. Il est possible de trouver une explication logique a cette suppression. Quant on développait un controlleur Angular avec la première version il y avait une ambiguité entre les pattern https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller[MVC] et https://en.wikipedia.org/wiki/Model_View_ViewModel[MVVM]. D'un côté le controlleur traitait des actions mais d'un autre on utilisait le Scope pour faire le binding two way. Malheureusement le mélange de ces deux concepts créer pas mal de confusion et même si il est possible de les faire cohabiter, le mieux reste encore de les séparer clairement. Dans Angular2 plus d'ambiguité, nous avons à disposition les Components et on peut dire qu'il fonctionne comme des ViewModels. Certains ne seront peut-être pas d'accord avec mon analyse, mais on va dire que ce point de vue n'engage que moi ;)
 
+Afin de rester bien organiser, ajoutez un répertoire components toujours dans :
+----
+public/javascripts/app
+----
+et ajoutez y un fichier _user.component.ts_ et un _user.component.html_. Le fichier .html correspondra au template utilisé par le compostant. L'idée est de partir sur une liste d'utilisateur
