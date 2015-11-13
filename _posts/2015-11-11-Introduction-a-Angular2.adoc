@@ -136,3 +136,9 @@ et ajoutez y un fichier _user.component.ts_ et un _user.component.html_. Le fich
 <iframe width="100%" height="170" src="//jsfiddle.net/Vtek/Labjf7s5/embedded/html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 ++++
 
+Pour le composant aura pour structure le code suivant :
+
+++++
+<iframe width="100%" height="200" src="//jsfiddle.net/Vtek/hjkvya2z/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+++++
+++++
