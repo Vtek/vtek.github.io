@@ -42,7 +42,7 @@ $ npm start
 Le serveur écoute sur le port 3000 et si vous attaquez l'url http://localhost:3000/user, vous devriez obtenir le *JSON* suivant en réponse :
 
 ++++
-<iframe width="100%" height="150" src="//jsfiddle.net/Vtek/5vc4fvgx/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe width="100%" height="150" src="//jsfiddle.net/Vtek/5vc4fvgx/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 ++++
 
 == Angular2 et les services
@@ -54,31 +54,31 @@ public/javascripts/app
 et ajoutez y un fichier _user.ts_ et un _user.service.ts_. Le fichier user.ts contient le code suivant :
 
 ++++
-<iframe width="100%" height="120" src="//jsfiddle.net/Vtek/m5hp41ot/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe width="100%" height="120" src="//jsfiddle.net/Vtek/m5hp41ot/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 ++++
 
 Cette classe définit un object de données correspondant au JSON qui est renvoyé par l'API. Le fichier _user.service.ts_ aura pour structure :
 
 ++++
-<iframe width="100%" height="200" src="//jsfiddle.net/Vtek/s2jgLa0v/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe width="100%" height="200" src="//jsfiddle.net/Vtek/s2jgLa0v/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 ++++
 
 La méthode _getUser()_ permettera d'obtenir les données. Pour consommer l'API Rest il existe le module *Http*. Celui ci vous permez d'attaquer les services web via les principaux verbes Http (Get, Post, Put, Delete...). Pour l'utiliser il faut au préalable en connaitre la définition du module. De plus il faut que votre service puisse utiliser la classe User. Dans votre code source, avant l'export de la classe _UserService_ il faut donc ajouter les imports :
 
 ++++
-<iframe width="100%" height="90" src="//jsfiddle.net/Vtek/aco04tn1/2/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe width="100%" height="90" src="//jsfiddle.net/Vtek/aco04tn1/2/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 ++++
 
 Pour manipuler l'objet Http, ajoutez un attribut de classe au dessus du constructeur :
 
 ++++
-<iframe width="100%" height="80" src="//jsfiddle.net/Vtek/Lu87cq26/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe width="100%" height="80" src="//jsfiddle.net/Vtek/Lu87cq26/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 ++++
 
 Dans getUsers() il est maintenant possible d'utiliser la référence pour faire notre appel à l'API :
 
 ++++
-<iframe width="100%" height="100" src="//jsfiddle.net/Vtek/t6fha4zf/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe width="100%" height="100" src="//jsfiddle.net/Vtek/t6fha4zf/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 ++++
 
 La méthode get est utilisé pour faire un appel Http Get sur l'url http://localhost:3000/user. C'est un code fluent (https://fr.wikipedia.org/wiki/D%C3%A9signation_cha%C3%AEn%C3%A9e[Désignation chaînée]), il faut donc chainer sur la méthode map() qui va s'occuper de transcrire le JSON en objet de type User. Pour le faire on utilise une fonction fléchée (https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Fonctions/Fonctions_fl%C3%A9ch%C3%A9es[Arrow function]) qui renvoie le résultat de la convertion.
@@ -99,20 +99,20 @@ NOTE: Les annotations sont des méta-données qui servent à décorer une classe
 Commencez par importer les annotations dédiés à l'injection :
 
 ++++
-<iframe width="100%" height="80" src="//jsfiddle.net/Vtek/e6y9jbdk/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe width="100%" height="80" src="//jsfiddle.net/Vtek/e6y9jbdk/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 ++++
 
 L'annotation Injectable va permettre de décorer la classe pour qu'elle puisse être injecter, Inject qu'à lui permet de précider l'injection direct d'une dépendance. Les annotations doivent être préfixé par un *@* et préceder l'élement décorer.
 Pour rendre la classe injectable il faut donc écrire :
 
 ++++
-<iframe width="100%" height="120" src="//jsfiddle.net/Vtek/g8ho9br1/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe width="100%" height="120" src="//jsfiddle.net/Vtek/g8ho9br1/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 ++++
 
 Et pour injecter une instance d'Http, il faut le faire via le constructeur de la classe en décorant le paramètre d'entrée :
 
 ++++
-<iframe width="100%" height="100" src="//jsfiddle.net/Vtek/kubhg4g1/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe width="100%" height="100" src="//jsfiddle.net/Vtek/kubhg4g1/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 ++++
 
 A ce stade le service utilisateur est terminé. Si vous avez bien suivi toutes les étapes vous devriez avoir le code suivant :
@@ -133,5 +133,6 @@ public/javascripts/app
 et ajoutez y un fichier _user.component.ts_ et un _user.component.html_. Le fichier .html correspondra au template utilisé par le compostant. L'idée est de partir sur une liste d'utilisateur. Une simple boucle for fera la mise en forme. Voici le code du template :
 
 ++++
-<iframe width="100%" height="300" src="//jsfiddle.net/Vtek/Labjf7s5/embedded/html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe width="100%" height="170" src="//jsfiddle.net/Vtek/Labjf7s5/embedded/html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 ++++
+
