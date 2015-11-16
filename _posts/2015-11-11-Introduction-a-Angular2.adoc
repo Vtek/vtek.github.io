@@ -244,4 +244,33 @@ getUsers(){
 }
 ----
 
-La logique du composant est maintenant opérationnel mais en l'état il ne peut pas fonctionner. Il faut le décorer 
+La logique du composant est maintenant opérationnelle mais en l'état il ne peut pas fonctionner. Il faut le décorer avec deux annotations : @Component et @View. La première va nous permettre de définir le selector (le tag qui permet à angular d'identifier le composant à utiliser dans une vue) et les services à utiliser. La seconde apporte des informations sur le template utiliser par le composant mais aussi les directives utilisées dans le composant.
+
+NOTE: Les directives n'ont pas disparu dans Angular2. Elle permettent toujours de manipuler le DOM.
+
+Avant d'ajouter les deux annotations sur la classe il faut les importer :
+
+[source,javascript]
+----
+import {Component, View, NgFor} from 'angular2/angular2';
+----
+
+Vous avez du remarquer qu'un import est fait aussi pour NgFor. En effet une boucle est utilisée dans le template et il est néssecaire d'inclure la référence de la directive pour que cela fonctionne. Il est donc nécessaire de préciser le template mais aussi l'ensemble des directives utilisées dans le template :
+
+[source,javascript]
+----
+@View({
+    templateUrl: 'javascripts/app/components/user.component.html',
+    directives: [NgFor]
+})
+----
+
+Pour l'annotation @Component, il faut préciser le selector et les dépendances :
+
+[source,javascript]
+----
+@Component({
+    selector: 'users',
+    providers:[UserService]
+})
+----
