@@ -174,7 +174,6 @@ export class UserService {
             .get('http://localhost:3000/user')
             .map((res) => { return <User[]>res.json(); });
     }
-
 }
 ----
 
@@ -238,7 +237,7 @@ Dans getUser() il est nécessaire de faire un appel au service pour obtenir les 
 [source,javascript]
 ----
 getUsers(){
-    this.users = this._userService.getUsers().subscribe((users) => {
+    this._userService.getUsers().subscribe((users) => {
         this.users = users;
     });
 }
@@ -279,8 +278,7 @@ Il ne manque plus que le constructeur du composant :
 
 [source,javascript]
 ----
-constructor(userService: UserService)
-{
+constructor(userService: UserService){
 	this._userService = userService;
 	this.users = this.getUsers();
 }
@@ -308,8 +306,7 @@ export class UserComponent {
     public users: User[];
     private _userService: UserService;
 
-    constructor(userService: UserService)
-    {
+    constructor(userService: UserService){
     	this._userService = userService;
         this.users = this.getUsers();
     }
