@@ -41,9 +41,15 @@ $ npm start
 
 Le serveur écoute sur le port 3000 et si vous attaquez l'url http://localhost:3000/user, vous devriez obtenir le *JSON* suivant en réponse :
 
-++++
-<iframe width="100%" height="150" src="//jsfiddle.net/Vtek/5vc4fvgx/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-++++
+[source,javascript]
+----
+[
+    {"firstName":"Sylvain","lastName":"PONTOREAU"},
+    {"firstName":"Guillaume","lastName":"SPERA"},
+    {"firstName":"Aroua","lastName":"TOUKABRI"},
+    {"firstName":"Anthony","lastName":"GUILLAUME"}
+]
+----
 
 == Angular2 et les services
 
@@ -53,33 +59,54 @@ public/javascripts/app
 ----
 et ajoutez y un fichier _user.ts_ et un _user.service.ts_. Le fichier user.ts contient le code suivant :
 
-++++
-<iframe width="100%" height="120" src="//jsfiddle.net/Vtek/m5hp41ot/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-++++
+[source,javascript]
+----
+export class User{
+    firstName: string;
+    lastName: string;
+}
+----
 
 Cette classe définit un object de données correspondant au JSON qui est renvoyé par l'API. Le fichier _user.service.ts_ aura pour structure :
 
-++++
-<iframe width="100%" height="200" src="//jsfiddle.net/Vtek/s2jgLa0v/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-++++
+
+[source,javascript]
+----
+export class UserService {
+
+    constructor(){
+
+    }
+
+    public getUsers() {
+        
+    }
+}
+----
 
 La méthode _getUser()_ permettera d'obtenir les données. Pour consommer l'API Rest il existe le module *Http*. Celui ci vous permez d'attaquer les services web via les principaux verbes Http (Get, Post, Put, Delete...). Pour l'utiliser il faut au préalable en connaitre la définition du module. De plus il faut que votre service puisse utiliser la classe User. Dans votre code source, avant l'export de la classe _UserService_ il faut donc ajouter les imports :
 
-++++
-<iframe width="100%" height="90" src="//jsfiddle.net/Vtek/aco04tn1/2/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-++++
+[source,javascript]
+----
+import {Http} from 'angular2/http';
+import {User} from './user';
+----
 
 Pour manipuler l'objet Http, ajoutez un attribut de classe au dessus du constructeur :
 
-++++
-<iframe width="100%" height="80" src="//jsfiddle.net/Vtek/Lu87cq26/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-++++
+[source,javascript]
+----
+private _http: Http;
+----
 
 Dans getUsers() il est maintenant possible d'utiliser la référence pour faire notre appel à l'API :
 
-++++
-<iframe width="100%" height="100" src="//jsfiddle.net/Vtek/t6fha4zf/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-++++
+[source,javascript]
+----
+return this._http
+           .get('http://localhost:3000/user')
+           .map((res) => { return <User[]>res.json(); });
+----
 
 La méthode get est utilisé pour faire un appel Http Get sur l'url http://localhost:3000/user. C'est un code fluent (https://fr.wikipedia.org/wiki/D%C3%A9signation_cha%C3%AEn%C3%A9e[Désignation chaînée]), il faut donc chainer sur la méthode map() qui va s'occuper de transcrire le JSON en objet de type User. Pour le faire on utilise une fonction fléchée (https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Fonctions/Fonctions_fl%C3%A9ch%C3%A9es[Arrow function]) qui renvoie le résultat de la convertion.
 
@@ -98,28 +125,58 @@ NOTE: Les annotations sont des méta-données qui servent à décorer une classe
 
 Commencez par importer les annotations dédiés à l'injection :
 
-++++
-<iframe width="100%" height="80" src="//jsfiddle.net/Vtek/e6y9jbdk/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-++++
+[source,javascript]
+----
+import {Injectable, Inject} from 'angular2/angular2';
+----
 
 L'annotation Injectable va permettre de décorer la classe pour qu'elle puisse être injecter, Inject qu'à lui permet de précider l'injection direct d'une dépendance. Les annotations doivent être préfixé par un *@* et préceder l'élement décorer.
 Pour rendre la classe injectable il faut donc écrire :
 
-++++
-<iframe width="100%" height="120" src="//jsfiddle.net/Vtek/g8ho9br1/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-++++
+[source,javascript]
+----
+@Injectable()
+export class UserService {
+	...   
+}
+----
 
 Et pour injecter une instance d'Http, il faut le faire via le constructeur de la classe en décorant le paramètre d'entrée :
 
-++++
-<iframe width="100%" height="100" src="//jsfiddle.net/Vtek/kubhg4g1/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-++++
+[source,javascript]
+----
+constructor(@Inject(Http) http: Http){
+	this._http = http;
+}
+----
 
 A ce stade le service utilisateur est terminé. Si vous avez bien suivi toutes les étapes vous devriez avoir le code suivant :
 
-++++
-<iframe width="100%" height="380" src="//jsfiddle.net/Vtek/Lnpy178y/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-++++
+[source,javascript]
+----
+/// <reference path='../../../../typings/tsd.d.ts' />
+
+import {User} from './user';
+import {Http} from 'angular2/http';
+import {Injectable, Inject} from 'angular2/angular2';
+
+@Injectable()
+export class UserService {
+
+    private _http: Http;
+
+    constructor(@Inject(Http) http: Http){
+        this._http = http;
+    }
+
+    public getUsers() {
+        return this._http
+            .get('http://localhost:3000/user')
+            .map((res) => { return <User[]>res.json(); });
+    }
+
+}
+----
 
 TIP: Vous avez surement fait attention à la ligne en commentaire tout en haut du code source. C'est la référence au fichier de définitions qui permet à votre IDE de faire l'auto-complétion en TypeScript. Ici la CLI tsd à centraliser l'ensemble des références dans un fichier tsd.d.ts. Il vous suffit ensuite d'ajouter cette référence dans n'importe quel fichier TypeScript pour accéder à l'ensemble de la complétion. C'est plutôt pratique, mais attention à ne pas mélanger l'utilisation des bibliothèques clients et serveurs dans votre code quand vous faite du node.js !
 
@@ -132,26 +189,59 @@ public/javascripts/app
 ----
 et ajoutez y un fichier _user.component.ts_ et un _user.component.html_. Le fichier .html correspondra au template utilisé par le compostant. L'idée est de partir sur une liste d'utilisateur. Une simple boucle for fera la mise en forme. Voici le code du template :
 
-++++
-<iframe width="100%" height="170" src="//jsfiddle.net/Vtek/Labjf7s5/embedded/html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-++++
+[source,html]
+----
+<div>
+    <h2>User list</h2>
+    <ul>
+        <li *ng-for="#user of users">
+            {{user.firstName}} {{user.lastName}}
+        </li>
+    </ul>
+</div>
+----
 
 Pour le composant aura pour structure le code suivant :
 
-++++
-<iframe width="100%" height="200" src="//jsfiddle.net/Vtek/hjkvya2z/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-++++
+[source,javascript]
+----
+export class UserComponent {
+    
+    constructor(){
+        
+    }
+
+    getUsers(){
+
+    }
+}
+----
 
 Afin que le template puisse fonctionner il faut que le composant dispose d'un attribut public users de type User[] (Le template itère une collection). De plus le service devra être utiliser pour obtenir les données. Avant l'export de la classe il faut donc importer le type User et UserService :
 
-++++
-<iframe width="100%" height="100" src="//jsfiddle.net/Vtek/ccoLLvu3/2/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-++++
+[source,javascript]
+----
+import {User} from '../services/user';
+import {UserService} from '../services/user.service';
+----
 
 Ensuite ajoutez avant le constructeur l'attibut public correspondant au tableau d'utilisateur et celui privée pour utiliser le service utilisateur :
 
-++++
-<iframe width="100%" height="100" src="//jsfiddle.net/Vtek/Lj13hLbp/2/embedded/js" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-++++
+[source,javascript]
+----
+public users: User[];
+private _userService: UserService;
+----
 
-Dans getUser
+Dans getUser() il est nécessaire de faire un appel au service pour obtenir les données. Pour cela il faut souscrire au résultat de l'appel et assigner la valeur de retour à l'attribut users :
+
+[source,javascript]
+----
+getUsers(){
+    this.users = this._userService.getUsers().subscribe((users) => {
+        this.users = users;
+    });
+}
+----
+
+La logique du composant est maintenant opérationnel mais en l'état il ne peut pas fonctionner. Il faut le décorer 
