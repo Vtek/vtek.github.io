@@ -319,3 +319,89 @@ export class UserComponent {
     }
 }
 ----
+
+
+== Bootstrapping
+
+Depuis le début de l'article il y a eu pas mal de code, mais vous n'avez rien vu tourner. Il est donc temps de passer aux montages des différents élement pour avoir un peu de visuel. Dans cette partie je vais vous parler de certains élément qui ne sont pas du tout finalisé dans Angular2. Je vais donc aller à l'essentiel, sans trop insister !
+
+Pour afficher la liste des utilisateurs, je vous propose d'afficher un lien dans un Composant parent afin de manipuler le router. Pour commencer, ajoutez les fichier app.html, app.ts, boostrap.ts et route.config.ts à la racine du répertoire :
+
+----
+public/javascripts/app
+----
+
+Pour commencer ajoutez le code suivant dans le fichier route.config.ts :
+
+[source,javascript]
+----
+import {UserComponent} from './components/user.component';
+
+export var Routes = {
+    userList : {
+        path: '/userList',
+        as: 'UserList',
+        component: UserComponent
+    }
+};
+
+export const APP_ROUTES = Object.keys(Routes).map(r => Routes[r]);
+----
+
+Le router va être réecrit prochainement donc inutile de s'attarder trop sur ce code. Il permet de définir un composant sur le path /userList qui a pour alias le nom UserList. Il est ensuite l'utiliser dans le template app.html :
+
+[source,javascript]
+----
+<a [router-link]="['/' + routes.userList.as]">List all users</a>
+<router-outlet></router-outlet>
+----
+
+Ici router-outlet joue le rôle de contenair pour le composant qui va être chargé au clique sur le lien. Le composant app.ts joue uniquement le rôle de parent. Dans la class App les actions qui sont faites permettent de monter la mécanique du router :
+
+[source,javascript]
+----
+/// <reference path='../../../typings/tsd.d.ts' />
+
+import {Component, View} from 'angular2/angular2';
+import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
+import {Routes, APP_ROUTES} from './route.config';
+
+@Component({
+    selector: 'app'
+})
+@View({
+    templateUrl: 'javascripts/app/app.html',
+    directives: [ROUTER_DIRECTIVES]
+})
+@RouteConfig(APP_ROUTES)
+export class App {
+    public routes = Routes;
+}
+----
+
+[source,javascript]
+----
+Pour finir l'exemple, il faut démarrer l'ensemble de l'application avec le fichier boostrap. Ajoutez y le code suivant :
+
+import {bootstrap} from 'angular2/angular2';
+import {ROUTER_PROVIDERS} from 'angular2/router';
+import {App} from './app';
+import {HTTP_PROVIDERS} from 'angular2/http';
+
+bootstrap(App, [HTTP_PROVIDERS, ROUTER_PROVIDERS]);
+----
+
+Une fois ces quatres fichiers alimenté, le code source est complet. Il ne reste plus qu'à compiler le code en tapant dans votre terminal la commande :
+
+----
+$ tsc
+----
+
+Pour finir, démarrez le service rest avec npm :
+
+----
+$ npm start
+----
+
+L'application est disponible via l'url : http://localhost:3000.
+En cliquant sur le lien _List all users_ vous devriez à présent voir la liste des utilisateurs renvoyée par l'Api Rest.
