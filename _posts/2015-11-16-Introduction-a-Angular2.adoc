@@ -15,21 +15,21 @@ https://github.com/Vtek/BlogIntroductionAngular2
 
 L'Api tourne avec *node.js* (vous trouverez le runtime https://nodejs.org[ici]), et nécessite la CLI *TypeScript*. Il faut l'installer globalement via npm :
 
-[source,TypeScript]
+[source,javascript]
 ----
 $ npm install -g typescript
 ----
 
 TypeScript utilise des fichiers de définitions. Pour les gérer éfficacement j'utilise la CLI *tsd* :
 
-[source,TypeScript]
+[source,javascript]
 ----
 $ npm install -g tsd
 ----
 
 Pour compiler les fichiers TypeScript, mettez vous à la racine du projet et tapez les trois commandes suivantes :
 
-[source,TypeScript]
+[source,javascript]
 ----
 $ npm install
 $ tsd install
@@ -38,14 +38,14 @@ $ tsc
 
 Si tout va bien l'API démarre via la commande :
 
-[source,TypeScript]
+[source,javascript]
 ----
 $ npm start
 ----
 
 Le serveur écoute sur le port 3000 et si vous attaquez l'url http://localhost:3000/user, vous devriez obtenir le *JSON* suivant en réponse :
 
-[source,TypeScript]
+[source,javascript]
 ----
 [
     {"firstName":"Sylvain","lastName":"PONTOREAU"},
@@ -59,14 +59,14 @@ Le serveur écoute sur le port 3000 et si vous attaquez l'url http://localhost:3
 
 Si vous avez déjà fait de l'Angular, vous connaissez très certainement les _services_. C'est une des notions qui a été conservée dans la version 2 et nous allons en utiliser un pour consommer notre Rest API. Pour commencer, ajoutez un répertoire _services_ dans :
 
-[source,TypeScript]
+[source,javascript]
 ----
 public/javascripts/app
 ----
 
 et ajoutez y un fichier _user.ts_ et un _user.service.ts_. Le fichier user.ts contient le code suivant :
 
-[source,TypeScript]
+[source,javascript]
 ----
 export class User{
     firstName: string;
@@ -77,7 +77,7 @@ export class User{
 Cette classe définit un objet de données correspondant au JSON qui est renvoyé par l'API. Le fichier _user.service.ts_ aura pour structure :
 
 
-[source,TypeScript]
+[source,javascript]
 ----
 export class UserService {
 
@@ -93,7 +93,7 @@ export class UserService {
 
 La méthode _getUser()_ permettra d'obtenir les données. Pour consommer l'API Rest il existe le module *Http*. Celui-ci vous permet d'attaquer les services web via les principaux verbes Http (*Get*, *Post*, *Put*, *Delete*...). Pour l'utiliser il faut au préalable en connaitre la définition. De plus, il faut que le service puisse utiliser la classe _User_. Dans le code source, avant l'export de la classe _UserService_ il faut donc ajouter les imports :
 
-[source,TypeScript]
+[source,javascript]
 ----
 import {Http} from 'angular2/http';
 import {User} from './user';
@@ -101,14 +101,14 @@ import {User} from './user';
 
 Pour manipuler l'objet _Http_, ajoutez un attribut de classe au-dessus du constructeur :
 
-[source,TypeScript]
+[source,javascript]
 ----
 private _http: Http;
 ----
 
 Dans _getUsers()_ il est maintenant possible d'utiliser la référence pour faire l'appel à l'API :
 
-[source,TypeScript]
+[source,javascript]
 ----
 return this._http
            .get('http://localhost:3000/user')
@@ -132,14 +132,14 @@ NOTE: Les annotations sont des méta-données qui servent à décorer une classe
 
 Commencez par importer les annotations dédiés à l'injection :
 
-[source,TypeScript]
+[source,javascript]
 ----
 import {Injectable, Inject} from 'angular2/angular2';
 ----
 
 L'annotation _Injectable_ va permettre de décorer la classe pour qu'elle puisse être injectée, _Inject_ quant à lui permet de préciser l'injection direct d'une dépendance. Les annotations doivent être préfixées par un *@* et précédées l'élément décoré. Pour rendre la classe injectable il faut donc écrire :
 
-[source,TypeScript]
+[source,javascript]
 ----
 @Injectable()
 export class UserService {
@@ -149,7 +149,7 @@ export class UserService {
 
 Et pour injecter une instance d'_Http_, il faut le faire via le constructeur de la classe en décorant le paramètre d'entrée :
 
-[source,TypeScript]
+[source,javascript]
 ----
 constructor(@Inject(Http) http: Http){
 	this._http = http;
@@ -158,7 +158,7 @@ constructor(@Inject(Http) http: Http){
 
 A ce stade le service utilisateur est terminé. Si vous avez bien suivi toutes les étapes vous devriez avoir le code suivant :
 
-[source,TypeScript]
+[source,javascript]
 ----
 /// <reference path='../../../../typings/tsd.d.ts' />
 
@@ -190,7 +190,7 @@ Angular2 a enterré plusieurs concepts important du framework. Les deux principa
 
 Afin de rester bien organiser, ajoutez un répertoire _components_ toujours dans :
 
-[source,TypeScript]
+[source,javascript]
 ----
 public/javascripts/app
 ----
@@ -211,7 +211,7 @@ et ajoutez y un fichier _user.component.ts_ et un _user.component.html_. Le fich
 
 Pour le composant aura pour structure le code suivant :
 
-[source,TypeScript]
+[source,javascript]
 ----
 export class UserComponent {
     
@@ -227,7 +227,7 @@ export class UserComponent {
 
 Afin que le template puisse fonctionner il faut que le composant dispose d'un attribut _public users_ de type _User[]_ (Le template itère une collection). De plus, le service devra être utilisé pour obtenir les données. Avant l'export de la classe il faut donc importer le type _User_ et _UserService_ :
 
-[source,TypeScript]
+[source,javascript]
 ----
 import {User} from '../services/user';
 import {UserService} from '../services/user.service';
@@ -235,7 +235,7 @@ import {UserService} from '../services/user.service';
 
 Ensuite, ajoutez avant le constructeur l'attribut public correspondant au tableau d'utilisateur et celui privée pour utiliser le service utilisateur :
 
-[source,TypeScript]
+[source,javascript]
 ----
 public users: User[];
 private _userService: UserService;
@@ -243,7 +243,7 @@ private _userService: UserService;
 
 Dans _getUser()_ il est nécessaire de faire un appel au service pour obtenir les données. Pour cela il faut souscrire au résultat de l'appel et assigner la valeur de retour à l'attribut _users_ :
 
-[source,TypeScript]
+[source,javascript]
 ----
 getUsers(){
     this._userService.getUsers().subscribe((users) => {
@@ -258,14 +258,14 @@ NOTE: Les directives n'ont pas disparu dans Angular2 et elle permettent toujours
 
 Avant d'ajouter les deux annotations sur la classe il faut les importer :
 
-[source,TypeScript]
+[source,javascript]
 ----
 import {Component, View, NgFor} from 'angular2/angular2';
 ----
 
 Vous avez dû remarquer qu'un import est fait aussi pour _NgFor_. En effet, une boucle est utilisée dans le template et il est nécessaire d'inclure la référence de la directive pour que cela fonctionne. Il faut ensuite préciser dans l'annotation le template et l'ensemble des directives utilisées par celui-ci :
 
-[source,TypeScript]
+[source,javascript]
 ----
 @View({
     templateUrl: 'javascripts/app/components/user.component.html',
@@ -275,7 +275,7 @@ Vous avez dû remarquer qu'un import est fait aussi pour _NgFor_. En effet, une 
 
 Pour l'annotation _Component_, il faut spécifier le selector et les dépendances :
 
-[source,TypeScript]
+[source,javascript]
 ----
 @Component({
     selector: 'users',
@@ -285,7 +285,7 @@ Pour l'annotation _Component_, il faut spécifier le selector et les dépendance
 
 Il ne manque plus que le constructeur du composant :
 
-[source,TypeScript]
+[source,javascript]
 ----
 constructor(userService: UserService){
 	this._userService = userService;
@@ -297,7 +297,7 @@ Il n'est pas nécessaire de préciser que _UserService_ est une dépendance à i
 
 Notre composant est maintenant terminée. Si vous avez suivi toutes les étapes vous devriez avoir l'ensemble du code suivant :
 
-[source,TypeScript]
+[source,javascript]
 ----
 import {Component, View, NgFor} from 'angular2/angular2';
 import {UserService} from '../services/user.service';
@@ -335,14 +335,14 @@ Depuis le début de l'article il y a eu pas mal de code, mais rien n'est encore 
 
 Pour afficher la liste des utilisateurs, je vous propose d'afficher un lien dans un composant parent afin de manipuler le *router*. Pour commencer, ajoutez les fichier _app.html_, _app.ts_, _boostrap.ts_ et _route.config.ts_ à la racine du répertoire :
 
-[source,TypeScript]
+[source,javascript]
 ----
 public/javascripts/app
 ----
 
 Le code du fichier route.config.ts est le suivant :
 
-[source,TypeScript]
+[source,javascript]
 ----
 import {UserComponent} from './components/user.component';
 
@@ -359,7 +359,7 @@ export const APP_ROUTES = Object.keys(Routes).map(r => Routes[r]);
 
 Le router va être réécrit prochainement par l'équipe d'Angular, donc inutile de s'attarder trop sur ce code car, il risque de ne plus être valide dans les prochaines versions. Grosso modo il permet de définir un composant sur le path _"/userList"_ qui a pour alias le nom _UserList_. Le router est ensuite utilisé dans le template _app.html_ :
 
-[source,TypeScript]
+[source,javascript]
 ----
 <a [router-link]="['/' + routes.userList.as]">List all users</a>
 <router-outlet></router-outlet>
@@ -367,7 +367,7 @@ Le router va être réécrit prochainement par l'équipe d'Angular, donc inutile
 
 Ici _router-outlet_ joue le rôle d'un conteneur pour le composant qui va être chargé lors du clic sur le lien. Le composant _app.ts_ joue uniquement le rôle de parent. Dans la class _App_ les actions qui sont faites permettent de monter la mécanique du router :
 
-[source,TypeScript]
+[source,javascript]
 ----
 /// <reference path='../../../typings/tsd.d.ts' />
 
@@ -390,7 +390,7 @@ export class App {
 
 Pour finir l'exemple, il faut démarrer l'ensemble de l'application avec le fichier _boostrap.ts_. Ajoutez y le code suivant :
 
-[source,TypeScript]
+[source,javascript]
 ----
 import {bootstrap} from 'angular2/angular2';
 import {ROUTER_PROVIDERS} from 'angular2/router';
@@ -402,14 +402,14 @@ bootstrap(App, [HTTP_PROVIDERS, ROUTER_PROVIDERS]);
 
 Une fois ces quatre fichiers alimentés, le code source est complet. Il ne reste plus qu'à compiler l'ensemble des fichiers TypeScript en tapant dans votre terminal la commande :
 
-[source,TypeScript]
+[source,javascript]
 ----
 $ tsc
 ----
 
 Pour finir, démarrez l'Api Rest avec npm :
 
-[source,TypeScript]
+[source,javascript]
 ----
 $ npm start
 ----
