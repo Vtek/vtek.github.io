@@ -4,7 +4,7 @@
 :hp-tags: Angular2, TypeScript
 
 
-L'annonce d'*Angular2* l'année dernière à la _ng-europe_ à fait couler beaucoup d'encre. Cette nouvelle version change complétement le framework, a tel point que l'on peut se demander si la librairie ne devrait pas s'appeller autrement. Dernièrement j'ai eu un peu de temps pour faire de la veille et ça faisait un moment que je voulais voir ce que cette version donne. Je vous propose donc un petit exemple !
+L'annonce d'*Angular2* l'année dernière à la _ng-europe_ à fait couler beaucoup d'encre. Cette nouvelle version change complètement le framework, a tel point que l'on peut se demander si la librairie ne devrait pas s'appeler autrement. Dernièrement j'ai eu un peu de temps pour faire de la veille et ça faisait un moment que je voulais voir ce que cette version donne. Je vous propose donc un petit exemple !
 
 
 == Rest API
@@ -84,7 +84,7 @@ export class UserService {
 }
 ----
 
-La méthode _getUser()_ permettera d'obtenir les données. Pour consommer l'API Rest il existe le module *Http*. Celui ci vous permez d'attaquer les services web via les principaux verbes Http (Get, Post, Put, Delete...). Pour l'utiliser il faut au préalable en connaitre la définition du module. De plus il faut que votre service puisse utiliser la classe User. Dans votre code source, avant l'export de la classe _UserService_ il faut donc ajouter les imports :
+La méthode _getUser()_ permettera d'obtenir les données. Pour consommer l'API Rest il existe le module *Http*. Celui ci vous permez d'attaquer les services web via les principaux verbes Http (Get, Post, Put, Delete...). Pour l'utiliser il faut au préalable en connaitre la définition. De plus il faut que le service puisse utiliser la classe User. Dans le code source, avant l'export de la classe _UserService_ il faut donc ajouter les imports :
 
 [source,javascript]
 ----
@@ -99,7 +99,7 @@ Pour manipuler l'objet Http, ajoutez un attribut de classe au dessus du construc
 private _http: Http;
 ----
 
-Dans getUsers() il est maintenant possible d'utiliser la référence pour faire notre appel à l'API :
+Dans getUsers() il est maintenant possible d'utiliser la référence pour faire l'appel à l'API :
 
 [source,javascript]
 ----
@@ -244,9 +244,9 @@ getUsers(){
 }
 ----
 
-La logique du composant est maintenant opérationnelle mais en l'état il ne peut pas fonctionner. Il faut le décorer avec deux annotations : @Component et @View. La première va nous permettre de définir le selector (le tag qui permet à angular d'identifier le composant à utiliser dans une vue) et les services à utiliser. La seconde apporte des informations sur le template utiliser par le composant mais aussi les directives utilisées dans le composant.
+La logique du composant est maintenant opérationnelle mais en l'état il ne peut pas fonctionner. Il faut le décorer avec deux annotations : @Component et @View. La première va nous permettre de définir le selector (le tag qui permet à angular d'identifier le composant à utiliser dans une vue) et les services à utiliser. La seconde apporte des informations sur le template et les directives à utiliser par le composant.
 
-NOTE: Les directives n'ont pas disparu dans Angular2. Elle permettent toujours de manipuler le DOM.
+NOTE: Les directives n'ont pas disparu dans Angular2 et elle permettent toujours de manipuler le DOM.
 
 Avant d'ajouter les deux annotations sur la classe il faut les importer :
 
@@ -255,7 +255,7 @@ Avant d'ajouter les deux annotations sur la classe il faut les importer :
 import {Component, View, NgFor} from 'angular2/angular2';
 ----
 
-Vous avez du remarquer qu'un import est fait aussi pour NgFor. En effet une boucle est utilisée dans le template et il est néssecaire d'inclure la référence de la directive pour que cela fonctionne. Il est donc nécessaire de préciser le template mais aussi l'ensemble des directives utilisées dans le template :
+Vous avez du remarquer qu'un import est fait aussi pour NgFor. En effet, une boucle est utilisée dans le template et il est néssecaire d'inclure la référence de la directive pour que cela fonctionne. Il faut ensuite préciser dans l'annotation le template et l'ensemble des directives utilisées par celui-ci :
 
 [source,javascript]
 ----
@@ -265,7 +265,7 @@ Vous avez du remarquer qu'un import est fait aussi pour NgFor. En effet une bouc
 })
 ----
 
-Pour l'annotation @Component, il faut préciser le selector et les dépendances :
+Pour l'annotation @Component, il faut spécifier le selector et les dépendances :
 
 [source,javascript]
 ----
@@ -275,7 +275,7 @@ Pour l'annotation @Component, il faut préciser le selector et les dépendances 
 })
 ----
 
-Il ne manque plus que le constructeur du composant, le voici :
+Il ne manque plus que le constructeur du composant :
 
 [source,javascript]
 ----
@@ -286,7 +286,9 @@ constructor(userService: UserService)
 }
 ----
 
-Notre composant est terminée, si vous avez suivi toutes les étapes vous devriez avoir l'ensemble du code suivant :
+Il n'est pas nécessaire de préciser que UserService est une dépendance à injecter, Angular2 est capable de le faire automatiquement dans notre cas. La dépendance est explicitement décrit dans l'annotation Component et le service est décoré par @Injectable.
+
+Notre composant est maitnenant terminée. Si vous avez suivi toutes les étapes vous devriez avoir l'ensemble du code suivant :
 
 [source,javascript]
 ----
@@ -304,11 +306,11 @@ import {User} from '../services/user';
 })
 export class UserComponent {
     public users: User[];
-	private _userService: UserService;
+    private _userService: UserService;
 
     constructor(userService: UserService)
     {
-		this._userService = userService;
+    	this._userService = userService;
         this.users = this.getUsers();
     }
 
@@ -323,7 +325,7 @@ export class UserComponent {
 
 == Bootstrapping
 
-Depuis le début de l'article il y a eu pas mal de code, mais vous n'avez rien vu tourner. Il est donc temps de passer aux montages des différents élement pour avoir un peu de visuel. Dans cette partie je vais vous parler de certains élément qui ne sont pas du tout finalisé dans Angular2. Je vais donc aller à l'essentiel, sans trop insister !
+Depuis le début de l'article il y a eu pas mal de code, mais rien n'est encore exectuable. Il est donc temps de passer aux montages des différents élement pour avoir un peu de visuel. Dans cette partie je vais vous parler de certains élément qui ne sont pas du tout finalisé dans Angular2. Je vais donc aller à l'essentiel, sans trop insister !
 
 Pour afficher la liste des utilisateurs, je vous propose d'afficher un lien dans un Composant parent afin de manipuler le router. Pour commencer, ajoutez les fichier app.html, app.ts, boostrap.ts et route.config.ts à la racine du répertoire :
 
@@ -331,7 +333,7 @@ Pour afficher la liste des utilisateurs, je vous propose d'afficher un lien dans
 public/javascripts/app
 ----
 
-Pour commencer ajoutez le code suivant dans le fichier route.config.ts :
+Le code du fichier route.config.ts est le suivant :
 
 [source,javascript]
 ----
@@ -348,7 +350,7 @@ export var Routes = {
 export const APP_ROUTES = Object.keys(Routes).map(r => Routes[r]);
 ----
 
-Le router va être réecrit prochainement donc inutile de s'attarder trop sur ce code. Il permet de définir un composant sur le path /userList qui a pour alias le nom UserList. Il est ensuite l'utiliser dans le template app.html :
+Le router va être réecrit prochainement par l'équipe d'Angular, donc inutile de s'attarder trop sur ce code car il risque de ne plus être valide dans les prochaines versions. Grosso modo il permet de définir un composant sur le path /userList qui a pour alias le nom UserList. Le router est ensuite utiliser dans le template app.html :
 
 [source,javascript]
 ----
@@ -356,7 +358,7 @@ Le router va être réecrit prochainement donc inutile de s'attarder trop sur ce
 <router-outlet></router-outlet>
 ----
 
-Ici router-outlet joue le rôle de contenair pour le composant qui va être chargé au clique sur le lien. Le composant app.ts joue uniquement le rôle de parent. Dans la class App les actions qui sont faites permettent de monter la mécanique du router :
+Ici router-outlet joue le rôle d'un contenaire pour le composant qui va être chargé au clique sur le lien. Le composant app.ts joue uniquement le rôle de parent. Dans la class App les actions qui sont faites permettent de monter la mécanique du router :
 
 [source,javascript]
 ----
@@ -379,10 +381,10 @@ export class App {
 }
 ----
 
-[source,javascript]
-----
 Pour finir l'exemple, il faut démarrer l'ensemble de l'application avec le fichier boostrap. Ajoutez y le code suivant :
 
+[source,javascript]
+----
 import {bootstrap} from 'angular2/angular2';
 import {ROUTER_PROVIDERS} from 'angular2/router';
 import {App} from './app';
@@ -391,7 +393,7 @@ import {HTTP_PROVIDERS} from 'angular2/http';
 bootstrap(App, [HTTP_PROVIDERS, ROUTER_PROVIDERS]);
 ----
 
-Une fois ces quatres fichiers alimenté, le code source est complet. Il ne reste plus qu'à compiler le code en tapant dans votre terminal la commande :
+Une fois ces quatres fichiers alimenté, le code source est complet. Il ne reste plus qu'à compiler l'ensemble des fichiers TypeScript en tapant dans votre terminal la commande :
 
 ----
 $ tsc
@@ -407,8 +409,10 @@ L'application est disponible via l'url : http://localhost:3000.
 En cliquant sur le lien _List all users_ vous devriez à présent voir la liste des utilisateurs renvoyée par l'Api Rest :)
 
 
+NOTE: Pour les plus curieux d'entre vous qui se demande comment les fichiers javascript sont chargés, je vous conseil de jeter un coup d'oeil à l'index.html contenu dans le répertorie Views. Comme vous allez le voir c'est system.js qui est utiliser pour charger et démarrer l'ensemble de l'application. J'ai volontairement écarté cette partie du code dans l'article pour me concentrer uniquement sur Angular2.
+
 == Conclusion
 
-Dans cette exemple j'ai voulu vous présenter deux fondements d'Angular2 : les services et les composants. Ces deux éléments representent les bases de la prochaine version et sont maintenant assez mature pour qu'on puisse les essayer. Il y a fort à parier que dans les prochaines semaine la structure de la librairie change encore. Il ne faut pas se voiler la face, c'est une alpha et elle est très loin d'être prête pour de la production.
+Dans cette exemple j'ai voulu vous présenter deux fondements d'Angular2 : les Services et les Composants. Ces deux éléments representent les bases de la prochaine version et sont maintenant assez mature pour qu'on puisse les essayer. Il y a fort à parier que dans les prochaines semaine la structure de la librairie change encore. Il ne faut pas se voiler la face, c'est une alpha et elle est très loin d'être prête pour de la production.
 
 Quoi qu'il en soit l'état actuel du code est suffisant pour se faire un avis. Il est clair qu'Angular2 a changé en profondeur et à renier certains de ses concepts clés. A titre personnel je trouve cette version très intéressante car elle est mieux structuré à mon goût et ne mélange plus certains concept qui cohabitait très moyennement ensemble. Maintenant il y a un point qui restera obscure encore quelques mois : Est ce que la communauté va suivre ? Le succés de la premier version est venu du fait que le nombre de développeur utilisant Angular a grossit exponentiellement après la sortie du framework. Angular2 connaitra-t-il le même engoument ? Je penses qu'il faudra attendre sa sortie en Release pour le savoir !
