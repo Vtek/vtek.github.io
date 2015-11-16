@@ -23,7 +23,7 @@
     <meta property="og:url" content="http://sylvain.pontoreau.com/2015/11/16/Introduction-a-Angular2.html" />
     <meta property="og:image" content="http://sylvain.pontoreau.com/images/introduction-a-angular2.png" />
     <meta property="article:published_time" content="2015-11-15T23:00:00.000Z" />
-    <meta property="article:modified_time" content="2015-11-16T21:11:21.893Z" />
+    <meta property="article:modified_time" content="2015-11-16T21:13:50.960Z" />
     <meta property="article:tag" content="Angular2" />
     <meta property="article:tag" content="TypeScript" />
     
@@ -48,7 +48,7 @@
     "headline": "Introduction à Angular2",
     "url": "http://sylvain.pontoreau.com/2015/11/16/Introduction-a-Angular2.html",
     "datePublished": "2015-11-15T23:00:00.000Z",
-    "dateModified": "2015-11-16T21:11:21.893Z",
+    "dateModified": "2015-11-16T21:13:50.960Z",
     "image": "http://sylvain.pontoreau.com/images/introduction-a-angular2.png",
     "keywords": "Angular2,  TypeScript",
     "description": "L&amp;#8217;annonce d&#x27;Angular2 l&amp;#8217;année dernière à la ng-europe à fait couler beaucoup d&amp;#8217;encre. Cette nouvelle version change complètement le framework, a tel point que l&amp;#8217;on peut se demander si la librairie ne devrait..."
@@ -104,7 +104,7 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">$ npm install -g typescript</code></pre>
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">$ npm install -g typescript</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -112,7 +112,7 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">$ npm install -g tsd</code></pre>
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">$ npm install -g tsd</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -120,7 +120,7 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">$ npm install
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">$ npm install
 $ tsd install
 $ tsc</code></pre>
 </div>
@@ -130,7 +130,7 @@ $ tsc</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">$ npm start</code></pre>
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">$ npm start</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -138,7 +138,7 @@ $ tsc</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">[
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">[
     {"firstName":"Sylvain","lastName":"PONTOREAU"},
     {"firstName":"Guillaume","lastName":"SPERA"},
     {"firstName":"Aroua","lastName":"TOUKABRI"},
@@ -156,7 +156,7 @@ $ tsc</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">public/javascripts/app</code></pre>
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">public/javascripts/app</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -164,7 +164,7 @@ $ tsc</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">export class User{
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">export class User{
     firstName: string;
     lastName: string;
 }</code></pre>
@@ -175,7 +175,7 @@ $ tsc</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">export class UserService {
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">export class UserService {
 
     constructor(){
 
@@ -192,7 +192,7 @@ $ tsc</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import {Http} from 'angular2/http';
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">import {Http} from 'angular2/http';
 import {User} from './user';</code></pre>
 </div>
 </div>
@@ -201,7 +201,7 @@ import {User} from './user';</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">private _http: Http;</code></pre>
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">private _http: Http;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -209,7 +209,7 @@ import {User} from './user';</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">return this._http
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">return this._http
            .get('http://localhost:3000/user')
            .map((res) =&gt; { return &lt;User[]&gt;res.json(); });</code></pre>
 </div>
@@ -265,7 +265,7 @@ Les annotations sont des méta-données qui servent à décorer une classe, un p
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import {Injectable, Inject} from 'angular2/angular2';</code></pre>
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">import {Injectable, Inject} from 'angular2/angular2';</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -273,7 +273,7 @@ Les annotations sont des méta-données qui servent à décorer une classe, un p
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">@Injectable()
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">@Injectable()
 export class UserService {
 	...
 }</code></pre>
@@ -284,7 +284,7 @@ export class UserService {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">constructor(@Inject(Http) http: Http){
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">constructor(@Inject(Http) http: Http){
 	this._http = http;
 }</code></pre>
 </div>
@@ -294,7 +294,7 @@ export class UserService {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">/// &lt;reference path='../../../../typings/tsd.d.ts' /&gt;
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">/// &lt;reference path='../../../../typings/tsd.d.ts' /&gt;
 
 import {User} from './user';
 import {Http} from 'angular2/http';
@@ -342,7 +342,7 @@ Vous avez surement fait attention à la ligne en commentaire tout en haut du cod
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">public/javascripts/app</code></pre>
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">public/javascripts/app</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -365,7 +365,7 @@ Vous avez surement fait attention à la ligne en commentaire tout en haut du cod
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">export class UserComponent {
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">export class UserComponent {
 
     constructor(){
 
@@ -382,7 +382,7 @@ Vous avez surement fait attention à la ligne en commentaire tout en haut du cod
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import {User} from '../services/user';
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">import {User} from '../services/user';
 import {UserService} from '../services/user.service';</code></pre>
 </div>
 </div>
@@ -391,7 +391,7 @@ import {UserService} from '../services/user.service';</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">public users: User[];
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">public users: User[];
 private _userService: UserService;</code></pre>
 </div>
 </div>
@@ -400,7 +400,7 @@ private _userService: UserService;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">getUsers(){
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">getUsers(){
     this._userService.getUsers().subscribe((users) =&gt; {
         this.users = users;
     });
@@ -427,7 +427,7 @@ Les directives n&#8217;ont pas disparu dans Angular2 et elle permettent toujours
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import {Component, View, NgFor} from 'angular2/angular2';</code></pre>
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">import {Component, View, NgFor} from 'angular2/angular2';</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -435,7 +435,7 @@ Les directives n&#8217;ont pas disparu dans Angular2 et elle permettent toujours
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">@View({
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">@View({
     templateUrl: 'javascripts/app/components/user.component.html',
     directives: [NgFor]
 })</code></pre>
@@ -446,7 +446,7 @@ Les directives n&#8217;ont pas disparu dans Angular2 et elle permettent toujours
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">@Component({
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">@Component({
     selector: 'users',
     providers:[UserService]
 })</code></pre>
@@ -457,7 +457,7 @@ Les directives n&#8217;ont pas disparu dans Angular2 et elle permettent toujours
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">constructor(userService: UserService){
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">constructor(userService: UserService){
 	this._userService = userService;
 	this.users = this.getUsers();
 }</code></pre>
@@ -471,7 +471,7 @@ Les directives n&#8217;ont pas disparu dans Angular2 et elle permettent toujours
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import {Component, View, NgFor} from 'angular2/angular2';
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">import {Component, View, NgFor} from 'angular2/angular2';
 import {UserService} from '../services/user.service';
 import {User} from '../services/user';
 
@@ -513,7 +513,7 @@ export class UserComponent {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">public/javascripts/app</code></pre>
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">public/javascripts/app</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -521,7 +521,7 @@ export class UserComponent {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import {UserComponent} from './components/user.component';
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">import {UserComponent} from './components/user.component';
 
 export var Routes = {
     userList : {
@@ -539,7 +539,7 @@ export const APP_ROUTES = Object.keys(Routes).map(r =&gt; Routes[r]);</code></pr
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">&lt;a [router-link]="['/' + routes.userList.as]"&gt;List all users&lt;/a&gt;
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">&lt;a [router-link]="['/' + routes.userList.as]"&gt;List all users&lt;/a&gt;
 &lt;router-outlet&gt;&lt;/router-outlet&gt;</code></pre>
 </div>
 </div>
@@ -548,7 +548,7 @@ export const APP_ROUTES = Object.keys(Routes).map(r =&gt; Routes[r]);</code></pr
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">/// &lt;reference path='../../../typings/tsd.d.ts' /&gt;
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">/// &lt;reference path='../../../typings/tsd.d.ts' /&gt;
 
 import {Component, View} from 'angular2/angular2';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
@@ -572,7 +572,7 @@ export class App {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import {bootstrap} from 'angular2/angular2';
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">import {bootstrap} from 'angular2/angular2';
 import {ROUTER_PROVIDERS} from 'angular2/router';
 import {App} from './app';
 import {HTTP_PROVIDERS} from 'angular2/http';
@@ -585,7 +585,7 @@ bootstrap(App, [HTTP_PROVIDERS, ROUTER_PROVIDERS]);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">$ tsc</code></pre>
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">$ tsc</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -593,7 +593,7 @@ bootstrap(App, [HTTP_PROVIDERS, ROUTER_PROVIDERS]);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">$ npm start</code></pre>
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">$ npm start</code></pre>
 </div>
 </div>
 <div class="paragraph">
