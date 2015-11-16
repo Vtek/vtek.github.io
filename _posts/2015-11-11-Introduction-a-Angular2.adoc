@@ -274,3 +274,48 @@ Pour l'annotation @Component, il faut préciser le selector et les dépendances 
     providers:[UserService]
 })
 ----
+
+Il ne manque plus que le constructeur du composant, le voici :
+
+[source,javascript]
+----
+constructor(userService: UserService)
+{
+	this._userService = userService;
+	this.users = this.getUsers();
+}
+----
+
+Notre composant est terminée, si vous avez suivi toutes les étapes vous devriez avoir l'ensemble du code suivant :
+
+[source,javascript]
+----
+import {Component, View, NgFor} from 'angular2/angular2';
+import {UserService} from '../services/user.service';
+import {User} from '../services/user';
+
+@Component({
+    selector: 'users',
+    providers:[UserService]
+})
+@View({
+    templateUrl: 'javascripts/app/components/user.component.html',
+    directives: [NgFor]
+})
+export class UserComponent {
+    public users: User[];
+	private _userService: UserService;
+
+    constructor(userService: UserService)
+    {
+		this._userService = userService;
+        this.users = this.getUsers();
+    }
+
+    getUsers(){
+        this._userService.getUsers().subscribe((users) => {
+            this.users = users;
+        });
+    }
+}
+----
