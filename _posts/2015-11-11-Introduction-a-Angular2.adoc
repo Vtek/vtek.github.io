@@ -1,4 +1,4 @@
-= Introduction à Angular2 !
+= Introduction à Angular2
 :hp-image: introduction-a-angular2.png
 
 :hp-tags: Angular2, TypeScript
