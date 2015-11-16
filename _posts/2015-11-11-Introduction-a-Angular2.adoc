@@ -53,7 +53,7 @@ Le serveur écoute sur le port 3000 et si vous attaquez l'url http://localhost:3
 
 == Angular2 et les services
 
-Si vous avez déjà fait de l'Angular, vous connaissez très certainement les _services_. C'est une des notions qui a été conservé dans la version 2 et nous allons en utiliser un pour consommer notre Rest API. Pour commencer, ajoutez un répertoire services dans :
+Si vous avez déjà fait de l'Angular, vous connaissez très certainement les _services_. C'est une des notions qui a été conservée dans la version 2 et nous allons en utiliser un pour consommer notre Rest API. Pour commencer, ajoutez un répertoire _services_ dans :
 ----
 public/javascripts/app
 ----
@@ -67,7 +67,7 @@ export class User{
 }
 ----
 
-Cette classe définit un object de données correspondant au JSON qui est renvoyé par l'API. Le fichier _user.service.ts_ aura pour structure :
+Cette classe définit un objet de données correspondant au JSON qui est renvoyé par l'API. Le fichier _user.service.ts_ aura pour structure :
 
 
 [source,javascript]
@@ -84,7 +84,7 @@ export class UserService {
 }
 ----
 
-La méthode _getUser()_ permettera d'obtenir les données. Pour consommer l'API Rest il existe le module *Http*. Celui ci vous permez d'attaquer les services web via les principaux verbes Http (Get, Post, Put, Delete...). Pour l'utiliser il faut au préalable en connaitre la définition. De plus il faut que le service puisse utiliser la classe User. Dans le code source, avant l'export de la classe _UserService_ il faut donc ajouter les imports :
+La méthode _getUser()_ permettra d'obtenir les données. Pour consommer l'API Rest il existe le module *Http*. Celui-ci vous permet d'attaquer les services web via les principaux verbes Http (*Get*, *Post*, *Put*, *Delete*...). Pour l'utiliser il faut au préalable en connaitre la définition. De plus, il faut que le service puisse utiliser la classe _User_. Dans le code source, avant l'export de la classe _UserService_ il faut donc ajouter les imports :
 
 [source,javascript]
 ----
@@ -92,14 +92,14 @@ import {Http} from 'angular2/http';
 import {User} from './user';
 ----
 
-Pour manipuler l'objet Http, ajoutez un attribut de classe au dessus du constructeur :
+Pour manipuler l'objet _Http_, ajoutez un attribut de classe au-dessus du constructeur :
 
 [source,javascript]
 ----
 private _http: Http;
 ----
 
-Dans getUsers() il est maintenant possible d'utiliser la référence pour faire l'appel à l'API :
+Dans _getUsers()_ il est maintenant possible d'utiliser la référence pour faire l'appel à l'API :
 
 [source,javascript]
 ----
@@ -108,16 +108,16 @@ return this._http
            .map((res) => { return <User[]>res.json(); });
 ----
 
-La méthode get est utilisé pour faire un appel Http Get sur l'url http://localhost:3000/user. C'est un code fluent (https://fr.wikipedia.org/wiki/D%C3%A9signation_cha%C3%AEn%C3%A9e[Désignation chaînée]), il faut donc chainer sur la méthode map() qui va s'occuper de transcrire le JSON en objet de type User. Pour le faire on utilise une fonction fléchée (https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Fonctions/Fonctions_fl%C3%A9ch%C3%A9es[Arrow function]) qui renvoie le résultat de la convertion.
+La méthode _get_ est utilisé pour faire un appel Http Get sur l'url http://localhost:3000/user. C'est un code fluent (https://fr.wikipedia.org/wiki/D%C3%A9signation_cha%C3%AEn%C3%A9e[Désignation chaînée]), il faut donc chainer sur la méthode _map()_ qui va s'occuper de transcrire le JSON en objet de type _User_. Pour le faire on utilise une fonction fléchée (https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Fonctions/Fonctions_fl%C3%A9ch%C3%A9es[Arrow function]) qui renvoie le résultat de la conversion.
 
-NOTE: Les fonctions fléchées sont normalisées dans *ES6*. Elles sont utilisées depuis longtemps en programmation et on les retrouvent souvent sous le nom d'*Expression Lambda*. Cette dénomination vient du travail d'_Alonzo Church_ qui est l'inventeur de ce concept (https://fr.wikipedia.org/wiki/Lambda-calcul[λ-calcul]). Il est possible de les utiliser dans beaucoup de langages, notamment *C#*, *Lisp*, *Python* et même *C++* depuis la version 11 !
+NOTE: Les fonctions fléchées sont normalisées dans *ES6*. Elles sont utilisées depuis longtemps en programmation et on les retrouve souvent sous le nom d'*Expression Lambda*. Cette dénomination vient du travail d'_Alonzo Church_ qui est l'inventeur de ce concept (https://fr.wikipedia.org/wiki/Lambda-calcul[λ-calcul]). Il est possible de les utiliser dans beaucoup de langages, notamment *C#*, *Lisp*, *Python* et même *C++* depuis la version 11 !
 
-Notre service est quasiment finit, mais il manque une partie importante du code : l'instantiation de la classe Http. Pour le faire on va se dispenser du mot clé new car Angular utilise depuis toujours un concept fort et structurant : l'injection de dépendances. Je ne vais pas trop insister sur l'injection, cela mériterais un article entier sur le sujet (j'aborderais surement le sujet dans un billet, en attendant si vous êtes intéresser voir trouverez des infomations https://en.wikipedia.org/wiki/Dependency_injection[ici], https://en.wikipedia.org/wiki/Dependency_inversion_principle[ici] ou encore https://en.wikipedia.org/wiki/Inversion_of_control[ici])
+Notre service est quasiment finit, mais il manque une partie importante du code : l'instantiation de la classe _Http_. Pour le faire on va se dispenser du mot clé *new* car Angular utilise depuis toujours un concept fort et structurant : l'injection de dépendances. Je ne vais pas trop insister sur l'injection, cela mériterait un article entier sur le sujet (j'aborderais surement le sujet dans un billet, en attendant si vous êtes intéressé vous trouverez des informations https://en.wikipedia.org/wiki/Dependency_injection[ici], https://en.wikipedia.org/wiki/Dependency_inversion_principle[ici] ou encore https://en.wikipedia.org/wiki/Inversion_of_control[ici])
 
 Deux points sont important à noter niveau dépendances sur ce service :
 
-* La classe Http est une dépendance nécessaire au bon fonctionnement du service.
-* Le service en lui même est une dépendance qu'il faudra injecter.
+* La classe _Http_ est une dépendance nécessaire au bon fonctionnement du service.
+* Le service en lui-même est une dépendance qu'il faudra injecter.
 
 Il va donc falloir utiliser des annotations pour gérer ces deux points.
 
@@ -130,8 +130,7 @@ Commencez par importer les annotations dédiés à l'injection :
 import {Injectable, Inject} from 'angular2/angular2';
 ----
 
-L'annotation Injectable va permettre de décorer la classe pour qu'elle puisse être injecter, Inject qu'à lui permet de précider l'injection direct d'une dépendance. Les annotations doivent être préfixé par un *@* et préceder l'élement décorer.
-Pour rendre la classe injectable il faut donc écrire :
+L'annotation _Injectable_ va permettre de décorer la classe pour qu'elle puisse être injectée, _Inject_ quant à lui permet de préciser l'injection direct d'une dépendance. Les annotations doivent être préfixées par un *@* et précédées l'élément décoré. Pour rendre la classe injectable il faut donc écrire :
 
 [source,javascript]
 ----
@@ -141,7 +140,7 @@ export class UserService {
 }
 ----
 
-Et pour injecter une instance d'Http, il faut le faire via le constructeur de la classe en décorant le paramètre d'entrée :
+Et pour injecter une instance d'_Http_, il faut le faire via le constructeur de la classe en décorant le paramètre d'entrée :
 
 [source,javascript]
 ----
@@ -177,12 +176,12 @@ export class UserService {
 }
 ----
 
-TIP: Vous avez surement fait attention à la ligne en commentaire tout en haut du code source. C'est la référence au fichier de définitions qui permet à votre IDE de faire l'auto-complétion en TypeScript. Ici la CLI tsd à centraliser l'ensemble des références dans un fichier tsd.d.ts. Il vous suffit ensuite d'ajouter cette référence dans n'importe quel fichier TypeScript pour accéder à l'ensemble de la complétion. C'est plutôt pratique, mais attention à ne pas mélanger l'utilisation des bibliothèques clients et serveurs dans votre code quand vous faite du node.js !
+TIP: Vous avez surement fait attention à la ligne en commentaire tout en haut du code source. C'est la référence au fichier de définitions qui permettent à votre *IDE* de faire l'auto-complétion en TypeScript. Ici la CLI tsd à centraliser l'ensemble des références dans un fichier _tsd.d.ts_. Il vous suffit ensuite d'ajouter cette référence dans n'importe quel fichier TypeScript pour accéder à l'ensemble de la complétion. C'est plutôt pratique, mais attention à ne pas mélanger l'utilisation des bibliothèques clients et serveurs dans votre code quand vous faites du node.js !
 
 == Les composants
-Angular2 a enterré plusieurs concepts important du framework. Les deux principaux pour moi sont le Scope et le Controller. Il est possible de trouver une explication logique a cette suppression. Quant on développait un controlleur Angular avec la première version il y avait une ambiguité entre les pattern https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller[MVC] et https://en.wikipedia.org/wiki/Model_View_ViewModel[MVVM]. D'un côté le controlleur traitait des actions mais d'un autre on utilisait le Scope pour faire le binding two way. Malheureusement le mélange de ces deux concepts créer pas mal de confusion et même si il est possible de les faire cohabiter, le mieux reste encore de les séparer clairement. Dans Angular2 plus d'ambiguité, nous avons à disposition les Components et on peut dire qu'il fonctionne comme des ViewModels. Certains ne seront peut-être pas d'accord avec mon analyse, mais on va dire que ce point de vue n'engage que moi ;)
+Angular2 a enterré plusieurs concepts important du framework. Les deux principaux pour moi sont le *Scope* et le *Controller*. Il est possible de trouver une explication logique à cette suppression. Quant on développait un contrôleur Angular avec la première version il y avait une ambiguïté entre les pattern https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller[MVC] et https://en.wikipedia.org/wiki/Model_View_ViewModel[MVVM]. D'un côté le contrôleur traitait des actions mais d'un autre on utilisait le Scope pour faire le *binding two way*. Malheureusement le mélange de ces deux concepts créer pas mal de confusion et même s'il est possible de les faire cohabiter, le mieux reste encore de les séparer clairement. Dans Angular2 plus d'ambiguïté, nous avons à disposition les *Components* et on peut dire qu'il fonctionne comme des ViewModels. Certains ne seront peut-être pas d'accord avec mon analyse, mais on va dire que ce point de vue n'engage que moi ;)
 
-Afin de rester bien organiser, ajoutez un répertoire components toujours dans :
+Afin de rester bien organiser, ajoutez un répertoire _components_ toujours dans :
 ----
 public/javascripts/app
 ----
@@ -216,7 +215,7 @@ export class UserComponent {
 }
 ----
 
-Afin que le template puisse fonctionner il faut que le composant dispose d'un attribut public users de type User[] (Le template itère une collection). De plus le service devra être utiliser pour obtenir les données. Avant l'export de la classe il faut donc importer le type User et UserService :
+Afin que le template puisse fonctionner il faut que le composant dispose d'un attribut _public users_ de type _User[]_ (Le template itère une collection). De plus, le service devra être utilisé pour obtenir les données. Avant l'export de la classe il faut donc importer le type _User_ et _UserService_ :
 
 [source,javascript]
 ----
@@ -224,7 +223,7 @@ import {User} from '../services/user';
 import {UserService} from '../services/user.service';
 ----
 
-Ensuite ajoutez avant le constructeur l'attibut public correspondant au tableau d'utilisateur et celui privée pour utiliser le service utilisateur :
+Ensuite, ajoutez avant le constructeur l'attribut public correspondant au tableau d'utilisateur et celui privée pour utiliser le service utilisateur :
 
 [source,javascript]
 ----
@@ -232,7 +231,7 @@ public users: User[];
 private _userService: UserService;
 ----
 
-Dans getUser() il est nécessaire de faire un appel au service pour obtenir les données. Pour cela il faut souscrire au résultat de l'appel et assigner la valeur de retour à l'attribut users :
+Dans _getUser()_ il est nécessaire de faire un appel au service pour obtenir les données. Pour cela il faut souscrire au résultat de l'appel et assigner la valeur de retour à l'attribut _users_ :
 
 [source,javascript]
 ----
@@ -243,7 +242,7 @@ getUsers(){
 }
 ----
 
-La logique du composant est maintenant opérationnelle mais en l'état il ne peut pas fonctionner. Il faut le décorer avec deux annotations : @Component et @View. La première va nous permettre de définir le selector (le tag qui permet à angular d'identifier le composant à utiliser dans une vue) et les services à utiliser. La seconde apporte des informations sur le template et les directives à utiliser par le composant.
+La logique du composant est maintenant opérationnelle, mais en l'état il ne peut pas fonctionner. Il faut le décorer avec deux annotations : _@Component_ et _@View_. La première va nous permettre de définir le *selector* (le tag qui permet à angular d'identifier le composant à utiliser dans une vue) et les services à utiliser. La seconde apporte des informations sur le template et les *directives* à utiliser par le composant.
 
 NOTE: Les directives n'ont pas disparu dans Angular2 et elle permettent toujours de manipuler le DOM.
 
@@ -254,7 +253,7 @@ Avant d'ajouter les deux annotations sur la classe il faut les importer :
 import {Component, View, NgFor} from 'angular2/angular2';
 ----
 
-Vous avez du remarquer qu'un import est fait aussi pour NgFor. En effet, une boucle est utilisée dans le template et il est néssecaire d'inclure la référence de la directive pour que cela fonctionne. Il faut ensuite préciser dans l'annotation le template et l'ensemble des directives utilisées par celui-ci :
+Vous avez dû remarquer qu'un import est fait aussi pour _NgFor_. En effet, une boucle est utilisée dans le template et il est nécessaire d'inclure la référence de la directive pour que cela fonctionne. Il faut ensuite préciser dans l'annotation le template et l'ensemble des directives utilisées par celui-ci :
 
 [source,javascript]
 ----
@@ -264,7 +263,7 @@ Vous avez du remarquer qu'un import est fait aussi pour NgFor. En effet, une bou
 })
 ----
 
-Pour l'annotation @Component, il faut spécifier le selector et les dépendances :
+Pour l'annotation _Component_, il faut spécifier le selector et les dépendances :
 
 [source,javascript]
 ----
@@ -284,9 +283,9 @@ constructor(userService: UserService){
 }
 ----
 
-Il n'est pas nécessaire de préciser que UserService est une dépendance à injecter, Angular2 est capable de le faire automatiquement dans notre cas. La dépendance est explicitement décrit dans l'annotation Component et le service est décoré par @Injectable.
+Il n'est pas nécessaire de préciser que _UserService_ est une dépendance à injecter, Angular2 est capable de le faire automatiquement dans notre cas. La dépendance est explicitement décrite dans l'annotation _Component_ et le service est décoré par _Injectable_.
 
-Notre composant est maitnenant terminée. Si vous avez suivi toutes les étapes vous devriez avoir l'ensemble du code suivant :
+Notre composant est maintenant terminée. Si vous avez suivi toutes les étapes vous devriez avoir l'ensemble du code suivant :
 
 [source,javascript]
 ----
@@ -322,9 +321,9 @@ export class UserComponent {
 
 == Bootstrapping
 
-Depuis le début de l'article il y a eu pas mal de code, mais rien n'est encore exectuable. Il est donc temps de passer aux montages des différents élement pour avoir un peu de visuel. Dans cette partie je vais vous parler de certains élément qui ne sont pas du tout finalisé dans Angular2. Je vais donc aller à l'essentiel, sans trop insister !
+Depuis le début de l'article il y a eu pas mal de code, mais rien n'est encore exéctuable. Il est donc temps de passer aux montages des différents élements pour avoir un peu de visuel. Dans cette partie je vais vous parler de certains éléments qui ne sont pas du tout finalisés dans Angular2. Je vais donc aller à l'essentiel, sans trop insister !
 
-Pour afficher la liste des utilisateurs, je vous propose d'afficher un lien dans un Composant parent afin de manipuler le router. Pour commencer, ajoutez les fichier app.html, app.ts, boostrap.ts et route.config.ts à la racine du répertoire :
+Pour afficher la liste des utilisateurs, je vous propose d'afficher un lien dans un composant parent afin de manipuler le *router*. Pour commencer, ajoutez les fichier _app.html_, _app.ts_, _boostrap.ts_ et _route.config.ts_ à la racine du répertoire :
 
 ----
 public/javascripts/app
@@ -347,7 +346,7 @@ export var Routes = {
 export const APP_ROUTES = Object.keys(Routes).map(r => Routes[r]);
 ----
 
-Le router va être réecrit prochainement par l'équipe d'Angular, donc inutile de s'attarder trop sur ce code car il risque de ne plus être valide dans les prochaines versions. Grosso modo il permet de définir un composant sur le path /userList qui a pour alias le nom UserList. Le router est ensuite utiliser dans le template app.html :
+Le router va être réécrit prochainement par l'équipe d'Angular, donc inutile de s'attarder trop sur ce code car, il risque de ne plus être valide dans les prochaines versions. Grosso modo il permet de définir un composant sur le path _"/userList"_ qui a pour alias le nom _UserList_. Le router est ensuite utilisé dans le template _app.html_ :
 
 [source,javascript]
 ----
@@ -355,7 +354,7 @@ Le router va être réecrit prochainement par l'équipe d'Angular, donc inutile 
 <router-outlet></router-outlet>
 ----
 
-Ici router-outlet joue le rôle d'un contenaire pour le composant qui va être chargé au clique sur le lien. Le composant app.ts joue uniquement le rôle de parent. Dans la class App les actions qui sont faites permettent de monter la mécanique du router :
+Ici _router-outlet_ joue le rôle d'un conteneur pour le composant qui va être chargé lors du clic sur le lien. Le composant _app.ts_ joue uniquement le rôle de parent. Dans la class _App_ les actions qui sont faites permettent de monter la mécanique du router :
 
 [source,javascript]
 ----
@@ -378,7 +377,7 @@ export class App {
 }
 ----
 
-Pour finir l'exemple, il faut démarrer l'ensemble de l'application avec le fichier boostrap. Ajoutez y le code suivant :
+Pour finir l'exemple, il faut démarrer l'ensemble de l'application avec le fichier _boostrap.ts_. Ajoutez y le code suivant :
 
 [source,javascript]
 ----
@@ -390,26 +389,26 @@ import {HTTP_PROVIDERS} from 'angular2/http';
 bootstrap(App, [HTTP_PROVIDERS, ROUTER_PROVIDERS]);
 ----
 
-Une fois ces quatres fichiers alimenté, le code source est complet. Il ne reste plus qu'à compiler l'ensemble des fichiers TypeScript en tapant dans votre terminal la commande :
+Une fois ces quatre fichiers alimentés, le code source est complet. Il ne reste plus qu'à compiler l'ensemble des fichiers TypeScript en tapant dans votre terminal la commande :
 
 ----
 $ tsc
 ----
 
-Pour finir, démarrez le service rest avec npm :
+Pour finir, démarrez l'Api Rest avec npm :
 
 ----
 $ npm start
 ----
 
 L'application est disponible via l'url : http://localhost:3000.
-En cliquant sur le lien _List all users_ vous devriez à présent voir la liste des utilisateurs renvoyée par l'Api Rest :)
+En cliquant sur le lien _List all users_ vous devriez à présent voir la liste des utilisateurs renvoyés par l'Api Rest :)
 
 
-NOTE: Pour les plus curieux d'entre vous qui se demande comment les fichiers javascript sont chargés, je vous conseil de jeter un coup d'oeil à l'index.html contenu dans le répertorie Views. Comme vous allez le voir c'est system.js qui est utiliser pour charger et démarrer l'ensemble de l'application. J'ai volontairement écarté cette partie du code dans l'article pour me concentrer uniquement sur Angular2.
+NOTE: Pour les plus curieux d'entre vous qui se demande comment les fichiers javascript sont chargés, je vous conseille de jeter un coup d'oeil à l'_index.html_ contenu dans le répertorie _Views_. Comme vous allez le voir c'est *system.js* qui est utilisé pour charger et démarrer l'ensemble de l'application. J'ai volontairement écarté cette partie du code dans l'article pour me concentrer uniquement sur Angular2.
 
 == Conclusion
 
-Dans cette exemple j'ai voulu vous présenter deux fondements d'Angular2 : les Services et les Composants. Ces deux éléments representent les bases de la prochaine version et sont maintenant assez mature pour qu'on puisse les essayer. Il y a fort à parier que dans les prochaines semaine la structure de la librairie change encore. Il ne faut pas se voiler la face, c'est une alpha et elle est très loin d'être prête pour de la production.
+Dans cet exemple j'ai voulu vous présenter deux fondements d'Angular2 : les *Services* et les *Composants*. Ces deux éléments représentent les bases de la prochaine version et elles sont maintenant assez matures pour qu'on puisse les essayer. Il y a fort à parier que dans les prochaines semaines la structure de la librairie change encore.
 
-Quoi qu'il en soit l'état actuel du code est suffisant pour se faire un avis. Il est clair qu'Angular2 a changé en profondeur et à renier certains de ses concepts clés. A titre personnel je trouve cette version très intéressante car elle est mieux structuré à mon goût et ne mélange plus certains concept qui cohabitait très moyennement ensemble. Maintenant il y a un point qui restera obscure encore quelques mois : Est ce que la communauté va suivre ? Le succés de la premier version est venu du nombre conséquent de développeurs utilisant Angular. La seconde version connaitra-t-elle le même engoument ? Il faudra attendre sa sortie en Release pour le savoir !
+Quoi qu'il en soit l'état actuel du code est suffisant pour ce faire un avis. Il est clair qu'Angular2 a changé en profondeur et à renier certains de ses concepts clés. A titre personnel je trouve cette version très intéressante car, elle est mieux structurée à mon goût et ne mélange plus certains concept qui cohabitait très moyennement ensemble. Maintenant il y a un point qui restera obscure encore quelques mois : Est-ce que la communauté va suivre ? Le succès de la première version est venu du nombre conséquent de développeurs utilisant Angular. La seconde version connaitra-t-elle le même engouement ? Il faudra attendre sa sortie en Release pour le savoir !
