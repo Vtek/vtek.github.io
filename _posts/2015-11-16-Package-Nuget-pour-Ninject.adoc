@@ -1,0 +1,4 @@
+= Package Nuget pour Ninject
+:hp-image: introduction-a-angular2.png
+:published_at: 2015-11-16
+:hp-tags: C#, IoC, Ninject
