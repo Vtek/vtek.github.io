@@ -27,5 +27,15 @@ Au final en utilisant l'inversion de contrôle, votre application va devenir plu
 
 NOTE: L'inversion de contrôle permet aussi de respecter un des principes majeurs de https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)[SOLID] : l'inversion des dépendances. Ce principe définit qu'il faut toujours dépendre des abstractions et non des implémentations. Les principes SOLID sont considérer par beaucoup comme les _"Best Pratices"_ de la POO. Ils permettent d'avoir un développement éfficace et fiable.
 
+Parmis les manières les plus courrante de mettre en place l'IoC, il existe :
 
-== Mise en place
+* Le pattern https://en.wikipedia.org/wiki/Factory_(object-oriented_programming)[Factory] qui permet de délégué la création d'instance. Une approche rudimentaire mais qui a le mérite d'être simple dans sa mise en place.
+* Le pattern https://en.wikipedia.org/wiki/Service_locator_pattern[Service Locator] qui via l'utilisation d'un registrer permet de retourver des implémentations correspondant à des contrats.
+* Le pattern https://en.wikipedia.org/wiki/Dependency_injection[Dependancy injection] qui permet de passer une dépendance à un object dépendant.
+
+La suite de l'article va se concentrer sur le troisième pattern, Depenceny Injection. Factory est un pattern trop simplice pour permettre de résoudre les dépendances à lui seul et Service Locator est devenu au fil du temps un anti-pattern (notamment parce qu'il crée de l'ahérence alors que c'est l'inverse que l'ont veut).
+
+
+== StructureMap à la rescousse !
+
+Il existe un bon nombre de 
