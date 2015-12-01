@@ -3,3 +3,29 @@
 :published_at: 2015-11-26
 :hp-tags: C#, IoC
 
+
+L'inversion de contrôle (aka *IoC*) est un pattron d'architecture permettant de casser les adhérenses entre les dépendances. Ce découplage permet au dépendances de haut niveau de ne plus reposer directement sur celle de bas niveau et de passer par une couche d'abstration. L'objectif est d'améliorer la modularité des applications afin de faciliter les étapes de maintenance et d'évolution.
+
+
+== Pourquoi ce pattern ?
+
+Avant de montrer la mise en place de l'inversion de contrôle il est préférable d'expliquer comment on en est arrivé là !
+
+Le problème de départ est assez simple en réalité. Si on a une application développée en couche et que l'ont fait reposer chaqu'une d'elle sur une autre de plus bas niveau, que va-t-il se passer si par la suite on veut changer, modifier, supprimer la couche la plus basse ? Le problème est là, il va falloir modifier la couche de plus haut niveau pour l'adapter en conséquence. Il est d'ailleurs fort probable que cela déclencher des modification en cascade sur toutes les couches haut niveau.
+
+Avec l'inversion de contrôle on va plutôt faire reposer chaque couche sur une abstraction afin de passer de ça :
+
+[Schéma]
+
+A ça :
+
+[Schéma]
+
+La différence est suptile mais importante. Dans le second shémas, changer les couches concrêtes de mon application n'entraine pas de problèmes de structure, tout compilera. Mieux encore, le développement de l'application peut être abstrait et n'avoir aucunes connaissances du fonctionnement bas niveau. Plus fort, je peux définir des abstractions utilisés par les couches de bas niveau qui sont implémentées en haut niveau. Un autre intéressant, les test unitaires deviennent beaucoup plus simple et pertinent car les dépendances ne rentre plus en compte dans l'étape de validation.
+
+Au final en utilisant l'inversion de contrôle, votre application va devenir plus modulaire, souple, maintenable, évolutive et testable.
+
+NOTE: L'inversion de contrôle permet aussi de respecter un des principes majeurs de https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)[SOLID] : l'inversion des dépendances. Ce principe définit qu'il faut toujours dépendre des abstractions et non des implémentations. Les principes SOLID sont considérer par beaucoup comme les _"Best Pratices"_ de la POO. Ils permettent d'avoir un développement éfficace et fiable.
+
+
+== Mise en place
