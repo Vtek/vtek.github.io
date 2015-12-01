@@ -1,7 +1,7 @@
-= Inverser le contrôle !
+= Inverser le contrôle avec StructueMap !
 :hp-image: introduction-a-angular2.png
 :published_at: 2015-11-26
-:hp-tags: C#, IoC
+:hp-tags: C#, IoC, StructureMap
 
 
 L'inversion de contrôle (aka *IoC*) est un pattron d'architecture permettant de casser les adhérenses entre les dépendances. Ce découplage permet au dépendances de haut niveau de ne plus reposer directement sur celle de bas niveau et de passer par une couche d'abstration. L'objectif est d'améliorer la modularité des applications afin de faciliter les étapes de maintenance et d'évolution.
@@ -36,6 +36,7 @@ Parmis les manières les plus courrante de mettre en place l'IoC, il existe :
 La suite de l'article va se concentrer sur le troisième pattern, Depenceny Injection. Factory est un pattern trop simplice pour permettre de résoudre les dépendances à lui seul et Service Locator est devenu au fil du temps un anti-pattern (notamment parce qu'il crée de l'ahérence alors que c'est l'inverse que l'ont veut).
 
 
-== StructureMap à la rescousse !
+== StructureMap en action !
 
-Il existe un bon nombre de 
+Il existe de nombreuse bibliothèque dédiée à l'IoC. Sincérement il n'y a pas de mauvais choix même si j'ai tendance à déconseiller celle de Microsoft (https://github.com/unitycontainer/unity[Unity]) qui est à la traine par rapport à la concurrence. Pour ma part j'ai longtemps utilisé Ninject pour son côté _"Simple & Straightforward"_, très éfficace en développement bien qu'un peu lent à l'execution il faut l'admettre. Dernièrement j'ai décidé de changer et je me suis mis sur StructureMap, un container historique (le premier en C#) qui embarque d'innombrables capacités pour un niveau de performance très correct. C'est un bon compromis entre capacité et puissance et depuis la version 3 il ont l'équipe à fait un gros travail pour se rapporcher de l'approche de Ninject. De plus il est en développement actif depuis presque 10 ans, il dispose d'une documentation riche et complète et est à l'heure ou j'écris le seul à disposer d'un support pour DNX
+
