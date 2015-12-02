@@ -218,5 +218,7 @@ configuration.For<ILogger>().Use<ConsoleLogger>().Setter<ILogger>("Logger");
 
 NOTE: Cette surcharge peut s'avérer pratique, mais attention au renommage, on a vite fait d'oublier d'aller modifier la configuration du Container !
 
+La deuxième solution pour mettre en place l'injection par propriété est de définir des conventions dans le registre des Policies du Container. Pour cela les développeurs de StructureMap on tout prévu, il existe la méthode Set
+
 == IoC best practices
 
