@@ -1,6 +1,6 @@
 = Inverser le contrôle avec StructueMap !
 :hp-image: introduction-a-angular2.png
-:published_at: 2015-11-26
+:published_at: 2015-12-02
 :hp-tags: C#, IoC, StructureMap
 
 
@@ -149,7 +149,7 @@ Console.WriteLine(loggers.Count() == 2);//print True
 
 A ce stade vous avez les bases pour résoudre des dépendances. Cependant l'utilisation actuelle du Container correspond à peu de chose prêt au pattern ServiceLocator. On aurait aussi pu faire une Factory pour gérer la création d'instance. Il est donc temps de s'intéresser à l'injection des dépendances.
 
-== Injection et cycle de vie des instances
+== Injection & Lifecycle
 
 Pour injecter les dépendances il nous faut une classse plus haut niveau qui repose sur le contrat établit dans ILogger. Pour continuer avec un cas simple prenons l'exemple d'un controlleur qui, lors de l'éxecution d'une action, trace une information via le logger. Si l'ont veut casser l'adhérence il faut passer la dépendance implémentant ILogger via le constructeur :
 
@@ -186,6 +186,35 @@ controller.Action();// print "Hello from action !"
 ----
 
 J'en vois déjà qui vont me répondre que j'ai mis un *Warning* plus haut concernant l'appel de GetInstance<T> sans utiliser une interface ! En réalité dans ce cas les choses sont différentes car Controller n'est pas une dépandance mais un dépendent. La résolution est donc conforme au principe d'inversion de dépendance. Cette manière de procéder est une des plus couramment utilisé dans le monde .Net (on l'a retrouve sous la forme de DependencyResolver dans les frameworks Microsoft).
+
+StructureMap offre aussi la possibilité d'injecter les dépendances par inspection des propriétés plutôt que par le constructeur. C'est une alternative intéressante et facile à mettre en oeuvre. Déjà cela permet de réduire le code de la classe Controller à :
+
+[source,csharp]
+----
+public class Controller
+{
+	public ILogger Logger { get; set; }
+
+	public void Action()
+	{
+		this.Logger.Information("Hello from action !");
+	}
+}
+----
+
+Pour inspecter il existe une premier solution. En déclaration la liaison entre un contrat et son implémentation dans la configuration, une méthode Setter permet de spécifier une propriété à injecter : 
+
+[source,csharp]
+----
+configuration.For<ILogger>().Use<ConsoleLogger>().Setter<ILogger>();
+----
+
+Setter<T> dispose d'une surcharge qui permet d'injecter à la condition que le nom de la propriété match avec celui passé en argument :
+
+[source,csharp]
+----
+configuration.For<ILogger>().Use<ConsoleLogger>().Setter<ILogger>();
+----
 
 == IoC best practices
 
