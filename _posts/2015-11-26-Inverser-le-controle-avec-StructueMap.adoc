@@ -46,6 +46,71 @@ Pour installer le package StructureMap il suffit d'ajouter le package Nuget via 
 Install-Package StructureMap
 ----
 
+La première classe qui va nous intéresser est Container. C'est l'élément centrale de la librairie. Elle va nous permettre de définir les dépendances à résoudres, leur façon d'être résolut et leur récupération.
+Pour définir une dépendance il nous faut un contract. Pour les besoins de l'article je vais en définir deux :
+
+[source,csharp]
+----
+public interface IController
+{
+    void Action();
+}
+----
+
+Le premier contrat est un controlleur qui réalise une action.
+
+[source,csharp]
+----
+public interface ILogger
+{
+    void Information(string message);
+}
+----
+
+Le second définit un logger qui va tracer un message d'information. Son implémentation est la suivante :
+
+[source,csharp]
+----
+public class MyLogger
+{
+    public void Information(string message)
+    {
+        Console.WriteLine(message);
+    }
+}
+----
+
+Pour résoudre cette dépendance via le container il faut la définir. La classe possède un constructeur acceptant en paramètre une action qui expose un object de configuration. Cette object permet de définir les liaisons entre contrat et implémentation à l'aide des méthodes For<T> et Use<T> :
+
+[source,csharp]
+----
+var container = new Container(configuration =>
+{
+	configuration.For<ILogger>().Use<Logger>();
+});
+----
+
+Ces deux méthodes disposent d'une surcharge qui permet de passer en paramètre des object Type. Le résultat est le même mais syntaxiquement c'est plus lourd à lire. Il lié le contrat à une implémentation il existe aussi la méthode Add<T>, ce code fonctionne donc aussi :
+
+[source,csharp]
+----
+var container = new Container(configuration =>
+{
+	configuration.For<ILogger>().Add<Logger>();
+});
+----
+
+NOTE: Il existe une différenciation très nette entre les deux méthode. Add<T> permet d'ajouter une implémentation alors que Use<T> définit l'implementation comme strictement à utiliser. En conséquence lors que vous utilisez Use<T> c'est toujours la dernière liaison à une implémentation qui l'emporte.
+
+La dépendance est à présent définit. Le code ne contient pas de logique de création des implémentations c'est donc l'instance de la class Container qui va donc les construire pour nous. Il est possible de les récupérer en appelant la méthode GetInstance<T>() :
+
+
+[source,csharp]
+----
+var logger = container.GetInstance<ILogger>();
+----
+
+WARNING: Attention, la méthode GetInstance<T> peut très bien accepter des types implémentés sans que cela ne pose de problèmes. Cependant en faisant ça il y a une rupture avec le principe SOLID d'inversion de dépendance. N'oubliez pas : Il faut dépendre des abstractions, pas des implémentations.
 
 
 
