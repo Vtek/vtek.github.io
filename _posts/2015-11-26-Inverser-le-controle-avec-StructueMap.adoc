@@ -36,7 +36,7 @@ Parmis les manières les plus courrante de mettre en place l'IoC, il existe :
 La suite de l'article va se concentrer sur le troisième pattern, Depenceny Injection. Factory est un pattern trop simplice pour permettre de résoudre les dépendances à lui seul et Service Locator est devenu au fil du temps un anti-pattern (notamment parce qu'il crée de l'ahérence alors que c'est l'inverse que l'ont veut).
 
 
-== StructureMap en action !
+== StructureMap en action : les bases !
 
 Il existe de nombreuse bibliothèque dédiée à l'IoC. Sincérement il n'y a pas de mauvais choix même si j'ai tendance à déconseiller celle de Microsoft (https://github.com/unitycontainer/unity[Unity]) qui est à la traine par rapport à la concurrence. Pour ma part j'ai longtemps utilisé Ninject pour son côté _"Simple & Straightforward"_, très éfficace en développement bien qu'un peu lent à l'execution il faut l'admettre. Dernièrement j'ai décidé de changer et je me suis mis sur StructureMap, un container historique (le premier en C#) qui embarque d'innombrables capacités pour un niveau de performance très correct. C'est un bon compromis entre capacité et puissance et depuis la version 3 il ont l'équipe à fait un gros travail pour se rapporcher de l'approche de Ninject. De plus il est en développement actif depuis presque 10 ans, il dispose d'une documentation riche et complète et est à l'heure ou j'écris le seul à disposer d'un support pour DNX.
 
@@ -47,17 +47,7 @@ Install-Package StructureMap
 ----
 
 La première classe qui va nous intéresser est Container. C'est l'élément centrale de la librairie. Elle va nous permettre de définir les dépendances à résoudres, leur façon d'être résolut et leur récupération.
-Pour définir une dépendance il nous faut un contract. Pour les besoins de l'article je vais en définir deux :
-
-[source,csharp]
-----
-public interface IController
-{
-    void Action();
-}
-----
-
-Le premier contrat est un controlleur qui réalise une action.
+Pour définir une dépendance il nous faut un contract. Pour les besoins de l'article je vais en définir un :
 
 [source,csharp]
 ----
@@ -67,11 +57,11 @@ public interface ILogger
 }
 ----
 
-Le second définit un logger qui va tracer un message d'information. Son implémentation est la suivante :
+L'interface correspond à un logger qui va tracer un message d'information. Son implémentation est la suivante :
 
 [source,csharp]
 ----
-public class MyLogger
+public class ConsoleLogger : ILogger
 {
     public void Information(string message)
     {
@@ -86,7 +76,7 @@ Pour résoudre cette dépendance via le container il faut la définir. La classe
 ----
 var container = new Container(configuration =>
 {
-	configuration.For<ILogger>().Use<Logger>();
+	configuration.For<ILogger>().Use<ConsoleLogger>();
 });
 ----
 
@@ -112,6 +102,44 @@ var logger = container.GetInstance<ILogger>();
 
 WARNING: Attention, la méthode GetInstance<T> peut très bien accepter des types implémentés sans que cela ne pose de problèmes. Cependant en faisant ça il y a une rupture avec le principe SOLID d'inversion de dépendance. N'oubliez pas : Il faut dépendre des abstractions, pas des implémentations.
 
+Si une dépendance n'est pas définit et que l'ont souhaite la résoudre, l'instance de Container léve une Exception de configuration. Il peut y avoir des cas où l'ont ne sait pas si une liaison est établie entre un contrat et une implémentation. Dans ce cas il vaut mieux utiliser la méthode TryGetInstance<T> et tester si l'instance est retournée est null, c'est plus optimisé que de traiter le cas avec un bloc try catch :
+
+[source,csharp]
+----
+var controller = container.GetInstance<IController>();
+Console.WriteLine(controller == null);//print True
+----
+
+La méthode Add<T> permettant de définir plusieurs implémentation d'un même contrat, il existe une méthode GetAllInstances<T>() qui renvoie l'ensemble des implémentations correspondante. Si on rajoute une nouvelle implémentation de ILogger :
+
+[source,csharp]
+----
+public class FileLogger : ILogger
+{
+    public void Information(string message)
+    {
+        File.WriteAllText("log.txt", message);
+    }
+}
+----
+
+Et qu'on l'ajoute les deux implémentations dans la configuration :
+
+[source,csharp]
+----
+configuration.For<ILogger>().Add<ConsoleLogger>();
+configuration.For<ILogger>().Add<FileLogger>();
+----
+
+L'appel à la méthode renverra une instance de IEnumerable<ILogger> :
+
+[source,csharp]
+----
+var loggers = container.GetAllInstances<ILogger>();
+Console.WriteLine(loggers.Count() == 2);//print True
+----
+
+A ce stade vous avez les bases pour résoudre les dépendances. Cependant l'utilisation actuelle du Container correspond à peu de chose prêt au pattern ServiceLocator. On aurait très bien pu faire une Factory pour gérer la création d'instance. Il est donc temps de s'intéresser 
 
 
 == Mise en place dans WebApi
