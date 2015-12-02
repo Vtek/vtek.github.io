@@ -53,7 +53,7 @@ Pour définir une dépendance il nous faut un contract. Pour les besoins de l'ar
 ----
 public interface ILogger
 {
-    void Information(string message);
+	void Information(string message);
 }
 ----
 
@@ -63,10 +63,10 @@ L'interface correspond à un logger qui va tracer un message d'information. Son 
 ----
 public class ConsoleLogger : ILogger
 {
-    public void Information(string message)
-    {
-        Console.WriteLine(message);
-    }
+	public void Information(string message)
+	{
+		Console.WriteLine(message);
+	}
 }
 ----
 
@@ -106,8 +106,9 @@ Si une dépendance n'est pas définit et que l'ont souhaite la résoudre, l'inst
 
 [source,csharp]
 ----
-var controller = container.GetInstance<IController>();
-Console.WriteLine(controller == null);//print True
+//Aucune implémentation de IDisposable n'est configurés actuellement
+var disposable = container.GetInstance<IDisposable>();
+Console.WriteLine(disposable == null);//print True
 ----
 
 La méthode Add<T> permettant de définir plusieurs implémentation d'un même contrat, il existe une méthode GetAllInstances<T>() qui renvoie l'ensemble des implémentations correspondante. Si on rajoute une nouvelle implémentation de ILogger :
@@ -116,10 +117,10 @@ La méthode Add<T> permettant de définir plusieurs implémentation d'un même c
 ----
 public class FileLogger : ILogger
 {
-    public void Information(string message)
-    {
-        File.WriteAllText("log.txt", message);
-    }
+	public void Information(string message)
+	{
+		File.WriteAllText("log.txt", message);
+	}
 }
 ----
 
@@ -139,7 +140,30 @@ var loggers = container.GetAllInstances<ILogger>();
 Console.WriteLine(loggers.Count() == 2);//print True
 ----
 
-A ce stade vous avez les bases pour résoudre les dépendances. Cependant l'utilisation actuelle du Container correspond à peu de chose prêt au pattern ServiceLocator. On aurait très bien pu faire une Factory pour gérer la création d'instance. Il est donc temps de s'intéresser 
+A ce stade vous avez les bases pour résoudre des dépendances. Cependant l'utilisation actuelle du Container correspond à peu de chose prêt au pattern ServiceLocator. On aurait aussi pu faire une Factory pour gérer la création d'instance. Il est donc temps de s'intéresser à l'injection des dépendances.
+
+== Injection et cycle de vie des instances
+
+Pour injecter les dépendances il nous faut une classse plus haut niveau qui repose sur le contrat établit dans ILogger. Pour continuer avec un cas simple prenons l'exemple d'un controlleur qui, lors de l'éxecution d'une action, trace une information via le logger. Si l'ont veut casser l'adhérence il faut passer la dépendance implémentant ILogger via le constructeur :
+
+[source,csharp]
+----
+public class Controller
+{
+	private ILogger _logger;
+
+	public Controller(ILogger logger)
+	{
+		logger = _logger;
+	}
+
+	public void Action()
+	{
+		this._logger.Information("Hello from action !");
+	}
+}
+----
+
 
 
 == Mise en place dans WebApi
