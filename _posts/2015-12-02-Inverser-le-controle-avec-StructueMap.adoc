@@ -202,19 +202,21 @@ public class Controller
 }
 ----
 
-Pour inspecter il existe une premier solution. En déclaration la liaison entre un contrat et son implémentation dans la configuration, une méthode Setter permet de spécifier une propriété à injecter : 
+Pour inspecter il existe une premier solution. En déclaration la liaison entre un contrat et son implémentation dans la configuration, une méthode Setter permet de spécifier pour quel type la une propriété inspecter peut êtere injecter : 
 
 [source,csharp]
 ----
 configuration.For<ILogger>().Use<ConsoleLogger>().Setter<ILogger>();
 ----
 
-Setter<T> dispose d'une surcharge qui permet d'injecter à la condition que le nom de la propriété match avec celui passé en argument :
+La méthode Setter<T> dispose d'une surcharge qui permet d'injecter à condition que le nom de la propriété match avec celui passé en argument :
 
 [source,csharp]
 ----
-configuration.For<ILogger>().Use<ConsoleLogger>().Setter<ILogger>();
+configuration.For<ILogger>().Use<ConsoleLogger>().Setter<ILogger>("Logger");
 ----
+
+NOTE: Cette surcharge peut s'avérer pratique, mais attention au renommage, on a vite fait d'oublier d'aller modifier la configuration du Container !
 
 == IoC best practices
 
