@@ -164,6 +164,8 @@ public class Controller
 }
 ----
 
+Après avoir configurer pour lié une des deux implémentations de ILogger, il est possible d'injecter la dépendance dans une instance de Controller à l'aide de la méthode BuildUp du container :
+
 
 
 == Mise en place dans WebApi
