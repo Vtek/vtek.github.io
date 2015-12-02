@@ -185,7 +185,7 @@ var controller = container.GetInstance<Controller>();
 controller.Action();// print "Hello from action !"
 ----
 
-J'en vois déjà qui vont me répondre que j'ai mis un *Warning* plus haut concernant l'appel de GetInstance<T> sans utiliser une interface ! En réalité dans ce cas les choses sont différentes car, Controller n'est pas une dépandance mais un dépendent.
+J'en vois déjà qui vont me répondre que j'ai mis un *Warning* plus haut concernant l'appel de GetInstance<T> sans utiliser une interface ! En réalité dans ce cas les choses sont différentes car Controller n'est pas une dépandance mais un dépendent. La résolution est donc conforme au principe d'inversion de dépendance. Cette manière de procéder est une des plus couramment utilisé dans le monde .Net (on l'a retrouve sous la forme de DependencyResolver dans les frameworks Microsoft).
 
 == IoC best practices
 
