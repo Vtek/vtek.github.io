@@ -315,7 +315,85 @@ Il existe une autre façon de déclarer un cycle de vie avec StructureMap. Dans 
 
 WARNING: Les cycles de vies personnalisés peuvent être utilsé dans bien des cas. Il existe des bibliothèques qui fournissent des cycles spécialisés, comme pour le Web par exemple. Avec la version 4 de StructureMap l'équipe de développement encouragement fortement a ne plus utilisé se mode fonctionnement mais à préférer l'utilisation du NestedContainer à la place. Il permette de repondre à 95% des cas de figures sans avoir besoin de librairie annexe ni de code supplémentaire.
 
+Comme indiquer dans la note au dessus les NestedContainer permette aussi de gérer le cycle de vie des instances. En les utilisant on se simplifie clairement la vie car à partir du moment ou le NestedContainer est récupérer tout les instances qui sont obtenues lui sont propre. Il suffit ensuite d'appeller la méthode Dispose pour le libérer. C'est une méthode très fléxible puisqu'elle suffit d'établir un scope pour que cela fonctionne. En plus dans ce mode toutes les dépendances qui implemente IDisposable sont Dispose lors de l'appel à la méthode sur le NestedContainer. Du coup les trois états de StructureMap suffisent à gérer tous les cas, y compris ceux liée au context Web. Pour illustrer cela un Scope simple peut être imaginé : L'éxecution d'une ligne de code. Dans ce cas voici les étapes qui va falloir faire pour le mettre en place :
+
+* Le NestedContainer est crée et démarrer le Scope
+* Le code voulut est executé
+* Le NestedContainer libère les dépendances.
+
+Ces trois étapes peuvent bien évidement être rejouer à l'infinit. Pour illustrer le bon fonctionnement du Dispose, un implémentation de ILogger disposable va être utilisé :
+
+[source,csharp]
+----
+public class DisposableConsoleLogger : ConsoleLogger, IDisposable
+{
+	public void Dispose()
+	{
+		Console.WriteLine("Hello form Dispose !");
+	}
+}
+----
+
+Pour la configuration rien ne change à par le Use<T> qui utilise DisposableConsoleLogger  :
+
+[source,csharp]
+----
+var container = new Container(configuration =>
+{
+	configuration.For<ILogger>().Use<DisposableConsoleLogger>();
+});
+----
+
+Le code des trois étapes est le suivant :
+
+[source,csharp]
+----
+var nested = container.GetNestedContainer();
+var logger = nested.GetInstance<ILogger>();
+nested.Dispose();//print Hello form Dispose !
+----
+
+Pour illustrer l'isolation nette de se scope il suffit de l'inclure dans une boucle for et de test si la dernière instance récupérer est la même que la courrant :
+
+[source,csharp]
+----
+ILogger last = null;
+for(var i = 0; i < 10; i++)
+{
+	var nested = container.GetNestedContainer();
+	var logger = nested.GetInstance<ILogger>();
+	if (last != null)
+	Console.WriteLine(last == logger);//print False
+	last = logger;
+	nested.Dispose();//print Hello form Dispose !
+}
+----
+
+Au final vraiement rien de compliqué avec le NestedContainer. C'est une technique puissante et très élégante, il suffit juste de clairement définir son Scoping dans une application !
+
+Arriver à ce stade, le tour d'horizon de StructureMap est fait. Vous avez à présent les clés pour le mettre en place dans vos projets. L'exemple qui m'a servit pour écrire l'article est disponible sur Github Gist : https://gist.github.com/Vtek/7e5064a188417713a2d8[ici].
+
+Pour finir je vous propose une dernière petite partie sur les...
 
 
 == Best practices
 
+Voici un ensemble de règle qu'il est bon de suivre :
+
+* Masquer l'accès au Container : L'inversion de contrôle sert à casser les adhérances. Si vous utilise spécifiquement un Container pour résoudre des dépendances alors c'est l'inverse qui se produit. Il vaut donc mieux passer par une couche intermédiaire qui va vous permettre de changer le Container facileement si besoin.
+
+* Préfére l'injection par constructeur : Elle ne demande pas de logique d'injection et est par conséquent la manière la plus simple de la mettre en place !
+
+* N'oublier pas l'injection par propriété : Certains cas ne sont pas traitable avec l'injection par constructeur, n'hésitez surtout pas à utiliser celle par propriété, elle est là pour ça !
+
+* Ne mélanger pas les cycles de vie : Beaucoup ont essayer et se sont casser les dents. Mise à part le Singleton qui est simple à comprendre et mélanger pour le reste abstenez-vous. En mixant le risque c'est que plus le projet grossit plus la grappe de rétention entre les instances devient complexe. On peut vite arriver à des situations hors de contrôle.
+
+* N'injectez pas des types primitifs : Techniquement c'est faisable mais c'est une erreur. Les dépendant attentend des dépendances définit par des contracts, les types primitifs ne répondent pas cela.
+
+* Ne faite pas de résolution de dépendance base sur des chaines de charactère (Nom, Type, Namespace) : Ici encore techniquement c'est possible mais ça compléxifie la maintenance et ça oblige à revalider la configuration du Container à chaque renommage de dépendance, propriété, namespace. Au final vous allez perdre du temps et il y a d'autre façon de le faire bien plus éfficace.
+
+* Inutile de définir des cycles de vie, il vaut mieux utilisé le Scoping : L'exemple des NestedContainer par de lui même :)
+
+* Ne mélanger pas IoC et Reflexion : C'est une fausse bonne idée. Se sont deux aspects bien différents qui peuvent parfois aboutir au même résultat mais qui n'ont pas du tout la même vocation. Si vous en arriver à faire de la réflexion pour Activer des dépendances dans ce cas là utiliser plutôt https://msdn.microsoft.com/fr-fr/library/dd460648(v=vs.110).aspx[MEF]  . Si se n'est pas le cas alors vous faites très certainement quelque chose qu'un Container IoC fait déjà :)
+
+* Votre container ne devrait jamais être utiliser dans un test unitaire
