@@ -396,4 +396,4 @@ Voici un ensemble de règle qu'il est bon de suivre :
 
 * Ne mélanger pas IoC et Reflexion : C'est une fausse bonne idée. Se sont deux aspects bien différents qui peuvent parfois aboutir au même résultat mais qui n'ont pas du tout la même vocation. Si vous en arriver à faire de la réflexion pour Activer des dépendances dans ce cas là utiliser plutôt https://msdn.microsoft.com/fr-fr/library/dd460648(v=vs.110).aspx[MEF]  . Si se n'est pas le cas alors vous faites très certainement quelque chose qu'un Container IoC fait déjà :)
 
-* Votre container ne devrait jamais être utiliser dans un test unitaire
+* Votre container ne devrait jamais être utiliser dans des tests unitaires. Vos 
