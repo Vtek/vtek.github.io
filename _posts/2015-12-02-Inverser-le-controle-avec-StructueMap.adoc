@@ -38,7 +38,7 @@ La suite de l'article va se concentrer sur le troisième pattern, Depenceny Inje
 
 == StructureMap en action : les bases !
 
-Il existe de nombreuse bibliothèque dédiée à l'IoC. Sincérement il n'y a pas de mauvais choix même si j'ai tendance à déconseiller celle de Microsoft (https://github.com/unitycontainer/unity[Unity]) qui est à la traine par rapport à la concurrence. Pour ma part j'ai longtemps utilisé Ninject pour son côté _"Simple & Straightforward"_, très éfficace en développement bien qu'un peu lent à l'execution il faut l'admettre. Dernièrement j'ai décidé de changer et je me suis mis sur StructureMap, un container historique (le premier en C#) qui embarque d'innombrables capacités pour un niveau de performance très correct. C'est un bon compromis entre capacité et puissance et depuis la version 3 l'équipe à fait un gros travail pour se rapporcher de l'approche de Ninject. De plus il est en développement actif depuis presque 10 ans, il dispose d'une documentation riche et complète et est le premier à disposer d'un support pour DNX.
+Il existe de nombreuse bibliothèque dédiée à l'IoC. Sincérement il n'y a pas de mauvais choix même si j'ai tendance à déconseiller celle de Microsoft (https://github.com/unitycontainer/unity[Unity]) qui est à la traine par rapport à la concurrence. Pour ma part j'ai longtemps utilisé Ninject pour son côté _"Simple & Straightforward"_, très éfficace en développement bien qu'un peu lent à l'execution il faut l'admettre. Dernièrement j'ai décidé de changer et je me suis mis sur StructureMap, un container historique (le premier en C#) qui embarque d'innombrables capacités pour un niveau de performance très correct. C'est un bon compromis entre capacité et puissance et depuis la version 3 l'équipe à fait un gros travail pour se rapporcher de l'approche de Ninject. De plus il est en développement actif depuis presque 10 ans, il dispose d'une documentation riche et complète et est le premier à disposer d'un support pour DNX avec la version 4. C'est cette version que l'on va utilisé aujourd'hui !
 
 Pour installer le package StructureMap il suffit d'ajouter le package Nuget via la commande :
 
@@ -309,9 +309,13 @@ var logger2 = container.GetInstance<ILogger>();
 Console.WriteLine(logger == logger2);//print True
 ----
 
-Ces deux cas sont parmis les principaux que l'ont trouve dans le développement mais il en existe d'autre qui permettent de gérer la vie de l'instance sur un Thread ou encore dans un container encapsuler dans un scope temporaire (ContainerScoped, utiliser pour gérer notamment le cas de DNX)
+Ces deux cas sont parmis les principaux que l'ont trouve dans le développement mais il en existe d'autre qui permettent de gérer la vie de l'instance sur un Thread ou encore dans un container encapsuler dans un scope temporaire (ContainerScoped, utiliser pour gérer notamment le cas de DNX).
 
-Il existe une autre façon de déclarer un cycle de vie avec StructureMap. Dans la bibliothèque une interface ILifecycle permet d'implémenter facilement sont propre cycle de vie.
+Il existe une autre façon de déclarer un cycle de vie avec StructureMap. Dans la bibliothèque une interface ILifecycle permet d'implémenter facilement sont propre cycle de vie. Il est ensuite possible de l'utiliser dans la configuration avec la méthode LifecycleIs<T> (ou T implémente ILifecycle).
+
+WARNING: Les cycles de vies personnalisés peuvent être utilsé dans bien des cas. Il existe des bibliothèques qui fournissent des cycles spécialisés, comme pour le Web par exemple. Avec la version 4 de StructureMap l'équipe de développement encouragement fortement a ne plus utilisé se mode fonctionnement mais à préférer l'utilisation du NestedContainer à la place. Il permette de repondre à 95% des cas de figures sans avoir besoin de librairie annexe ni de code supplémentaire.
+
+
 
 == Best practices
 
