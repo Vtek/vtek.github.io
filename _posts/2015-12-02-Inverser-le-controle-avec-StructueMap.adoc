@@ -275,9 +275,43 @@ Au niveau de la mécanique d'injection des dépendances nous avons vu les fondam
 
 == Lifecycle
 
-Depuis le début de cette article la création des instances a été complétement délégué à la classe Container. La grand question à présent est : Comment puis gérer le cycle de vie des instances au sein de mon container ?
+Depuis le début de cette article la création des instances des dépendances a été complétement délégué à la classe Container. La grand question à présent est : Comment puis gérer le cycle de vie des instances au sein de mon container ?
 
-StructureMap, comme tout les container IoC, met à disposition un ensemble de méthode et classe pour gérer cela. Par défaut lorsque l'ont ajouter une liaison entre un contrat et une implémentation, le container va définir leur cycle de vie à Transient. Cela veut dire qu'à chaque fois qu'il résoudra une dépendance il créra une instance. Il est tout façon possible de mettre explicitement la dépendance dans le mode Transient via la méthode d'extension 
+StructureMap, comme tout les container IoC, met à disposition un ensemble de méthode et classe pour gérer cela. Par défaut lorsque l'ont ajouter une liaison entre un contrat et une implémentation, le container va définir leur cycle de vie à l'état Transient. Cela veut dire qu'à chaque fois qu'il résoudra une dépendance il créra une instance. Il est tout façon possible de mettre explicitement la dépendance dans le mode Transient :
+
+[source,csharp]
+----
+configuration.For<ILogger>().Use<ConsoleLogger>().Transient();
+----
+
+Logiquement si l'on demande deux fois la dépendance, la référence est différente :
+
+[source,csharp]
+----
+var logger = container.GetInstance<ILogger>();
+var logger2 = container.GetInstance<ILogger>();
+Console.WriteLine(logger == logger2);//print False
+----
+
+Un cas régulier dans le cycle de vie des objets c'est l'instance unique. Pour le faire on utilise la méthode Singleton :
+
+[source,csharp]
+----
+configuration.For<ILogger>().Use<ConsoleLogger>().Singleton();
+----
+
+En conséquence le test de référence que l'on a fait précedement renvoie True :
+
+[source,csharp]
+----
+var logger = container.GetInstance<ILogger>();
+var logger2 = container.GetInstance<ILogger>();
+Console.WriteLine(logger == logger2);//print True
+----
+
+Ces deux cas sont parmis les principaux que l'ont trouve dans le développement mais il en existe d'autre qui permettent de gérer la vie de l'instance sur un Thread ou encore dans un container encapsuler dans un scope temporaire (ContainerScoped, utiliser pour gérer notamment le cas de DNX)
+
+Il existe une autre façon de déclarer un cycle de vie avec StructureMap. Dans la bibliothèque une interface ILifecycle permet d'implémenter facilement sont propre cycle de vie.
 
 == Best practices
 
