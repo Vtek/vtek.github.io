@@ -38,7 +38,7 @@ La suite de l'article va se concentrer sur le troisième pattern, Depenceny Inje
 
 == StructureMap en action : les bases !
 
-Il existe de nombreuse bibliothèque dédiée à l'IoC. Sincérement il n'y a pas de mauvais choix même si j'ai tendance à déconseiller celle de Microsoft (https://github.com/unitycontainer/unity[Unity]) qui est à la traine par rapport à la concurrence. Pour ma part j'ai longtemps utilisé Ninject pour son côté _"Simple & Straightforward"_, très éfficace en développement bien qu'un peu lent à l'execution il faut l'admettre. Dernièrement j'ai décidé de changer et je me suis mis sur StructureMap, un container historique (le premier en C#) qui embarque d'innombrables capacités pour un niveau de performance très correct. C'est un bon compromis entre capacité et puissance et depuis la version 3 il ont l'équipe à fait un gros travail pour se rapporcher de l'approche de Ninject. De plus il est en développement actif depuis presque 10 ans, il dispose d'une documentation riche et complète et est à l'heure ou j'écris le seul à disposer d'un support pour DNX.
+Il existe de nombreuse bibliothèque dédiée à l'IoC. Sincérement il n'y a pas de mauvais choix même si j'ai tendance à déconseiller celle de Microsoft (https://github.com/unitycontainer/unity[Unity]) qui est à la traine par rapport à la concurrence. Pour ma part j'ai longtemps utilisé Ninject pour son côté _"Simple & Straightforward"_, très éfficace en développement bien qu'un peu lent à l'execution il faut l'admettre. Dernièrement j'ai décidé de changer et je me suis mis sur StructureMap, un container historique (le premier en C#) qui embarque d'innombrables capacités pour un niveau de performance très correct. C'est un bon compromis entre capacité et puissance et depuis la version 3 l'équipe à fait un gros travail pour se rapporcher de l'approche de Ninject. De plus il est en développement actif depuis presque 10 ans, il dispose d'une documentation riche et complète et est à l'heure ou j'écris le seul à disposer d'un support pour DNX.
 
 Pour installer le package StructureMap il suffit d'ajouter le package Nuget via la commande :
 
@@ -149,7 +149,7 @@ Console.WriteLine(loggers.Count() == 2);//print True
 
 A ce stade vous avez les bases pour résoudre des dépendances. Cependant l'utilisation actuelle du Container correspond à peu de chose prêt au pattern ServiceLocator. On aurait aussi pu faire une Factory pour gérer la création d'instance. Il est donc temps de s'intéresser à l'injection des dépendances.
 
-== Injection & Lifecycle
+== Injection
 
 Pour injecter les dépendances il nous faut une classse plus haut niveau qui repose sur le contrat établit dans ILogger. Pour continuer avec un cas simple prenons l'exemple d'un controlleur qui, lors de l'éxecution d'une action, trace une information via le logger. Si l'ont veut casser l'adhérence il faut passer la dépendance implémentant ILogger via le constructeur :
 
@@ -218,7 +218,43 @@ configuration.For<ILogger>().Use<ConsoleLogger>().Setter<ILogger>("Logger");
 
 NOTE: Cette surcharge peut s'avérer pratique, mais attention au renommage, on a vite fait d'oublier d'aller modifier la configuration du Container !
 
-La deuxième solution pour mettre en place l'injection par propriété est de définir des conventions dans le registre des Policies du Container. Pour cela les développeurs de StructureMap on tout prévu, il existe la méthode Set
+La deuxième solution pour mettre en place l'injection par propriété est de définir des conventions dans le registre des Policies du Container. Pour cela les développeurs de StructureMap on tout prévu, il existe une méthode SetAllProperties qui attent en paramètre une action exposant une instance de la classe SetterConvention :
 
-== IoC best practices
+[source,csharp]
+----
+configuration.Policies.SetAllProperties(convention => {
+
+});
+----
+
+Plusieurs possibilés sont offertes pour définir une convention. La plus simple est celle qui définit une éxigence de type stricte :
+
+[source,csharp]
+----
+convention.OfType<ILogger>();
+----
+
+Une convention par namespace peut être établit, elle permet de déclencher l'injection de la dépendance uniquement sur les classe appartenant à ce namespace. Deux possibilité de déclaration,  Soit par nom :
+
+[source,csharp]
+----
+convention.WithAnyTypeFromNamespace("MyNamespace");
+----
+
+Soit en utilisant le namespace d'un type :
+
+[source,csharp]
+----
+convention.WithAnyTypeFromNamespaceContainingType<ILogger>();
+----
+
+Ces trois exemple de convention permettent de traiter pas mal de cas. La classe SetterConvention offre plusieurs autres possibilités pour customiser sa logique d'injection. Le mieux c'est de les essayer pour voir celle qui conviennent aux besoins.
+
+Au niveau de l'injection des dépendances, nous avons vu les deux méthodes principalement utilisées. Il faut savoir que la méthode priviliégié par la plus part des développeurs est celle injectant les dépendances par constructeur. Cependant il existe de nombreux car ou l'insepection est indispensanble (par exemple pour injecter des dépendances dans des attributs), donc il ne faut pas non plus complétement écarter cette possibilité.
+
+== Lifecycle
+
+Depuis le départ laa création des instances a été complétement délégué 
+
+== Best practices
 
