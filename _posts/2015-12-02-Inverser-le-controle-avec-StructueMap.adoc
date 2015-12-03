@@ -202,7 +202,7 @@ public class Controller
 }
 ----
 
-Pour inspecter il existe une premier solution. En déclaration la liaison entre un contrat et son implémentation dans la configuration, une méthode Setter permet de spécifier pour quelle type de dépendance sous jacente l'injection peut être faite : 
+Par défaut StructureMap ne résoudera pas la dépendance en l'état. Dans la configuration il faut, lors de la liaison entre un contrat et son implémentation, utiliser la méthode Setter pour spécifier quelle type de dépendance sous jacente va être injecter : 
 
 [source,csharp]
 ----
@@ -244,25 +244,34 @@ Plusieurs possibilés sont offertes pour définir une convention. La plus simple
 convention.OfType<ILogger>();
 ----
 
-Une convention par namespace peut être établit, elle permet de déclencher l'injection de la dépendance uniquement sur les classe appartenant à ce namespace. Deux possibilité de déclaration,  Soit par nom :
+Une convention par namespace peut être établit, elle permet de déclencher l'injection de la dépendance uniquement sur les Type appartenant à ce namespace. Deux possibilité de déclaration,  Soit par nom :
 
 [source,csharp]
 ----
 convention.WithAnyTypeFromNamespace("MyNamespace");
 ----
 
-Soit en utilisant le namespace d'un type :
+Soit en utilisant le namespace d'un type en particulier :
 
 [source,csharp]
 ----
 convention.WithAnyTypeFromNamespaceContainingType<ILogger>();
 ----
 
-Ces trois exemple de convention permettent de traiter pas mal de cas. La classe SetterConvention offre plusieurs autres possibilités pour customiser sa logique d'injection. Le mieux c'est de les essayer pour voir celle qui conviennent aux besoins.
+Ces trois exemples de convention permettent de traiter pas mal de cas. La classe SetterConvention offre plusieurs autres possibilités pour customiser sa logique d'injection. Le mieux c'est de les essayer pour voir celle qui conviennent aux besoins.
 
-Sans vous en rendre compte vous venez ici de déloquer une possibilité du Container. En effet 
+Sans s'en rendre compte, en utilisant les conventions, une nouvelle capacités du Container a été dévérouiller, le BuildUp ! Il est maintenant possible de se dispenser d'utiliser la méthode GetInstance<T>() pour obtenir une instance d'un dépendant avec ses dépendances injectées :
 
-Au niveau de l'injection des dépendances, nous avons vu les deux méthodes principalement utilisées. Il faut savoir que la méthode priviliégié par la plus part des développeurs est celle injectant les dépendances par constructeur. Cependant il existe de nombreux car ou l'insepection est indispensanble (par exemple pour injecter des dépendances dans des attributs), donc il ne faut pas non plus complétement écarter cette possibilité.
+[source,csharp]
+----
+var controller = new Controller();
+container.BuildUp(controller);
+----
+
+L'intérêt premier est qu'avec cette technique on va pouvoir injecter les dépendances d'une instance dont la création est faite par un tier. Mine de rien cela ouvre pas mal de possibilité et permet de s'interfacer avec d'autre Framework ou Api qui possède leur propre mécanique de création d'instance (On peut cité par exemple Asp.Net MVC avec les ControllerFactory). C'est aussi une façon de faire qui est plus proche de la théorie de l'inversion de contrôle car dans ce cas précis il n'y a plus aucun appel direct de résolution d'un dépendant, le Container se préoccupe de se qu'il sait faire de mieux, résoudres les dépendances !
+
+Au niveau de la mécanique d'injection des dépendances nous avons vu les fondamentaux. Il faut savoir que la méthode priviliégié par la plus part des développeurs est celle injectant les dépendances par constructeur. Elle demande bien moins d'effort et évite d'avoir des propriétés publique manipulable par le premier venu. Cependant il existe de nombreux cas ou l'insepection par propriété est indispensanble (par exemple pour injecter des dépendances dans des attributs), donc il ne faut pas non plus complétement écarter cette possibilité. Personnellement j'utilise beaucoup l'injection par propriété car ça permet d'avoir une grande compacité de code en plus déviter de manipuler l'affectation des références à la main (je trouve que c'est plus clean sur ce point). Cependant quand je le fait je suis beaucoup plus stricte sur les règles de manipulation de ses instances. Il faut clairement que la responsabilité de leur manipulation soit faite uniquement par le dépendant, sinon c'est la porte ouvert à de nombreux problème.
+
 
 == Lifecycle
 
