@@ -202,23 +202,33 @@ public class Controller
 }
 ----
 
-Pour inspecter il existe une premier solution. En déclaration la liaison entre un contrat et son implémentation dans la configuration, une méthode Setter permet de spécifier pour quel type la une propriété inspecter peut êtere injecter : 
+Pour inspecter il existe une premier solution. En déclaration la liaison entre un contrat et son implémentation dans la configuration, une méthode Setter permet de spécifier pour quelle type de dépendance sous jacente l'injection peut être faite : 
 
 [source,csharp]
 ----
-configuration.For<ILogger>().Use<ConsoleLogger>().Setter<ILogger>();
+configuration.For<IController>().Use<Controller>().Setter<ILogger>().Is<ConsoleLogger>();
 ----
 
 La méthode Setter<T> dispose d'une surcharge qui permet d'injecter à condition que le nom de la propriété match avec celui passé en argument :
 
 [source,csharp]
 ----
-configuration.For<ILogger>().Use<ConsoleLogger>().Setter<ILogger>("Logger");
+configuration.For<IController>().Use<Controller>().Setter<ILogger>("Logger").Is<ConsoleLogger>();
 ----
 
 NOTE: Cette surcharge peut s'avérer pratique, mais attention au renommage, on a vite fait d'oublier d'aller modifier la configuration du Container !
 
-La deuxième solution pour mettre en place l'injection par propriété est de définir des conventions dans le registre des Policies du Container. Pour cela les développeurs de StructureMap on tout prévu, il existe une méthode SetAllProperties qui attent en paramètre une action exposant une instance de la classe SetterConvention :
+Une fois mise en place il suffit de demander à récupérer une instance d'une dépendance pour que celle ci soit automatiquement injecter avec celle sous-jacente :
+
+[source,csharp]
+----
+//Avec Setter<T> il devient obligatoire de demander une instance correspondant à un contrat.
+//IController doit donc être définit dans votre code pour que cela fonctionne
+var controller = container.GetInstance<IController>();
+controller.Action();// print "Hello from action !"
+----
+
+Cette première façon de faire est certes éfficace mais imaginez faire cela pour toutes les dépendances... ce n'est pas très élégant. En plus il devient compliquer de résoudre les dépendances sur des instances dépendant qu'on voudrait résoudre avec le container. Il existe donc une méthode plus éfficace pour mettre en place l'injection par propriété : Définir des conventions dans le registre des Policies du Container. Pour cela les développeurs de StructureMap on tout prévu, il existe une méthode SetAllProperties qui attent en paramètre une action exposant une instance de la classe SetterConvention :
 
 [source,csharp]
 ----
@@ -250,11 +260,15 @@ convention.WithAnyTypeFromNamespaceContainingType<ILogger>();
 
 Ces trois exemple de convention permettent de traiter pas mal de cas. La classe SetterConvention offre plusieurs autres possibilités pour customiser sa logique d'injection. Le mieux c'est de les essayer pour voir celle qui conviennent aux besoins.
 
+Sans vous en rendre compte vous venez ici de déloquer une possibilité du Container. En effet 
+
 Au niveau de l'injection des dépendances, nous avons vu les deux méthodes principalement utilisées. Il faut savoir que la méthode priviliégié par la plus part des développeurs est celle injectant les dépendances par constructeur. Cependant il existe de nombreux car ou l'insepection est indispensanble (par exemple pour injecter des dépendances dans des attributs), donc il ne faut pas non plus complétement écarter cette possibilité.
 
 == Lifecycle
 
-Depuis le départ laa création des instances a été complétement délégué 
+Depuis le début de cette article la création des instances a été complétement délégué à la classe Container. La grand question à présent est : Comment puis gérer le cycle de vie des instances au sein de mon container ?
+
+StructureMap, comme tout les container IoC, met à disposition un ensemble de méthode et classe pour gérer cela. Par défaut lorsque l'ont ajouter une liaison entre un contrat et une implémentation, le container va définir leur cycle de vie à Transient. Cela veut dire qu'à chaque fois qu'il résoudra une dépendance il créra une instance. Il est tout façon possible de mettre explicitement la dépendance dans le mode Transient via la méthode d'extension 
 
 == Best practices
 
