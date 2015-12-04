@@ -402,3 +402,7 @@ Voici un ensemble de règle qu'il est bon de suivre :
 
 * Avec l'inversion de contrôle la résolution des dépendances se fait au runtime. C'est donc l'application qui doit tenir les références. Inutile d'essayer de les masquer, vous ne gagnerez pas plus de temps ni de confort de développement !
 
+
+== Conclusion
+
+S'en est finit pour cette article. J'éspère que vous aurez aprécié la lecture. L'inversion de contrôle est un concept qui de nos jours doit être connu, car de nombreux projets le mettent en oeuvre. StructureMap est un excellente bibliothèque. J'aurais aimé vous présentez de ses capacités mais elles sont tellement nombreuses qu'il faudrait plusieurs articles pour tout traiter !
