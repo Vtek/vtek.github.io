@@ -1,6 +1,6 @@
 = Inverser le contrôle avec StructueMap !
-:hp-image: introduction-a-angular2.png
-:published_at: 2015-12-02
+:hp-image: visual-studio.png
+:published_at: 2015-12-06
 :hp-tags: C#, IoC, StructureMap
 
 
