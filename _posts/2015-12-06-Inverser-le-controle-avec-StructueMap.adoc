@@ -42,6 +42,7 @@ Il existe de nombreuse bibliothèque dédiée à l'IoC. Sincèrement il n'y a pa
 
 Pour installer le package StructureMap il suffit d'ajouter le package *Nuget* via la commande :
 
+[source,powershell]
 ----
 Install-Package StructureMap
 ----
