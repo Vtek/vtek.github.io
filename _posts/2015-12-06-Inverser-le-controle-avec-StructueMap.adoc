@@ -27,6 +27,7 @@ Au final en utilisant l'inversion de contrôle, votre application va devenir plu
 
 NOTE: L'inversion de contrôle permet aussi de respecter un des principes majeurs de *https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)[SOLID]* : l'inversion des dépendances. Ce principe définit qu'il faut toujours dépendre des abstractions et non des implémentations. Les principes SOLID sont considérer par beaucoup comme les _"Best Pratices"_ de la *POO*. Ils permettent d'avoir un développement efficace et fiable.
 
+
 Parmi les manières les plus courantes de mettre en place l'IoC, il existe :
 
 * Le pattern *https://en.wikipedia.org/wiki/Factory_(object-oriented_programming)[Factory]* qui permet de déléguer la création d'instance. Une approche rudimentaire, mais qui a le mérite d'être simple dans sa mise en place.
