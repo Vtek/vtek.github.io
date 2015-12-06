@@ -15,11 +15,11 @@ Le problème de départ est assez simple en réalité. Si on a une application d
 
 Avec l'inversion de contrôle on va plutôt faire reposer chaque couche sur une abstraction afin de passer de ça :
 
-[Schéma]
+image::ioc1.png[]
 
 A ça :
 
-[Schéma]
+image::ioc2.png[]
 
 La différence est subtile mais importante. Dans le second schémas, changer les couches concrètes de mon application n'entraînent pas de problème de structure, tout compilera. Mieux encore, le développement de l'application peut être *abstrait* et n'avoir aucune connaissance du fonctionnement bas niveau. Plus fort, je peux définir des *abstractions* utilisées par les couches de bas niveau qui sont implémentées en haut niveau. Un autre point intéressant, les *tests unitaires* deviennent beaucoup plus simples et pertinents, car les dépendances ne rentre plus en compte dans l'étape de validation.
 
