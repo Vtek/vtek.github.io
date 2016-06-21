@@ -6,6 +6,7 @@
 
 L'annonce d'*Angular2* l'année dernière à la _ng-europe_ à fait couler beaucoup d'encre. Cette nouvelle version change complètement le framework, a tel point que l'on peut se demander si la librairie ne devrait pas s'appeler autrement. Dernièrement j'ai eu un peu de temps pour faire de la veille et ça faisait un moment que je voulais voir ce que cette version donne. Je vous propose donc un petit exemple !
 
+NOTE: 21 juin 2015 : L'article a été écrit il y a plusieurs mois et l'exemple proposé tourne sous la version alpha 44, le code en l'étât actuel ne fonctionne donc plus. Cependant les concepts de bases expliqués dans la suite de l'article sont toujours d'actualité. Je réviserais l'ensemble de l'article à la sortie d'Angular2 !
 
 == Rest API
 
