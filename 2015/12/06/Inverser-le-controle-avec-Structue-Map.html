@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Inverser le contrôle avec StructueMap !</title>
+    <meta name="description" content="" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="//sylvain.pontoreau.com/themes/Casper/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="//sylvain.pontoreau.com/themes/Casper/assets/css/screen.css?v=1.0.0" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+
+    <link rel="canonical" href="http://sylvain.pontoreau.com/2015/12/06/Inverser-le-controle-avec-Structue-Map.html" />
+    
+    <meta property="og:site_name" content="Sylvain PONTOREAU" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Inverser le contrôle avec StructueMap !" />
+    <meta property="og:description" content="L&amp;#8217;inversion de contrôle (aka IoC) est un patron d&amp;#8217;architecture permettant de casser les adhérences entre les dépendances. Ce découplage permet aux dépendances de haut niveau de ne plus reposer directement sur celle de bas niveau et..." />
+    <meta property="og:url" content="http://sylvain.pontoreau.com/2015/12/06/Inverser-le-controle-avec-Structue-Map.html" />
+    <meta property="og:image" content="http://sylvain.pontoreau.com/images/visual-studio.png" />
+    <meta property="article:published_time" content="2015-12-05T23:00:00.000Z" />
+    <meta property="article:modified_time" content="2016-06-21T18:59:07.774Z" />
+    <meta property="article:tag" content="C#" />
+    <meta property="article:tag" content="IoC" />
+    <meta property="article:tag" content="StructureMap" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Inverser le contrôle avec StructueMap !" />
+    <meta name="twitter:description" content="L&amp;#8217;inversion de contrôle (aka IoC) est un patron d&amp;#8217;architecture permettant de casser les adhérences entre les dépendances. Ce découplage permet aux dépendances de haut niveau de ne plus reposer directement sur celle de bas niveau et..." />
+    <meta name="twitter:url" content="http://sylvain.pontoreau.com/2015/12/06/Inverser-le-controle-avec-Structue-Map.html" />
+    <meta name="twitter:image:src" content="http://sylvain.pontoreau.com/images/visual-studio.png" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "Sylvain PONTOREAU",
+    "author": {
+        "@type": "Person",
+        "name": "Sylvain PONTOREAU",
+        "image": "https://avatars.githubusercontent.com/u/3357643?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": "sylvain.pontoreau.com"
+    },
+    "headline": "Inverser le contrôle avec StructueMap !",
+    "url": "http://sylvain.pontoreau.com/2015/12/06/Inverser-le-controle-avec-Structue-Map.html",
+    "datePublished": "2015-12-05T23:00:00.000Z",
+    "dateModified": "2016-06-21T18:59:07.774Z",
+    "image": "http://sylvain.pontoreau.com/images/visual-studio.png",
+    "keywords": "C#,  IoC,  StructureMap",
+    "description": "L&amp;#8217;inversion de contrôle (aka IoC) est un patron d&amp;#8217;architecture permettant de casser les adhérences entre les dépendances. Ce découplage permet aux dépendances de haut niveau de ne plus reposer directement sur celle de bas niveau et..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="Sylvain PONTOREAU" href="http://sylvain.pontoreau.com/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+</head>
+<body class="post-template tag-C tag-Io-C tag-Structure-Map">
+
+    
+
+
+<header class="main-header post-head " style="background-image: url(http://sylvain.pontoreau.com/images/visual-studio.png)">
+    <nav class="main-nav overlay clearfix">
+        <a class="back-button icon-arrow-left" href="http://sylvain.pontoreau.com">Home</a>
+        <!-- <a class="subscribe-button icon-feed" href="http://sylvain.pontoreau.com/rss/">Subscribe</a> -->
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post tag-C tag-Io-C tag-Structure-Map">
+
+        <header class="post-header">
+            <h1 class="post-title">Inverser le contrôle avec StructueMap !</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2015-12-06">06 December 2015</time>  on <a href="http://sylvain.pontoreau.com/tag/C">C#</a>, <a href="http://sylvain.pontoreau.com/tag/Io-C"> IoC</a>, <a href="http://sylvain.pontoreau.com/tag/Structure-Map"> StructureMap</a>
+            </section>
+        </header>
+
+        <section class="post-content">
+            <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>L&#8217;inversion de contrôle (aka <strong>IoC</strong>) est un patron d&#8217;architecture permettant de casser les adhérences entre les dépendances. Ce découplage permet aux dépendances de haut niveau de ne plus reposer directement sur celle de bas niveau et de passer par une couche d'<strong>abstraction</strong>. L&#8217;objectif est d&#8217;améliorer la modularité des applications afin de faciliter les étapes de maintenance et d'évolution.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_pourquoi_ce_pattern">Pourquoi ce pattern ?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Avant de montrer la mise en place de l&#8217;inversion de contrôle il est préférable d&#8217;expliquer comment on en est arrivé là !</p>
+</div>
+<div class="paragraph">
+<p>Le problème de départ est assez simple en réalité. Si on a une application développée en couche et que l&#8217;on fait reposer chacune d&#8217;elle sur une autre de plus bas niveau, que va-t-il se passer par la suite si on veut changer, modifier, supprimer la couche la plus basse ? Le problème est là, il va falloir modifier la couche de plus haut niveau pour l&#8217;adapter en conséquence. Il est d&#8217;ailleurs fort probable que cela déclenche des modifications en cascade sur toutes les couches de haut niveau.</p>
+</div>
+<div class="paragraph">
+<p>Avec l&#8217;inversion de contrôle on va plutôt faire reposer chaque couche sur une abstraction afin de passer de ça :</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/ioc1.png" alt="ioc1.png">
+</div>
+</div>
+<div class="paragraph">
+<p>A ça :</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/ioc2.png" alt="ioc2.png">
+</div>
+</div>
+<div class="paragraph">
+<p>La différence est subtile mais importante. Dans le second schémas, changer les couches concrètes de mon application n&#8217;entraînent pas de problème de structure, tout compilera. Mieux encore, le développement de l&#8217;application peut être <strong>abstrait</strong> et n&#8217;avoir aucune connaissance du fonctionnement bas niveau. Plus fort, je peux définir des <strong>abstractions</strong> utilisées par les couches de bas niveau qui sont implémentées en haut niveau. Un autre point intéressant, les <strong>tests unitaires</strong> deviennent beaucoup plus simples et pertinents, car les dépendances ne rentre plus en compte dans l'étape de validation.</p>
+</div>
+<div class="paragraph">
+<p>Au final en utilisant l&#8217;inversion de contrôle, votre application va devenir plus <strong>modulaire</strong>, <strong>souple</strong>, <strong>maintenable</strong>, <strong>évolutive</strong> et <strong>testable</strong>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+L&#8217;inversion de contrôle permet aussi de respecter un des principes majeurs de <strong><a href="https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)">SOLID</a></strong> : l&#8217;inversion des dépendances. Ce principe définit qu&#8217;il faut toujours dépendre des abstractions et non des implémentations. Les principes SOLID sont considérer par beaucoup comme les <em>"Best Pratices"</em> de la <strong>POO</strong>. Ils permettent d&#8217;avoir un développement efficace et fiable.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Parmi les manières les plus courantes de mettre en place l&#8217;IoC, il existe :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Le pattern <strong><a href="https://en.wikipedia.org/wiki/Factory_(object-oriented_programming)">Factory</a></strong> qui permet de déléguer la création d&#8217;instance. Une approche rudimentaire, mais qui a le mérite d'être simple dans sa mise en place.</p>
+</li>
+<li>
+<p>Le pattern <strong><a href="https://en.wikipedia.org/wiki/Service_locator_pattern">Service Locator</a></strong> qui via l&#8217;utilisation d&#8217;un <em>Registrer</em> permet de retourver des implémentations correspondant à des contrats.</p>
+</li>
+<li>
+<p>Le pattern <strong><a href="https://en.wikipedia.org/wiki/Dependency_injection">Dependancy injection</a></strong> qui permet de passer une dépendance à un object dépendant.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>La suite de l&#8217;article va se concentrer sur le troisième pattern, Depenceny Injection. Factory est un pattern trop simpliste pour permettre de résoudre les dépendances à lui seul et Service Locator est devenu au fil du temps un anti-pattern (notamment parce qu&#8217;il crée de l&#8217;adhérence alors que c&#8217;est l&#8217;inverse que l&#8217;on veut).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_structuremap_en_action_les_bases">StructureMap en action : les bases !</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Il existe de nombreuse bibliothèque dédiée à l&#8217;IoC. Sincèrement il n&#8217;y a pas de mauvais choix même si j&#8217;ai tendance à déconseiller celle de <strong>Microsoft</strong> (<a href="https://github.com/unitycontainer/unity">Unity</a>) qui est à la traine par rapport à la concurrence. Pour ma part j&#8217;ai longtemps utilisé <strong>Ninject</strong> pour son côté <em>"Simple &amp; Straightforward"</em>, très efficace en développement bien qu&#8217;un peu lent à l'éxecution il faut l&#8217;admettre. Dernièrement j&#8217;ai décidé de changer et je me suis mis sur <strong>StructureMap</strong>, un container historique (le premier en C#) qui embarque d&#8217;innombrables capacités pour un niveau de performance très correct. C&#8217;est un bon compromis entre capacité et puissance et depuis la version 3 l'équipe a fait un gros travail pour se rapporcher de l&#8217;approche de Ninject. De plus, il est en développement actif depuis presque 10 ans, il dispose d&#8217;une documentation riche et complète et est le premier à disposer d&#8217;un support pour <strong>DNX</strong> avec la version 4. C&#8217;est cette version que l&#8217;on va utiliser aujourd&#8217;hui !</p>
+</div>
+<div class="paragraph">
+<p>Pour installer le package StructureMap il suffit d&#8217;ajouter le package <strong>Nuget</strong> via la commande :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-powershell" data-lang="powershell">Install-Package StructureMap</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>La première classe qui va nous intéresser est <em>Container</em>. C&#8217;est l'élément centrale de la librairie. Elle va nous permettre de définir les dépendances à résoudre, leur façon d'être résolut et leur récupération. Pour définir une dépendance il nous faut un contrat. Pour les besoins de l&#8217;article je vais en définir un :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">public interface ILogger
+{
+	void Information(string message);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>L&#8217;interface correspond à un <em>Logger</em> qui va tracer un message d&#8217;information. Son implémentation est la suivante :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">public class ConsoleLogger : ILogger
+{
+	public void Information(string message)
+	{
+		Console.WriteLine(message);
+	}
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Pour résoudre cette dépendance via le container il faut la définir. La classe possède un constructeur acceptant en paramètre une action qui expose un object de configuration. Il permet de définir les liaisons entre contrat et implémentation à l&#8217;aide des méthodes <em>For&lt;T&gt;</em> et <em>Use&lt;T&gt;</em> :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">var container = new Container(configuration =&gt;
+{
+	configuration.For&lt;ILogger&gt;().Use&lt;ConsoleLogger&gt;();
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Ces deux méthodes disposent d&#8217;une surcharge qui permet de passer en paramètre des objets <em>Type</em>. Le résultat est le même, mais syntaxiquement c&#8217;est plus lourd à lire. Il existe aussi la méthode <em>Add&lt;T&gt;</em>, ce code fonctionne donc aussi :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">configuration.For&lt;ILogger&gt;().Add&lt;Logger&gt;();</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Il existe une différenciation très nette entre les deux méthodes. <em>Add&lt;T&gt;</em> permet d&#8217;ajouter une implémentation alors que <em>Use&lt;T&gt;</em> définit l&#8217;implémentation comme strictement à utiliser. En conséquence lorsque vous utilisez <em>Use&lt;T&gt;</em> c&#8217;est toujours la dernière liaison à une implémentation qui l&#8217;emporte.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Parfois il est nécessaire de définir comment le container va créer l&#8217;instance, dans ce cas il est possible d&#8217;utiliser une surcharge de la méthode <em>Use</em> qui accepte une fonction ayant en paramètre le contexte du container. Elle doit retourner une instance correspondant au contrat :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">configuration.For&lt;ILogger&gt;().Use("Logger instance creation", (x) =&gt;
+{
+	return new ConsoleLogger();
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Une fois la dépendance liée il est possible de la récupérer en appelant la méthode <em>GetInstance&lt;T&gt;()</em> du container :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">var logger = container.GetInstance&lt;ILogger&gt;();</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Attention, la méthode <em>GetInstance&lt;T&gt;</em> peut très bien accepter des types implémentés sans que cela ne pose de problèmes. Cependant, en faisant cela il y a une rupture avec le principe SOLID d&#8217;inversion de dépendance. N&#8217;oubliez pas : il faut dépendre des abstractions, pas des implémentations.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Si une dépendance n&#8217;est pas définie et que l&#8217;on souhaite la résoudre, l&#8217;instance de <em>Container</em> lève une <em>Exception</em> de configuration. Il peut y avoir des cas où l&#8217;on ne sait pas si une liaison est établie entre un contrat et une implémentation. Dans ce cas il vaut mieux utiliser la méthode <em>TryGetInstance&lt;T&gt;</em> et tester si l&#8217;instance retournée est <em>null</em>, c&#8217;est plus optimisé que de traiter le cas avec un bloc <em>try/catch</em> :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">//Aucune implémentation de IDisposable n'est configurées actuellement
+var disposable = container.GetInstance&lt;IDisposable&gt;();
+Console.WriteLine(disposable == null);//print True</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>La méthode <em>Add&lt;T&gt;</em> permettant de définir plusieurs implémentations d&#8217;un même contrat, il existe une méthode <em>GetAllInstances&lt;T&gt;()</em> qui renvoie l&#8217;ensemble des implémentations correspondante. Si on rajoute une nouvelle implémentation de <em>ILogger</em> :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">public class FileLogger : ILogger
+{
+	public void Information(string message)
+	{
+		File.WriteAllText("log.txt", message);
+	}
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Et qu&#8217;on l&#8217;ajoute les deux implémentations dans la configuration :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">configuration.For&lt;ILogger&gt;().Add&lt;ConsoleLogger&gt;();
+configuration.For&lt;ILogger&gt;().Add&lt;FileLogger&gt;();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>L&#8217;appel à la méthode renverra une instance de <em>IEnumerable&lt;ILogger&gt;</em> :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">var loggers = container.GetAllInstances&lt;ILogger&gt;();
+Console.WriteLine(loggers.Count() == 2);//print True</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A ce stade vous avez les bases pour résoudre des dépendances. Cependant, l&#8217;utilisation actuelle du container correspond à peu de choses prêt au pattern ServiceLocator. On aurait aussi pu faire une Factory pour gérer la création d&#8217;instance. Il est donc temps de s&#8217;intéresser à l&#8217;injection des dépendances.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_injection">Injection</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Pour injecter les dépendances il nous faut une classse de plus haut niveau qui repose sur le contrat établit dans <em>ILogger</em>. Pour continuer avec un cas simple prenons l&#8217;exemple d&#8217;un contrôleur qui, lors de l&#8217;exécution d&#8217;une action, trace une information via le <em>Logger</em>. Si l&#8217;on veut casser l&#8217;adhérence il faut passer la dépendance implémentant <em>ILogger</em> via le <strong>constructeur</strong> :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">public class Controller
+{
+	private ILogger _logger;
+
+	public Controller(ILogger logger)
+	{
+		_logger = logger;
+	}
+
+	public void Action()
+	{
+		this._logger.Information("Hello from action !");
+	}
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Après avoir configuré l&#8217;instance de <em>Container</em> pour lier une des deux implémentations de <em>ILogger</em>, il est possible de récupérer une instance de la classe <em>Controller</em> via la méthode <em>GetInstance&lt;T&gt;()</em> :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">var container = new Container(configuration =&gt;
+{
+	configuration.For&lt;ILogger&gt;().Use&lt;ConsoleLogger&gt;();
+});
+
+var controller = container.GetInstance&lt;Controller&gt;();
+controller.Action();// print "Hello from action !"</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+J&#8217;en vois déjà qui vont me répondre que j&#8217;ai mis un <strong>Warning</strong> plus haut concernant l&#8217;appel de <em>GetInstance&lt;T&gt;</em> sans utiliser une interface ! En réalité dans ce cas les choses sont différentes, car <em>Controller</em> n&#8217;est pas une dépandance mais un dépendent. La résolution est donc conforme au principe d&#8217;inversion de dépendance. Cette manière de procéder est une des plus couramment utilisées dans le monde .Net (on l&#8217;a retrouve sous la forme de <strong>Dependency Resolver</strong> dans certaines frameworks Microsoft).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>StructureMap offre aussi la possibilité d&#8217;injecter les dépendances par <strong>inspection</strong> des propriétés plutôt que par le constructeur. C&#8217;est une alternative intéressante et facile à mettre en oeuvre. Déjà cela permet de réduire le code de la classe <em>Controller</em> à :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">public class Controller
+{
+	public ILogger Logger { get; set; }
+
+	public void Action()
+	{
+		this.Logger.Information("Hello from action !");
+	}
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Par défaut StructureMap ne résoudra pas la dépendance en l'état. Dans la configuration il faut, lors de la liaison entre un contrat et son implémentation, utiliser la méthode <em>Setter&lt;T&gt;</em> pour spécifier le type de dépendance sous jacente qui va être injecté :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">configuration.For&lt;IController&gt;().Use&lt;Controller&gt;().Setter&lt;ILogger&gt;().Is&lt;ConsoleLogger&gt;();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>La méthode <em>Setter&lt;T&gt;</em> dispose d&#8217;une surcharge qui permet d&#8217;injecter à condition que le nom de la propriété match avec celui passé en argument :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">configuration.For&lt;IController&gt;().Use&lt;Controller&gt;().Setter&lt;ILogger&gt;("Logger").Is&lt;ConsoleLogger&gt;();</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Cette surcharge peut s&#8217;avérer pratique, mais attention en renommant, on a vite fait d&#8217;oublier d&#8217;aller modifier la configuration du container !
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Une fois mise en place il suffit de demander de récupérer une instance d&#8217;une dépendance pour que celle-ci soit automatiquement injecter avec une autre sous-jacente :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">//Avec Setter&lt;T&gt; il devient obligatoire de demander une instance correspondant à un contrat.
+//IController doit donc être définit dans votre code pour que cela fonctionne
+var controller = container.GetInstance&lt;IController&gt;();
+controller.Action();// print "Hello from action !"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Cette première façon de faire est certes efficace, mais imaginez faire cela pour toutes les dépendances&#8230;&#8203; Il existe donc une méthode plus efficace pour mettre en place l&#8217;injection par propriété : Définir des <strong>conventions</strong> dans le registre des <em>Policies</em> du container. Pour cela les développeurs de StructureMap ont tout prévu, il existe une méthode <em>SetAllProperties</em> qui attend en paramètre une action exposant une instance de la classe <em>SetterConvention</em> :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">configuration.Policies.SetAllProperties(convention =&gt; {
+
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Plusieurs possibilités sont offertes pour définir une convention. La plus simple est celle qui exige un type stricte :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">convention.OfType&lt;ILogger&gt;();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Une convention par namespace peut être établi, elle permet de déclencher l&#8217;injection de la dépendance uniquement sur les types appartenant à ce namespace. Deux possibilités de déclaration,  Soit par nom :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">convention.WithAnyTypeFromNamespace("MyNamespace");</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Soit en utilisant le namespace d&#8217;un type en particulier :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">convention.WithAnyTypeFromNamespaceContainingType&lt;ILogger&gt;();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Ces trois exemples de convention permettent de traiter pas mal de cas. La classe <em>SetterConvention</em> offre d&#8217;autres possibilités pour customiser sa logique d&#8217;injection. Le mieux c&#8217;est de les essayer pour voir celle qui conviennent aux besoins.</p>
+</div>
+<div class="paragraph">
+<p>Sans s&#8217;en rendre compte, en utilisant les conventions, une nouvelle capacité du container a été dévérouillée, le <em>BuildUp</em> ! Il est maintenant possible de se dispenser d&#8217;utiliser la méthode <em>GetInstance&lt;T&gt;()</em> pour obtenir une instance d&#8217;un dépendant avec ses dépendances injectées :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">var controller = new Controller();
+container.BuildUp(controller);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>L&#8217;intérêt premier de cette technique est qu&#8217;on va pouvoir injecter les dépendances d&#8217;une instance dont la création est faite par un tier. Mine de rien cela ouvre pas mal de possibilité et permet de s&#8217;interfacer avec d&#8217;autre Framework ou Api qui possède leur propre mécanique de création d&#8217;instance (On peut cité par exemple <strong>Asp.Net MVC</strong> avec les <em>ControllerFactory</em>). C&#8217;est aussi une méthode qui est plus proche de la théorie de l&#8217;inversion de contrôle, car dans ce cas précis il n&#8217;y a plus aucun appel direct de résolution d&#8217;un dépendant. Le container se préoccupe de ce qu&#8217;il sait faire de mieux : résoudre les dépendances !</p>
+</div>
+<div class="paragraph">
+<p>Au niveau de la mécanique d&#8217;injection des dépendances nous avons vu les fondamentaux. Il faut savoir que la méthode priviliégiée par la plupart des développeurs est celle injectant les dépendances par constructeur. Elle demande bien moins d&#8217;effort et évite d&#8217;avoir des propriétés publiques accessibes par le premier venu. Cependant, il existe de nombreux cas où l&#8217;injection par propriété est indispensable (par exemple pour les attributs), donc il ne faut pas écarter cette possibilité. Personnellement j&#8217;utilise beaucoup l&#8217;injection par propriété, car cela permet d&#8217;avoir une grande compacité de code en plus d'éviter de manipuler l&#8217;affectation des références à la main (je trouve que c&#8217;est plus propre sur ce point). Cependant, quand je le fais je suis beaucoup plus stricte sur les règles de manipulation des instances. Il faut clairement que la responsabilité de leur manipulation soit faite uniquement par le dépendant, sinon c&#8217;est la porte ouverte à de nombreux problèmes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_lifecycle">Lifecycle</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Depuis le début de cet article la création des dépendances a été complétement délégué à la classe <em>Container</em>. La grande question à présent est : Comment puis gérer le <strong>cycle de vie</strong> des instances au sein d&#8217;une instance de <em>Container</em> ?</p>
+</div>
+<div class="paragraph">
+<p>StructureMap, comme tous les containers IoC, met à disposition un ensemble de méthode et classe pour gérer cela. Par défaut lorsque l&#8217;on ajoute une liaison entre un contrat et une implémentation, le container va définir leur cycle de vie à l'état <strong>Transient</strong>. Cela veut dire qu'à chaque fois qu&#8217;il résoudra une dépendance il créera une instance. Il est tout à fait possible de mettre explicitement la dépendance dans le mode Transient :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">configuration.For&lt;ILogger&gt;().Use&lt;ConsoleLogger&gt;().Transient();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Logiquement si l&#8217;on demande deux fois la dépendance, la référence est différente :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">var logger = container.GetInstance&lt;ILogger&gt;();
+var logger2 = container.GetInstance&lt;ILogger&gt;();
+Console.WriteLine(logger == logger2);//print False</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Un cas régulier dans le cycle de vie des objets c&#8217;est <strong>l&#8217;instance unique</strong>. Pour le faire on utilise la méthode <em>Singleton</em> :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">configuration.For&lt;ILogger&gt;().Use&lt;ConsoleLogger&gt;().Singleton();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>En conséquence le test de référence que l&#8217;on a fait précédemment renvoie <em>True</em> :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">var logger = container.GetInstance&lt;ILogger&gt;();
+var logger2 = container.GetInstance&lt;ILogger&gt;();
+Console.WriteLine(logger == logger2);//print True</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Ces deux cas sont parmi les principaux que l&#8217;on trouve dans le développement, mais il en existe d&#8217;autre qui permettent de gérer la vie de l&#8217;instance sur un <strong>Thread</strong> ou encore dans un container encapsulé dans un <strong>Scope</strong> temporaire (<em>ContainerScoped</em>, utilisé pour gérer notamment le cas de DNX).</p>
+</div>
+<div class="paragraph">
+<p>Il existe une autre façon de déclarer un cycle de vie avec StructureMap. Dans la bibliothèque une interface <em>ILifecycle</em> permet d&#8217;implémenter facilement son propre cycle de vie. Il est ensuite possible de l&#8217;utiliser dans la configuration avec la méthode <em>LifecycleIs&lt;T&gt;</em> (ou T implémente ILifecycle).</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Les cycles de vie personnalisés peuvent être utilsés dans bien des cas. Il existe des bibliothèques qui fournissent des cycles spécialisés, comme pour le Web par exemple. Avec la version 4 de StructureMap l'équipe de développement encouragement fortement à ne plus utiliser ce mode fonctionnement, mais à préférer l&#8217;utilisation du <em>NestedContainer</em> à la place. Il permets de répondre à 95% des cas de figures sans avoir besoin de librairies annexes ni de codes supplémentaires.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Comme indiqué dans la note au-dessus le <em>NestedContainer</em> permet aussi de gérer le cycle de vie des instances. En les utilisant on se simplifie  la vie, car à partir du moment ou le <em>NestedContainer</em> est récupéré, toutes les instances qui sont obtenues lui sont propres. Il suffit ensuite d&#8217;appeler la méthode <em>Dispose</em> pour les libérer. C&#8217;est une méthode très flexible puisqu&#8217;il suffit d'établir un Scope pour que cela fonctionne. De plus, dans ce mode toutes les dépendances qui implementent <em>IDisposable</em> sont libérées lors de l&#8217;appel à la méthode sur le <em>NestedContainer</em>. Du coup les trois états de StructureMap suffisent à gérer tous les cas, y compris ceux liés au contexte Web. Par exemple un Scope simple peut être imaginé : L&#8217;exécution d&#8217;une ligne de code. Dans ce cas voici les étapes qu&#8217;il faut mettre en place :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Le <em>NestedContainer</em> est créé et démarre ainsi le Scope attendu</p>
+</li>
+<li>
+<p>Le code voulut est executé</p>
+</li>
+<li>
+<p>Le <em>NestedContainer</em> libère les dépendances.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Ces trois étapes peuvent être rejouées à l&#8217;infini. Pour illustrer le bon fonctionnement du <em>Dispose</em>, une implémentation de <em>ILogger</em> disposable va être utilisé :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">public class DisposableConsoleLogger : ConsoleLogger, IDisposable
+{
+	public void Dispose()
+	{
+		Console.WriteLine("Hello form Dispose !");
+	}
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Pour la configuration rien ne change à par l&#8217;appel à <em>Use&lt;T&gt;</em> qui utilise <em>DisposableConsoleLogger</em>  :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">var container = new Container(configuration =&gt;
+{
+	configuration.For&lt;ILogger&gt;().Use&lt;DisposableConsoleLogger&gt;();
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Le code des trois étapes est le suivant :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">var nested = container.GetNestedContainer();
+var logger = nested.GetInstance&lt;ILogger&gt;();
+nested.Dispose();//print Hello form Dispose !</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Pour illustrer l&#8217;isolation nette de ce Scope il suffit de l&#8217;inclure dans une boucle for et de tester si la dernière instance récupérer est la même que la courrante :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">ILogger last = null;
+for(var i = 0; i &lt; 10; i++)
+{
+	var nested = container.GetNestedContainer();
+	var logger = nested.GetInstance&lt;ILogger&gt;();
+	if (last != null)
+	Console.WriteLine(last == logger);//print False
+	last = logger;
+	nested.Dispose();//print Hello form Dispose !
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Au final rien de compliqué avec le <em>NestedContainer</em>. C&#8217;est une technique puissante et très élégante, il suffit juste de définir son Scoping dans une application !</p>
+</div>
+<div class="paragraph">
+<p>Arriver à ce stade, le tour d&#8217;horizon de StructureMap est fait. Vous avez à présent les clés pour le mettre en place dans vos projets. L&#8217;exemple qui m&#8217;a servi pour écrire l&#8217;article est disponible sur <strong>Github Gist</strong> : <a href="https://gist.github.com/Vtek/7e5064a188417713a2d8">ici</a>.</p>
+</div>
+<div class="paragraph">
+<p>Pour finir je vous propose une dernière petite partie sur les&#8230;&#8203;</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_best_practices">Best practices</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Pour finir cet article, je vous propose un ensemble de règle qu&#8217;il est bon de suivre :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><u>Masquer l'accès au Container</u> : L&#8217;inversion de contrôle sert à casser les adhérances. Si vous utilisez spécifiquement un container pour résoudre des dépendances alors c&#8217;est l&#8217;inverse qui se produit. Il vaut donc mieux passer par une couche intermédiaire qui va vous permettre de changer le Container facilement si besoin.</p>
+</li>
+<li>
+<p><u>Préfére l'injection par constructeur</u>  : Elle ne demande pas de logique d&#8217;injection et est par conséquent la manière la plus simple à mettre en place !</p>
+</li>
+<li>
+<p><u>N'oubliez pas l'injection par propriété</u>  : Certains cas ne sont pas possibles avec l&#8217;injection par constructeur, n&#8217;hésitez surtout pas à utiliser celle par propriété, elle est là pour ça !</p>
+</li>
+<li>
+<p><u>Ne mélangez pas les cycles de vie</u>  : Beaucoup ont essayé et se sont cassés les dents. Mise à part le <strong>Singleton</strong> qui est simple à comprendre et mélanger, pour le reste abstenez-vous ! En mixant le risque c&#8217;est que plus le projet grossit plus la grappe de rétention entre les instances devient complexe. On peut vite arriver à des situations hors de contrôle.</p>
+</li>
+<li>
+<p><u>N'injectez pas des types primitifs</u>  : Techniquement c&#8217;est faisable mais c&#8217;est une erreur. Les dépendants attendent des dépendances définies par des contrats, les types primitifs ne répondent pas cela.</p>
+</li>
+<li>
+<p><u>Ne faites pas de résolution de dépendance base sur des chaines de charactère (Nom, Type, Namespace)</u>  : Ici encore techniquement c&#8217;est possible mais cela compléxifie la maintenance et oblige à revalider la configuration du <em>Container</em> à chaque renommage de dépendance, propriété, namespace. Au final vous allez perdre du temps et il y a d&#8217;autre façon de faire bien plus efficace.</p>
+</li>
+<li>
+<p><u>Inutile de définir des cycles de vie</u> : Il vaut mieux utilisé le Scoping : L&#8217;exemple du <em>NestedContainer</em> parle de lui-même :)</p>
+</li>
+<li>
+<p><u>Ne mélangez pas IoC et Réflexion</u> : C&#8217;est une fausse bonne idée. Se sont deux aspects bien différents qui peuvent parfois aboutir au même résultat, mais qui n&#8217;ont pas du tout la même vocation. Si vous faites de la réflexion pour activer des dépendances dans ce cas utilisez plutôt <strong><a href="https://msdn.microsoft.com/fr-fr/library/dd460648(v=vs.110).aspx">MEF</a></strong> . Si se n&#8217;est pas le cas alors vous faites très certainement quelque chose qu&#8217;un container IoC fait déjà :)</p>
+</li>
+<li>
+<p><u>N'utilisé jamais de container IoC dans des tests unitaires</u> : Jamais ! Il existe des frameworks spécialisés pour gérer les dépendances sous-jacentes dans vos tests (<strong><a href="https://github.com/Moq/moq4">Moq</a></strong>, <strong><a href="https://www.nuget.org/packages/RhinoMocks/">Rhino</a></strong>).</p>
+</li>
+<li>
+<p><u>Organisez la configuration de vos dépendances</u> : elles grossissent en nombre rapidement. Pour mieux organiser leur configuration il existe dans StructureMap une classe appelée <em>Registry</em>. Cette classe permet de grouper la configuration par <strong>domaine de dépendance</strong>.</p>
+</li>
+<li>
+<p><u>Résoudre les dépendances se fait au runtime</u>  : C&#8217;est donc l&#8217;application qui doit tenir les références. Inutile d&#8217;essayer de les masquer, vous ne gagnerez pas plus de temps ni de confort de développement !</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Voilà, j&#8217;espère que vous aurez apprécié la lecture de cet article. L&#8217;inversion de contrôle est un concept qui doit être connu, car de nombreux projets le mettent en oeuvre. StructureMap est un excellente bibliothèque. J&#8217;aurais aimé vous présenter toutes ses capacités mais elles sont tellement nombreuses qu&#8217;il faudrait plusieurs articles pour toutes les traiter !</p>
+</div>
+</div>
+</div>
+        </section>
+
+        <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="" style="background-image: url(https://avatars.githubusercontent.com/u/3357643?v=3)"><span class="hidden">Sylvain PONTOREAU's Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href="">Sylvain PONTOREAU</a></h4>
+
+                    <p>Read <a href="">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    <span class="author-location icon-location">Paris</span>
+                    <span class="author-link icon-link"><a href="sylvain.pontoreau.com">sylvain.pontoreau.com</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/share?text=Inverser%20le%20contr%C3%B4le%20avec%20StructueMap%20!&amp;url=http://sylvain.pontoreau.com/2015/12/06/Inverser-le-controle-avec-Structue-Map.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://sylvain.pontoreau.com/2015/12/06/Inverser-le-controle-avec-Structue-Map.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://sylvain.pontoreau.com/2015/12/06/Inverser-le-controle-avec-Structue-Map.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+        </footer>
+
+
+        <section class="post-comments">
+          <div id="disqus_thread"></div>
+          <script type="text/javascript">
+          var disqus_shortname = 'sylvainpontoreau'; // required: replace example with your forum shortname
+          /* * * DON'T EDIT BELOW THIS LINE * * */
+          (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+          </script>
+          <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </section>
+
+
+    </article>
+
+</main>
+
+
+
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="http://sylvain.pontoreau.com">Sylvain PONTOREAU</a> &copy; 2016</section>
+        <section class="poweredby">Proudly published with <a href="http://hubpress.io">HubPress</a></section>
+    </footer>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//sylvain.pontoreau.com/themes/Casper/assets/js/jquery.fitvids.js?v=1.0.0"></script>
+    <script type="text/javascript" src="//sylvain.pontoreau.com/themes/Casper/assets/js/index.js?v=1.0.0"></script>
+
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-57055345-1', 'auto');
+    ga('send', 'pageview');
+
+    </script>
+</body>
+</html>
