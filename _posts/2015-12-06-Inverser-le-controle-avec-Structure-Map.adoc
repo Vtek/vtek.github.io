@@ -1,4 +1,4 @@
-= Inverser le contrôle avec StructueMap !
+= Inverser le contrôle avec StructureMap !
 :hp-image: visual-studio.png
 :published_at: 2015-12-06
 :hp-tags: C#, IoC, StructureMap
