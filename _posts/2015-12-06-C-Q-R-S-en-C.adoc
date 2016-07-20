@@ -6,6 +6,6 @@
 
 == Pourquoi ce pattern ?
 
-== Dispatcher
+== CQRS n'est pas...
 
-== CQRS n'est pas
+== Implementations disponibles
