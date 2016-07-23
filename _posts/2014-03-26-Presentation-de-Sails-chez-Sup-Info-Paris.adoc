@@ -1,0 +1,6 @@
+= Présentation de Sails chez Sup’Info Paris
+:hp-image: visual-studio.png
+:published_at: 2014-03-26
+:hp-tags: JavaScript, Node.js, Sails.js
+
+Le 26 mars j’ai réalisé une présentation du framework MVC Sails.js ! Les slides sont *http://fr.slideshare.net/RadicalEdward/prsentation-sails-by-dcube-at-supinfo-paris[ici]*
