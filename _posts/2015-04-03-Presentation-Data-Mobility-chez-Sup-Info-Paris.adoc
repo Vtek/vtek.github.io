@@ -1,5 +1,5 @@
 = Présentation Data & Mobility chez Sup’Info Paris
-:hp-image: visual-studio.png
+:hp-image: xamarin.png
 :published_at: 2015-04-03
 :hp-tags: C#, Xamarin
 
