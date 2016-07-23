@@ -24,7 +24,7 @@
     <meta property="og:url" content="http://sylvain.pontoreau.com/2015/12/06/Inverser-le-controle-avec-Structure-Map.html" />
     <meta property="og:image" content="http://sylvain.pontoreau.com/images/visual-studio.png" />
     <meta property="article:published_time" content="2015-12-05T23:00:00.000Z" />
-    <meta property="article:modified_time" content="2016-06-27T14:29:24.001Z" />
+    <meta property="article:modified_time" content="2016-07-23T14:10:28.840Z" />
     <meta property="article:tag" content="C#" />
     <meta property="article:tag" content="IoC" />
     <meta property="article:tag" content="StructureMap" />
@@ -50,7 +50,7 @@
     "headline": "Inverser le contrôle avec StructureMap !",
     "url": "http://sylvain.pontoreau.com/2015/12/06/Inverser-le-controle-avec-Structure-Map.html",
     "datePublished": "2015-12-05T23:00:00.000Z",
-    "dateModified": "2016-06-27T14:29:24.001Z",
+    "dateModified": "2016-07-23T14:10:28.840Z",
     "image": "http://sylvain.pontoreau.com/images/visual-studio.png",
     "keywords": "C#,  IoC,  StructureMap",
     "description": "L&amp;#8217;inversion de contrôle (aka IoC) est un patron d&amp;#8217;architecture permettant de casser les adhérences entre les dépendances. Ce découplage permet aux dépendances de haut niveau de ne plus reposer directement sur celle de bas niveau et..."
@@ -160,7 +160,7 @@ L&#8217;inversion de contrôle permet aussi de respecter un des principes majeur
 <h2 id="_structuremap_en_action_les_bases">StructureMap en action : les bases !</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Il existe de nombreuse bibliothèque dédiée à l&#8217;IoC. Sincèrement il n&#8217;y a pas de mauvais choix même si j&#8217;ai tendance à déconseiller celle de <strong>Microsoft</strong> (<a href="https://github.com/unitycontainer/unity">Unity</a>) qui est à la traine par rapport à la concurrence. Pour ma part j&#8217;ai longtemps utilisé <strong>Ninject</strong> pour son côté <em>"Simple &amp; Straightforward"</em>, très efficace en développement bien qu&#8217;un peu lent à l'éxecution il faut l&#8217;admettre. Dernièrement j&#8217;ai décidé de changer et je me suis mis sur <strong>StructureMap</strong>, un container historique (le premier en C#) qui embarque d&#8217;innombrables capacités pour un niveau de performance très correct. C&#8217;est un bon compromis entre capacité et puissance et depuis la version 3 l'équipe a fait un gros travail pour se rapporcher de l&#8217;approche de Ninject. De plus, il est en développement actif depuis presque 10 ans, il dispose d&#8217;une documentation riche et complète et est le premier à disposer d&#8217;un support pour <strong>DNX</strong> avec la version 4. C&#8217;est cette version que l&#8217;on va utiliser aujourd&#8217;hui !</p>
+<p>Il existe de nombreuse bibliothèque dédiée à l&#8217;IoC et sincèrement il n&#8217;y a pas de mauvais choix. Pour ma part j&#8217;ai longtemps utilisé <strong>Ninject</strong> pour son côté <em>"Simple &amp; Straightforward"</em>, très efficace en développement bien qu&#8217;un peu lent à l'éxecution il faut l&#8217;admettre. Dernièrement j&#8217;ai décidé de changer et je me suis mis sur <strong>StructureMap</strong>, un container historique (le premier en C#) qui embarque d&#8217;innombrables capacités pour un niveau de performance très correct. C&#8217;est un bon compromis entre capacité et puissance et depuis la version 3 l'équipe a fait un gros travail pour se rapporcher de l&#8217;approche de Ninject. De plus, il est en développement actif depuis presque 10 ans, il dispose d&#8217;une documentation riche et complète et est le premier à disposer d&#8217;un support pour <strong>DNX</strong> avec la version 4. C&#8217;est cette version que l&#8217;on va utiliser aujourd&#8217;hui !</p>
 </div>
 <div class="paragraph">
 <p>Pour installer le package StructureMap il suffit d&#8217;ajouter le package <strong>Nuget</strong> via la commande :</p>
