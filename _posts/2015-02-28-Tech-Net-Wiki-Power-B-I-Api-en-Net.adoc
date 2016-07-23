@@ -1,5 +1,5 @@
 = TechNet Wiki : PowerBI Api en .Net !
-:hp-image: visual-studio.png
+:hp-image: powerbi.png
 :published_at: 2015-02-28
 :hp-tags: C#, PowerBI
 
