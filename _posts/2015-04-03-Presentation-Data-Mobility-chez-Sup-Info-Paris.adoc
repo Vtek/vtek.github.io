@@ -1,0 +1,7 @@
+= Présentation Data & Mobility chez Sup’Info Paris
+:hp-image: visual-studio.png
+:published_at: 2015-04-03
+:hp-tags: C#, Xamarin
+
+Le 27 mars j’ai réalisé une présentation sur le thème Data & Mobility avec mon collégue Paul-Louis Bautes ! J’ai animé la partie Xaramin, les slides *http://fr.slideshare.net/RadicalEdward/presentation-sup-infoptt[ici]*
+
