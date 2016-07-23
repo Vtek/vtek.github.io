@@ -1,0 +1,6 @@
+= TechNet Wiki : PowerBI Api en .Net !
+:hp-image: visual-studio.png
+:published_at: 2015-02-28
+:hp-tags: C#, PowerBI
+
+J'ai publié un article sur le wiki *Microsoft Technet* qui présente une partie du travail que j'ai réalisé sur *PowerBI Api* pour les Techdays 2015. L'article est disponible *http://social.technet.microsoft.com/wiki/contents/articles/30105.powerbi-api-in-net.aspx[ici]*
