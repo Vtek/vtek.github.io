@@ -1,5 +1,5 @@
 = Présentation de Sails chez Sup’Info Paris
-:hp-image: visual-studio.png
+:hp-image: sails.png
 :published_at: 2014-03-26
 :hp-tags: JavaScript, Node.js, Sails.js
 
