@@ -1,0 +1,8 @@
+= DevOps day #3 - Xamarin
+:hp-image: xamarin.png
+:published_at: 2017-02-02
+:hp-tags: Xamarin, Azure, Visual Studio Mobile Center
+
+Le 02 février j'ai eu l'occasion de faire une conférence sur Xamarin au coeur de la transformation digitale. J'ai présenté ce sujet en compagnie de mon collègue Sébastien BOVO. Les slides de la conférence sont disponibles ici: *http://fr.slideshare.net/...*.
+
+La conférence a été diffusé en live sur JDN, vous pouvez la retrouver via ce lien: *http://url/...*.
