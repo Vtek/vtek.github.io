@@ -4,8 +4,8 @@
 :hp-tags: Xamarin, Azure, Visual Studio Mobile Center
 
 Aujourd'hui j'ai eu l'occasion de participer au *Microsoft DevOps Day #3* en animant une conférence sur *Xamarin au coeur de la transformation digitale*.
-J'ai présenté ce sujet en compagnie de mon collègue link:view-source:https://twitter.com/sbovo[Sébastien BOVO]. 
+J'ai présenté ce sujet en compagnie de mon collègue https://twitter.com/sbovo[Sébastien BOVO]. 
 
-L'événement a été diffusé en direct, vous pouvez retrouver la vidéo link:view-source:https://experiences.microsoft.fr/Video/devopsday-3/beb57dff-3621-446b-aa0d-fa2336498378#sgBgCMBbJuF0aHiD.97[ici] (la session *Xamarin* commence vers *2h45*).
+L'événement a été diffusé en direct, vous pouvez retrouver la vidéo https://experiences.microsoft.fr/Video/devopsday-3/beb57dff-3621-446b-aa0d-fa2336498378#sgBgCMBbJuF0aHiD.97[ici] (la session *Xamarin* commence vers *2h45*).
 
 Les source du projet que nous avons présenté sont disponibles sur *Github* : https://github.com/Vtek/FacesToSmileys
