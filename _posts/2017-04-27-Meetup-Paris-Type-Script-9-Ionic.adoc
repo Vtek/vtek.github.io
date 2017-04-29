@@ -1,0 +1,10 @@
+= Meetup Paris TypeScript #9 - Ionic
+:hp-image: ionic.png
+:published_at: 2017-04-27
+:hp-tags: TypeScript, Ionic
+
+Jeudi 27 avril j'ai fait une intervention au https://www.meetup.com/fr-FR/Paris-Typescript/[Meetup Paris TypeScript] pour parler de développement mobile hybride avec Ionic.
+
+Les slides de ma présentation sont disponibles sur https://speakerdeck.com/spontoreau/meetup-paris-typescript-number-9-lets-talk-about-ionic[Speaker Deck].
+
+Le code source de ma démo est aussi disponibles sur *Github* : https://github.com/Vtek/IonicCognitiveTranslator
