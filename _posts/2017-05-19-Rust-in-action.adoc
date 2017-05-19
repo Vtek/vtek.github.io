@@ -2,3 +2,5 @@
 :hp-image: rust.png
 :published_at: 2017-05-19
 :hp-tags: Rust
+
+Cela fait un moment que je n'ai pas écris d'article technique, il est donc grand temps de se plonger dans un nouveau sujet et pas n'importe lequel. Aujourd'hui j'ai choisi de parler de *Rust*, un language de programmation multi-paradigme, bas niveau, taillé pour gérer la concurrence et memory safe.
