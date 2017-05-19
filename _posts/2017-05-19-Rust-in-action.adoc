@@ -1,0 +1,4 @@
+= Rust in action
+:hp-image: rust.png
+:published_at: 2017-05-19
+:hp-tags: Rust
