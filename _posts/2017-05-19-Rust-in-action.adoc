@@ -5,7 +5,8 @@
 
 Cela fait un moment que je n'ai pas écris d'article technique, il est donc grand temps de se plonger dans un nouveau sujet et pas n'importe lequel. Aujourd'hui on va parler de *Rust*, le langage de la foundation Mozilla. 
 
-Multi-paradigme, performant, bas niveau, concurrency & memory safe, voici quelques caractéristiques qui en ont fait un des langages les plus apprécié par les développeurs (allez jeter un coup d'oeil au dernier survey de Stack Overflow).
+Multi-paradigme, performant, bas niveau, concurrency & memory safe, voici quelques caractéristiques qui en ont fait un des langages les plus apprécié par les développeurs l'ayant déjà utilisé (allez jeter un coup d'oeil au dernier survey de *https://insights.stackoverflow.com/survey/2017#technology[Stack Overflow]*).
 
-Avoir le plébisite de la communauté c'est bien, des projets concret c'est mieux. C'était le point faible de Rust mais courrant 2016 le langage a débarqué dans Firefox et Drop Box a annoncé qu'il l'utilisait pour certaines parties critiques de leurs services. Une bonne vitrine pour un langage qui mérite vraiment que l'on s'attarde un peu sur lui. C'est se que nous allons faire à présent dans ce billet
+Avoir le plébisite de la communauté c'est bien, des projets concret c'est mieux. C'était le point faible de Rust mais courrant 2016 le langage a débarqué dans Firefox et Drop Box a annoncé qu'il l'utilisait pour certaines parties critiques de leurs services. Une bonne vitrine pour un langage qui mérite vraiment que l'on s'attarde un peu sur lui. C'est se que nous allons faire à présent dans ce billet.
 
+NOTE: En tant qu'employé de *Microsoft* je ne développe pas avec Rust. Je n'ai donc pas la prétention d'être un expert sur ce sujet. C'est surtout un langage que j'apprécie et que je pratiques depuis 2015 de manière occasionnel et sur mon temps libre.
