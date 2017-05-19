@@ -3,4 +3,9 @@
 :published_at: 2017-05-19
 :hp-tags: Rust
 
-Cela fait un moment que je n'ai pas écris d'article technique, il est donc grand temps de se plonger dans un nouveau sujet et pas n'importe lequel. Aujourd'hui j'ai choisi de parler de *Rust*, un language de programmation multi-paradigme, bas niveau, taillé pour gérer la concurrence et memory safe.
+Cela fait un moment que je n'ai pas écris d'article technique, il est donc grand temps de se plonger dans un nouveau sujet et pas n'importe lequel. Aujourd'hui on va parler de *Rust*, le langage de la foundation Mozilla. 
+
+Multi-paradigme, performant, bas niveau, concurrency & memory safe, voici quelques caractéristiques qui en ont fait un des langages les plus apprécié par les développeurs (allez jeter un coup d'oeil au dernier survey de Stack Overflow).
+
+Avoir le plébisite de la communauté c'est bien, des projets concret c'est mieux. C'était le point faible de Rust mais courrant 2016 le langage a débarqué dans Firefox et Drop Box a annoncé qu'il l'utilisait pour certaines parties critiques de leurs services. Une bonne vitrine pour un langage qui mérite vraiment que l'on s'attarde un peu sur lui. C'est se que nous allons faire à présent dans ce billet
+
