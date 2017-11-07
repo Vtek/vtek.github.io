@@ -3,6 +3,8 @@
 :published_at: 2017-11-02
 :hp-tags: Azure, Cognitive Services
 
-Jeudi 2 novembre j'ai participé au deuxième Meetup https://www.meetup.com/fr-FR/Cognitives-Services-Paris/[Paris Cognitives Services]. J'ai eu l'occasion d'aborder un types de service que j'adore: *Azure Vision*. C'était le thème principal de la soirée et https://fr.linkedin.com/in/f%C3%A9lix-billon-2b217b12b[Félix Billon] nous a présenté les services équivalent côté *Google*. L'ambiance était vraiment bonne et j'ai beaucoup aimé participer à ce Meetup, je vous le conseil donc fortement ;)
+Jeudi 2 novembre j'ai participé au deuxième Meetup https://www.meetup.com/fr-FR/Cognitives-Services-Paris/[Paris Cognitives Services]. J'ai eu l'occasion d'aborder un types de service que j'adore: *Azure Vision*. C'était le thème principal de la soirée et https://fr.linkedin.com/in/f%C3%A9lix-billon-2b217b12b[Félix Billon] nous a présenté les services équivalent côté *Google*. 
+
+L'ambiance était vraiment bonne et j'ai beaucoup aimé participer à ce Meetup, je vous le conseil donc fortement ;)
 
 Mes slides sont disponibles sur https://speakerdeck.com/spontoreau/meetup-paris-cognitives-services-number-2-azure-vision[Speaker Deck].
